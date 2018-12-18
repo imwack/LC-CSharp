@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,13 +76,47 @@ namespace Solution
 
             return maxLen;
         }
+
+        //015 
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            Array.Sort(nums);
+            IList<IList<int>> ret = new List<IList<int>>();
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if(i>0 && nums[i]==nums[i-1]) continue;
+
+                int cur = i;
+                int l = cur + 1, r = nums.Length - 1;
+                while (l<r && l<nums.Length)
+                {
+                    if (nums[cur] + nums[l] + nums[r] == 0)
+                    {
+                        IList<int> tmp = new List<int>() { nums[cur] , nums[l] , nums[r] };
+                        ret.Add(tmp);
+                        ++l;
+                        while (l<nums.Length && nums[l]==nums[l-1])
+                        {
+                            ++l;
+                        }
+                    }
+                    else if (nums[cur] + nums[l] + nums[r] < 0)
+                        ++l;
+                    else
+                        --r;
+                }
+
+            }
+            return ret;
+        }
     }
     class Program
     {
         static void Main(string[] args)
         {
             Solution s = new Solution();
-            int ret = s.LongestSubStr("pwwkew");
+            int[] n = new[] {-1, -1, 0, 1, 2, 4};
+            var ret = s.ThreeSum(n);
             Console.WriteLine(ret);
         }
     }
