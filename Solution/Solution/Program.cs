@@ -37,13 +37,51 @@ namespace Solution
             }
             return ret;
         }
+
+        public int MaxArea(int[] h)
+        {
+            int maxArea = 0;
+            int l = 0, r = h.Length - 1;
+            while (l<r)
+            {
+                int area = (r - l)*Math.Min(h[l], h[r]);
+                maxArea = Math.Max(maxArea, area);
+                if (h[l] > h[r]) --r;
+                else ++l;
+            }
+            return maxArea;
+        }
+
+        //003
+        public int LongestSubStr(string str)
+        {
+            int maxLen = 0, start = -1;
+            Dictionary<char, int> lastIndex = new Dictionary<char, int>();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                char c = str[i];
+                if (!lastIndex.ContainsKey(c))
+                {
+                    maxLen = Math.Max(i - start, maxLen);
+                }
+                else 
+                {
+                    maxLen = Math.Max(i - lastIndex[c], maxLen);
+                    start = lastIndex[c];
+                }
+                lastIndex[c] = i;
+            }
+
+            return maxLen;
+        }
     }
     class Program
     {
         static void Main(string[] args)
         {
             Solution s = new Solution();
-            string ret = s.ZigZag("PAYPALISHIRING", 4);
+            int ret = s.LongestSubStr("pwwkew");
             Console.WriteLine(ret);
         }
     }
