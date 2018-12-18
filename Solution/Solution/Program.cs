@@ -109,6 +109,37 @@ namespace Solution
             }
             return ret;
         }
+
+        //017
+        public IList<string> PhoneNum(string number)
+        {
+            string[] code = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+            List<string> num = new List<string>();
+            foreach (var c in number)
+            {
+                num.Add(code[c-'2']);
+            }
+            IList<string> ret = new List<string>();
+            string cur = string.Empty;
+            PhoneNumAll(num, ret, cur, 0);
+            return ret;
+        }
+
+        private void PhoneNumAll(List<string> num, IList<string> ret, string cur, int id)
+        {
+            if (id == num.Count)
+            {
+                string tmp = string.Copy(cur);
+                ret.Add(tmp);
+                return;
+            }
+            for (int i = 0; i < num[id].Length; ++i)
+            {
+                cur += num[id][i];
+                PhoneNumAll(num,ret,cur,id+1);
+                cur = cur.Substring(0, cur.Length - 1);
+            }
+        }
     }
     class Program
     {
@@ -116,7 +147,7 @@ namespace Solution
         {
             Solution s = new Solution();
             int[] n = new[] {-1, -1, 0, 1, 2, 4};
-            var ret = s.ThreeSum(n);
+            var ret = s.PhoneNum("23");
             Console.WriteLine(ret);
         }
     }
