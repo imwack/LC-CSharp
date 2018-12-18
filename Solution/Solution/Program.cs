@@ -10,7 +10,8 @@ namespace Solution
 {
     public class Solution
     {
-        public string ZigZag(string s, int line)
+        //006 wrong
+        public string Convert(string s, int line)
         {
             string ret = string.Empty;
             int len = s.Length;
@@ -39,7 +40,8 @@ namespace Solution
             }
             return ret;
         }
-
+    
+        //011
         public int MaxArea(int[] h)
         {
             int maxArea = 0;
@@ -54,8 +56,8 @@ namespace Solution
             return maxArea;
         }
 
-        //003
-        public int LongestSubStr(string str)
+        //003 wrong
+        public int LengthOfLongestSubstring(string str)
         {
             int maxLen = 0, start = -1;
             Dictionary<char, int> lastIndex = new Dictionary<char, int>();
@@ -112,7 +114,7 @@ namespace Solution
         }
 
         //017
-        public IList<string> PhoneNum(string number)
+        public IList<string> LetterCombinations(string number)
         {
             string[] code = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
             List<string> num = new List<string>();
@@ -122,35 +124,36 @@ namespace Solution
             }
             IList<string> ret = new List<string>();
             string cur = string.Empty;
-            PhoneNumAll(num, ret, cur, 0);
+            LetterCombinations(num, ret, cur, 0);
             return ret;
         }
 
-        private void PhoneNumAll(List<string> num, IList<string> ret, string cur, int id)
+        private void LetterCombinations(List<string> num, IList<string> ret, string cur, int id)
         {
             if (id == num.Count)
             {
                 string tmp = string.Copy(cur);
-                ret.Add(tmp);
+                if(tmp.Length>0)
+                    ret.Add(tmp);
                 return;
             }
             for (int i = 0; i < num[id].Length; ++i)
             {
                 cur += num[id][i];
-                PhoneNumAll(num,ret,cur,id+1);
+                LetterCombinations(num,ret,cur,id+1);
                 cur = cur.Substring(0, cur.Length - 1);
             }
         }
         //022
-        public IList<string> GenerateParent(int n)
+        public IList<string> GenerateParenthesis(int n)
         {
             IList<string> ret = new List<string>();
             List<char> cur = new List<char>();
-            GenerateParent(ret, n, n, cur, n);
+            GenerateParenthesis(ret, n, n, cur, n);
             return ret;
         }
 
-        private void GenerateParent(IList<string> ret, int curL, int curR, List<char> cur, int n)
+        private void GenerateParenthesis(IList<string> ret, int curL, int curR, List<char> cur, int n)
         {
             if(curL>curR) return;
             
@@ -162,13 +165,13 @@ namespace Solution
             if (curL > 0)
             {
                 cur.Add('(');
-                GenerateParent(ret, curL - 1, curR, cur, n);
+                GenerateParenthesis(ret, curL - 1, curR, cur, n);
                 cur.RemoveAt(cur.Count-1);
             }
             if (curR > 0 && curL<curR)
             {
                 cur.Add(')');
-                GenerateParent(ret, curL , curR -1, cur, n);
+                GenerateParenthesis(ret, curL , curR -1, cur, n);
                 cur.RemoveAt(cur.Count - 1);
             }
         }
