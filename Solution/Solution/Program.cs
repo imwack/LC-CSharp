@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -140,15 +141,54 @@ namespace Solution
                 cur = cur.Substring(0, cur.Length - 1);
             }
         }
+        //022
+        public IList<string> GenerateParent(int n)
+        {
+            IList<string> ret = new List<string>();
+            List<char> cur = new List<char>();
+            GenerateParent(ret, n, n, cur, n);
+            return ret;
+        }
+
+        private void GenerateParent(IList<string> ret, int curL, int curR, List<char> cur, int n)
+        {
+            if(curL>curR) return;
+            
+            if (curL == 0 && curR == 0)
+            {
+                ret.Add(new string(cur.ToArray()));
+                return;
+            }
+            if (curL > 0)
+            {
+                cur.Add('(');
+                GenerateParent(ret, curL - 1, curR, cur, n);
+                cur.RemoveAt(cur.Count-1);
+            }
+            if (curR > 0 && curL<curR)
+            {
+                cur.Add(')');
+                GenerateParent(ret, curL , curR -1, cur, n);
+                cur.RemoveAt(cur.Count - 1);
+            }
+        }
     }
+    
     class Program
     {
         static void Main(string[] args)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             Solution s = new Solution();
             int[] n = new[] {-1, -1, 0, 1, 2, 4};
-            var ret = s.PhoneNum("23");
-            Console.WriteLine(ret);
+            var ret = s.GenerateParent(20);
+
+            stopwatch.Stop();
+            TimeSpan timespan = stopwatch.Elapsed;
+            var second = timespan.TotalSeconds;
+            Console.WriteLine(second);
         }
     }
 }
