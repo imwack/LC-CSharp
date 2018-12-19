@@ -8,6 +8,17 @@ using System.Threading.Tasks;
 
 namespace Solution
 {
+    public class ListNode
+    {
+        public int val;
+        public ListNode next;
+
+        public ListNode(int x)
+        {
+            val = x;
+        }
+    }
+        
     public class Solution
     {
         //006 wrong
@@ -175,6 +186,63 @@ namespace Solution
                 cur.RemoveAt(cur.Count - 1);
             }
         }
+
+        //016
+        public int ThreeSumClosest(int[] nums, int target)
+        {
+            Array.Sort(nums);
+            if (nums.Length < 3) return 0;
+            int ret = nums[0] + nums[1] + nums[2];
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+                int cur = i;
+                int l = cur + 1, r = nums.Length - 1;
+                while (l < r && l < nums.Length)
+                {
+                    int sum = nums[cur] + nums[l] + nums[r];
+                    if (Math.Abs(sum - target) < Math.Abs(ret - target))
+                        ret = sum;
+
+                    if (sum == target)
+                    {
+                        return target;
+                    }
+                    else if (sum < target)
+                        ++l;
+                    else
+                        --r;
+                }
+            }
+            return ret;
+        }
+        //024
+        public ListNode SwapPairs(ListNode head)
+        {
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            bool fistTime = true;
+            while (pre.next!=null)
+            {
+                ListNode first = pre.next;
+                ListNode second = first.next;
+                if(second==null) return head;
+                ListNode third = second.next;
+
+                first.next = third;
+                second.next = first;
+                pre.next = second;
+                pre = first;
+                if (fistTime)
+                {
+                    fistTime = false;
+                    head = second;
+                }
+            }
+            return head;
+        }
+        
+        //
     }
     
     class Program
@@ -186,7 +254,7 @@ namespace Solution
 
             Solution s = new Solution();
             int[] n = new[] {-1, -1, 0, 1, 2, 4};
-            var ret = s.GenerateParent(20);
+            var ret = s.GenerateParenthesis(20);
 
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
