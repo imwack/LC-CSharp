@@ -19,7 +19,7 @@ namespace Solution
             {
                 help[i] = new List<char>();
 
-                for (int j = 0; j < len/line; ++j)
+                for (int j = 0; j <= len/line; ++j)
                 {
                     int index = j*(2*line - 2) + i;
                     if(index<len)
@@ -63,15 +63,10 @@ namespace Solution
             for (int i = 0; i < str.Length; i++)
             {
                 char c = str[i];
-                if (!lastIndex.ContainsKey(c))
-                {
-                    maxLen = Math.Max(i - start, maxLen);
-                }
-                else 
-                {
-                    maxLen = Math.Max(i - lastIndex[c], maxLen);
-                    start = lastIndex[c];
-                }
+                if (lastIndex.ContainsKey(c))
+                    start = lastIndex[c]+1;
+                maxLen = Math.Max(i - start, maxLen);
+
                 lastIndex[c] = i;
             }
 
@@ -183,8 +178,8 @@ namespace Solution
 
             Solution s = new Solution();
             int[] n = new[] {-1, -1, 0, 1, 2, 4};
-            var ret = s.GenerateParent(20);
-
+            var ret = s.ZigZag("abcdefe",2);
+            Console.WriteLine(ret);
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             var second = timespan.TotalSeconds;
