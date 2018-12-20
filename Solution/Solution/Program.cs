@@ -270,8 +270,59 @@ namespace Solution
 
             return nums;
         }
+
+        //029
+        public int DivideInteger(int a, int b)
+        {
+            bool sign = (a > 0 && b > 0) || (a < 0 && b < 0);
+            int mul = -1;
+            if (sign) mul = 1;
+            a = Math.Abs(a);
+            b = Math.Abs(b);
+            if (a < b) return 0;
+            int l = 1, r = a;
+            while (l < r)
+            {
+                int mid = l + (r-l)/2;
+                if (a == b*mid)
+                    return mid;
+                if (a - b*mid > 0)
+                    l = mid + 1;
+                else
+                    r = mid - 1; 
+            }
+            if (a - b*l < b && a-b*l>0) return l;
+            return r;
+        }
+
+        public int HasNum(int[] nums, int tar)
+        {
+            int l = 0, r = nums.Length - 1, mid;
+            while (l<=r)
+            {
+                mid = l + (r - l)/2;
+                if(nums[mid] == tar) return mid;
+                if (nums[mid] > nums[l]) //[l,mid]升序
+                {
+                    if (tar > nums[l] && tar < nums[mid])
+                        r = mid-1;
+                    else
+                        l = mid+1;
+                }
+                else //[mid,r]升序
+                {
+                    if (tar > nums[r] || tar < nums[mid])
+                        r = mid-1;
+                    else
+                        l = mid+1;
+                }
+            }
+            return -1;
+        }
     }
     
+
+
     class Program
     {
         static void Main(string[] args)
@@ -280,8 +331,8 @@ namespace Solution
             stopwatch.Start();
 
             Solution s = new Solution();
-            int[] n = new[] {1, 2, 4, 3, 2, 4};
-            var ret = s.NextPermutation(n);
+            int[] n = new[] {4,5,6,7,0,1,2};
+            var ret = s.HasNum(n,0);
 
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
