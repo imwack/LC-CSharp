@@ -237,7 +237,39 @@ namespace Solution
             return head;
         }
         
-        //
+        //031
+        public int[] NextPermutation(int[] nums)
+        {
+            bool orderFlag = true;
+            int index=0,index2=0;
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                if (nums[i] > nums[i + 1])
+                {
+                    orderFlag = false;
+                    index = i;
+                    break;
+                }
+            }
+            if (orderFlag)
+            {
+                Array.Sort(nums);
+                return nums;
+            }
+            for (int i = index+1; i < nums.Length; ++i)
+            {
+                if (nums[i] >= nums[index]) continue;
+                index2 = i;
+                break;
+            }
+            
+            int temp = nums[index2];
+            nums[index2] = nums[index];
+            nums[index] = temp;
+            Array.Sort(nums,index+1, nums.Length-index-1);
+
+            return nums;
+        }
     }
     
     class Program
@@ -248,8 +280,8 @@ namespace Solution
             stopwatch.Start();
 
             Solution s = new Solution();
-            int[] n = new[] {-1, -1, 0, 1, 2, 4};
-            var ret = s.GenerateParent(20);
+            int[] n = new[] {1, 2, 4, 3, 2, 4};
+            var ret = s.NextPermutation(n);
 
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
