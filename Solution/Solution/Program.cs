@@ -8,16 +8,7 @@ using System.Threading.Tasks;
 
 namespace Solution
 {
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
 
-        public ListNode(int x)
-        {
-            val = x;
-        }
-    }
         
     public class Solution
     {
@@ -319,8 +310,211 @@ namespace Solution
             }
             return -1;
         }
+
+        public int CountPrimeSetBits(int L, int R)
+        {
+            int cnt = 0;
+            HashSet<int> prime = new HashSet<int>(new List<int>() { 2, 3, 5, 7, 11, 13, 17, 19 });
+            for (int i = L; i <= R; i++)
+            {
+                int bit = 0;
+                int n = i;
+                while (n > 0)
+                {
+                    bit += n%2;
+                    n /= 2;
+                }
+                if (prime.Contains(bit)) cnt++;
+            }
+
+            return cnt;
+        }
+        double[,] dp = new double[500, 500];
+        public double SoupServings(int N)
+        {
+            if (N > 5000) return 1;  //limit -> 1
+
+            return SoupServings((N + 24) / 25, (N + 24) / 25);
+        }
+        public double SoupServings(int a, int b)
+        {
+            if (a <= 0 && b <= 0) return 0.5;
+            if (a <= 0) return 1;
+            if (b <= 0) return 0;
+            if (dp[a, b] > 0) return dp[a, b];
+            dp[a, b] = 0.25 * (SoupServings(a - 4, b) + SoupServings(a - 3, b - 1) + SoupServings(a - 2, b - 2) + SoupServings(a - 1, b - 3));
+            return dp[a, b];
+        }
+
+        public bool CanVisitAllRooms(IList<IList<int>> rooms)
+        {
+            bool[] hasVisit = new bool[rooms.Count];
+            HashSet<int> keys = new HashSet<int>();
+            if (rooms.Count < 1) return true;
+            dfsVisitAllRooms(hasVisit, rooms, keys,0);
+            return hasVisit.All(b => b);
+        }
+
+        private void dfsVisitAllRooms(bool[] hasVisit, IList<IList<int>> rooms, HashSet<int> keys, int curRoom)
+        {
+            hasVisit[curRoom] = true;
+            foreach (var i in rooms[curRoom])
+            {
+                if (!keys.Contains(i) && i < rooms.Count)
+                    keys.Add(i);
+            }
+
+            foreach (var room in keys)
+            {
+                if (!hasVisit[room])
+                {
+                    hasVisit[room] = true;
+                    dfsVisitAllRooms(hasVisit, rooms, keys, room);
+                    break;
+                }
+            }
+        }
+        public string ShiftingLetters(string S, int[] shifts)
+        {
+            List<char> dic = new List<char> ();
+            for (int i = shifts.Length - 2; i >= 0; --i)
+            {
+                shifts[i] += shifts[i + 1]%26;
+            }
+            for (int i = 0; i < S.Length; ++i)
+            {
+                char c = (char)('a' + (S[i] - 'a' + shifts[i] % 26) % 26);
+                dic.Add(c);
+            }
+            string ret = new string(dic.ToArray());
+            return ret;
+        }
+
+        
+        public string Tree2str(TreeNode t)
+        {
+            string str = string.Empty;
+            Tree2str(t, str);
+            return str;
+        }
+        private void Tree2str(TreeNode t, string str)
+        {
+            if (t == null) return;
+        }
+        public int FindLUSlength(string[] strs)
+        {
+            Array.Sort(strs, (a, b) => b.Length -a.Length); //降序
+            HashSet<string> dup = new HashSet<string>(); //重复的string
+            HashSet<string> tmp = new HashSet<string>();
+            foreach (var str in strs)
+            {
+                if (!tmp.Contains(str))
+                    tmp.Add(str);
+                else if (!dup.Contains(str))
+                    dup.Add(str);
+            }
+            for (int i = 0; i < strs.Length; ++i)
+            {
+                if (dup.Contains(strs[i])) //有重复的 不可能能为最长
+                {
+                    continue;
+                }
+                for (int j = 0; j < i; j++)
+                {
+                    if (IsSubSequence(strs[j], strs[i]))
+                    {
+                        break;
+                    }
+                    if (j == i - 1) return strs[i].Length;
+                }
+
+            }
+            return -1;
+        }
+
+        public bool IsSubSequence(string a, string b)
+        {
+            //这里B的长度小于等于A 
+            int i = 0, j = 0;
+            foreach (char c in b)
+            {
+                bool find = false;
+                for (int index = i; index < a.Length; index++)
+                {
+                    if (a[index] == c)
+                    {
+                        i = index+1;
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find)
+                    return false;
+            }
+            return true;
+        }
+        public string PredictPartyVictory(string senate)
+        {
+            Queue<int> R = new Queue<int>();
+            Queue<int> D = new Queue<int>();
+            for (int i=0;i<senate.Length;i++)
+            {
+                if(senate[i]=='R')
+                    R.Enqueue(i);
+                else 
+                    D.Enqueue(i);
+            }
+            while (R.Count>0 && D.Count>0)
+            {
+                int r = R.Dequeue(), d = D.Dequeue();
+                if (r > d) D.Enqueue(d + senate.Length);
+                else R.Enqueue(r+senate.Length);
+            }
+            return R.Count>D.Count? "Radiant": "Dire";
+        }
+
+        public IList<IList<string>> Partition(string s)
+        {
+            IList<IList<string>> ret = new List<IList<string>>();
+            IList<string> cur = new List<string>();
+            Partition(s, ret, cur);
+            return ret;
+        }
+
+        private void Partition(string s, IList<IList<string>> ret, IList<string> cur)
+        {
+            if (s.Length == 0)
+            {
+                IList<string> temp = new List<string>(cur);
+                ret.Add( temp);
+                return;
+            }
+            for (int i = 1; i <= s.Length; i++)
+            {
+                string pre = s.Substring(0, i);
+                if (isPalindrome(pre))
+                {
+                    cur.Add(pre);
+                    Partition(s.Substring(i), ret, cur);
+                    cur.RemoveAt(cur.Count-1);
+                }
+            }
+        }
+
+        public bool isPalindrome(string s)
+        {
+            int l = 0, r = s.Length - 1;
+            while (l<r)
+            {
+                if(s[l]!=s[r]) return false;
+                l++;
+                r--;
+            }
+            return true;
+        }
     }
-    
+
+   
 
 
     class Program
@@ -331,13 +525,14 @@ namespace Solution
             stopwatch.Start();
 
             Solution s = new Solution();
-            int[] n = new[] {4,5,6,7,0,1,2};
-            var ret = s.HasNum(n,0);
-
+            int[] n = new[] {3,5,9};
+            string[] strs = new[] { "abcabc", "abcabc", "abcabc", "abc", "abc", "cca"};
+            var ret = s.Partition("");
+            Console.WriteLine(ret);
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             var second = timespan.TotalSeconds;
-            Console.WriteLine(second);
+            //Console.WriteLine(second);
         }
     }
 }
