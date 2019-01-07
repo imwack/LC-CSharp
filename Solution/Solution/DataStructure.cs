@@ -36,6 +36,23 @@ namespace Solution
         }
     }
 
+    public class Node
+    {
+        public int id;
+        public List<Node> Next;
+    }
+    public class Graph
+    {
+        public int Count; //节点数量
+        public Dictionary<int,Node> Nodes;
+
+        public Graph(int c)
+        {
+            Count = c;
+            Nodes = new Dictionary<int, Node>();
+        }
+    }
+
     public class DataStructure
     {
     }
