@@ -715,5 +715,20 @@ namespace Solution
             }
             return stack.Pop();
         }
+        public int CanCompleteCircuit(int[] gas, int[] cost)
+        {
+            int remain = 0, lack = 0, start = 0;
+            for (int i = 0; i < gas.Length; i++)
+            {
+                remain += gas[i] - cost[i];
+                if (remain < 0)
+                {
+                    start = i + 1;
+                    lack += gas[i] - cost[i];
+                }
+            }
+            if (remain + lack < 0) return -1;
+            return start;
+        }
     }
 }
