@@ -17,9 +17,13 @@ namespace Solution
             stopwatch.Start();
 
             MySolution s = new MySolution();
-            int[] n = new[] {3,5,9};
+            int[] n = new[] { 3, 30, 34, 5, 9 };
             string[] strs = new[] { "abcabc", "abcabc", "abcabc", "abc", "abc", "cca"};
-            var ret = s.Partition("");
+            int[,] arr = new int[3, 2]
+            {
+                {1, 0}, {1, 2}, {0, 1}
+            };
+            var ret = s.LargestNumber(n);
             Console.WriteLine(ret);
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;

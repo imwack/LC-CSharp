@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -513,22 +515,205 @@ namespace Solution
         //207. Course Schedule
         public bool CanFinish(int numCourses, int[,] prerequisites)
         {
-            Graph g = new Graph(numCourses);
-            int row = prerequisites.GetLength(0);
-            for (int i = 0; i < row; i++)
+            List<HashSet<int>> graph = new List<HashSet<int>>(numCourses);
+            List<int> degree = new List<int>();
+            for (int i = 0; i < numCourses; i++)
             {
-                int front = prerequisites[row, 0];
-                int last = prerequisites[row, 1];
+                graph.Add(new HashSet<int>());
+                degree.Add(0);
+            }
+            int cnt = prerequisites.GetLength(0);
+            for (int i = 0; i < cnt; ++i)
+            {
+                int next = prerequisites[i, 1];
+                int pre = prerequisites[i, 0];
+                graph[pre].Add(next);
+            }
 
-                if (!g.Nodes.ContainsKey(last))
+            for (int i = 0; i < numCourses; i++)
+            {
+                degree[i] = graph[i].Count;
+            }
+            for (int i = 0; i < numCourses; i++)
+            {
+                int id;
+                for (id = 0; id < numCourses; id++)
+                    if (degree[id] == 0)
+                        break;
+                if (id == numCourses) return false; //没找到度为0
+                degree[id] = -1;
+                for (int j = 0; j < numCourses; j++)
                 {
-                    g.Nodes[last] = new Node();
-                }
-                if (!g.Nodes.ContainsKey(front))
-                {
-                    g.Nodes[front] = new Node();
+                    if (graph[j].Contains(id))
+                        --degree[j];
                 }
             }
+            return true;
+        }
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null || root == q || root == p) return root;
+
+            TreeNode l = LowestCommonAncestor(root.left, p, q);
+            TreeNode r = LowestCommonAncestor(root.right, p, q);
+            if (l != null && r != null) return root;
+            return l ?? r;
+        }
+        public int[] FindOrder(int numCourses, int[,] prerequisites)
+        {
+            List<int> ret = new List<int>();
+            List<HashSet<int>> graph = new List<HashSet<int>>(numCourses);
+            List<int> degree = new List<int>();
+            for (int i = 0; i < numCourses; i++)
+            {
+                graph.Add(new HashSet<int>());
+                degree.Add(0);
+            }
+            int cnt = prerequisites.GetLength(0);
+            for (int i = 0; i < cnt; ++i)
+            {
+                int next = prerequisites[i, 1];
+                int pre = prerequisites[i, 0];
+                graph[pre].Add(next);
+            }
+            Queue<int> zero = new Queue<int>();
+            for (int i = 0; i < numCourses; i++)
+            {
+                if(degree[i] == 0)
+                    zero.Enqueue(i);
+            }
+            while (zero.Count>0)
+            {
+                int front = zero.Dequeue();
+                ret.Add(front);
+                for (int i = 0; i < numCourses; i++)
+                {
+                    if (graph[i].Contains(front))
+                    {
+                        graph[i].Remove(front);
+                        --degree[i];
+                        if(degree[i] == 0)
+                            zero.Enqueue(i);
+                    }
+                }
+            }
+            if (ret.Count == numCourses)
+                return ret.ToArray();
+            return new int[0];
+        }
+        public int Calculate(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            Stack<int> st = new Stack<int>();
+            char preSign = '+';
+            sb.Clear();
+            foreach (char c in s)
+            {
+
+                if (!IsSign(c))
+                {
+                    sb.Append(c);
+                    continue;
+                }
+                int cur = int.Parse(sb.ToString());
+                if (preSign == '+')
+                {
+                    st.Push(cur);
+                }
+                else if (preSign == '-')
+                {
+                    st.Push(-cur);
+                }
+                else if (preSign == '*')
+                {
+                    st.Push(st.Pop() * cur);
+                }
+                else if (preSign == '/')
+                {
+                    st.Push(st.Pop() / cur);
+                }
+                sb.Clear();
+                preSign = c;
+            }
+            int ret = int.Parse(sb.ToString());
+            while (st.Count > 0)
+            {
+                ret += st.Pop();
+            }
+            return ret;
+        }
+
+        public bool IsSign(char c)
+        {
+            return c == '+' || c == '-' || c == '/' || c == '*';
+        }
+
+        public string LargestNumber(int[] nums)
+        {
+            string[] strs = nums.Select(num => num.ToString()).ToArray();
+            Array.Sort(strs, (a, b) =>
+            {
+                long ab = long.Parse(a + b);
+                long ba = long.Parse(b + a);
+                if(ab>ba)
+                    return -1;
+                else
+                    return  1;
+            });
+            if (strs[0].StartsWith("0"))
+                return "0";
+            StringBuilder sb = new StringBuilder();
+            foreach (var str in strs)
+            {
+                sb.Append(str);
+            }
+            return sb.ToString();
+        }
+        public double MyPow(double x, int n)
+        {
+            if (n == 0) return 1;
+            double xx = 1.0;
+            for (int i = 0; i < n; i++)
+                xx *= x;
+            if (n > 0)
+            {
+                return xx;
+            }
+            return 1.0/xx;
+
+        }
+        public int EvalRPN(string[] tokens)
+        {
+            Stack<int> stack = new Stack<int>();
+            foreach (var str in tokens)
+            {
+                if (str == "+" || str == "-" || str == "*" || str == "/")
+                {
+                    int a = stack.Pop();
+                    int b = stack.Pop();
+                    int ret;
+                    switch (str)
+                    {
+                        case "+":
+                            stack.Push(a+b);
+                            break;
+                        case "-":
+                            stack.Push(a-b);
+                            break;
+                        case "*":
+                            stack.Push(a*b);
+                            break;
+                        case "/":
+                            stack.Push(a/b);
+                            break;
+                    }
+                }
+                else
+                {
+                    stack.Push(int.Parse(str));
+                }
+            }
+            return stack.Pop();
         }
     }
 }
