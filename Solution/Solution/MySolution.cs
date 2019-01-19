@@ -730,5 +730,295 @@ namespace Solution
             if (remain + lack < 0) return -1;
             return start;
         }
+
+        public int NthElement(int[] arr, int l, int r, int n)
+        {
+            int mid = (l + r)/2;
+            int midE = arr[mid];
+            int ll = l, rr = r;
+            while (ll < rr)
+            {
+                while (ll<mid && arr[ll]<midE)
+                {
+                    ++ll;
+                }
+                while (rr>mid && arr[rr] > midE)
+                {
+                    --rr;
+                }
+
+            }
+            return 0;
+        }
+
+        public void QuickSort(int[] arr )
+        {
+            QuickSort(arr, 0 , arr.Length-1);
+        }
+
+        public void Swap<T>(ref T a, ref T b)
+        {
+            T c = a;
+            a = b;
+            b = c;
+        }
+        public void QuickSort(int[] arr, int left, int right)
+        {
+            if(left>=right)
+                return;
+            
+            int flag = arr[left];
+            int l = left+1, r = right;
+            while (l<r)
+            {
+                while (l<r && arr[l]<=flag)
+                {
+                    ++l;
+                }
+                while (l<r && arr[r]>=flag)
+                {
+                    --r;
+                }
+                if (l<r)
+                {
+                    Swap(ref arr[l], ref arr[r]);
+                    ++l;
+                    --r;
+                }
+            }
+            if(arr[l]< arr[left]) 
+            Swap(ref arr[left], ref arr[l]);
+            QuickSort(arr, left, l - 1);
+            QuickSort(arr, l, right);
+        }
+
+        public void WiggleSort(int[] nums)
+        {
+            int mid = nums.Length/2;
+            KthElement(nums, 0, nums.Length-1, mid);
+            int midNum = nums[mid];
+            List<int> n = new List<int>();
+            n.Add(midNum);
+            Swap(ref nums[0], ref nums[mid]);
+            for (int i = 1; i < nums.Length; i++)
+            {
+                n.Add(0);
+            }
+            int l = 1, r = 2;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] > midNum)
+                {
+                    if (l < nums.Length)
+                    {
+                        n[l] = nums[i];
+                        l += 2;
+                    }
+                }
+                else
+                {
+                    if (r < nums.Length)
+                    {
+                        n[r] = nums[i];
+                        r += 2;
+                    }
+                }
+            }
+            for (int i = 0; i < nums.Length; i++)
+                nums[i] = n[i];
+        }
+
+        public int A( int n)
+        {
+            return (1 + 2 * n) % (n | 1);
+        }
+
+        public void KthElement(int[] nums, int left, int right, int k)
+        {
+            if (left >= right)
+                return;
+            int flag = nums[left];
+            int l = left, r = right;
+            while (l<r)
+            {
+                while (l<r && nums[l]<=flag)
+                {
+                    ++l;
+                }
+                while (l<r && nums[r]>=flag)
+                {
+                    --r;
+                }
+                if (l < r)
+                {
+                    Swap(ref nums[l], ref nums[r]);
+                }
+            }
+            if(nums[l]<flag)
+                Swap(ref nums[l], ref nums[r]);
+            if(l == k) return;
+            if (l > k)
+                KthElement(nums, left, l-1, k);
+            else
+                KthElement(nums,l+1,right,k);   
+
+        }
+
+        #region stack
+        public int CalPoints(string[] ops)
+        {
+            Stack<int> point = new Stack<int>();
+            int sum = 0;
+            foreach (var op in ops)
+            {
+                if (op == "C")
+                {
+                    sum -= point.Pop();
+                }
+                else if (op == "D")
+                {
+                    sum += 2 * point.Peek();
+                    point.Push(point.Peek() * 2);
+                }
+                else if (op == "+")
+                {
+                    int a = point.Pop();
+                    int b = point.Pop();
+                    sum += a + b;
+                    point.Push(b);
+                    point.Push(a);
+                    point.Push(a + b);
+                }
+                else
+                {
+                    //分数
+                    int p = int.Parse(op);
+                    point.Push(p);
+                    sum += p;
+                }
+            }
+            return sum;
+        }
+
+        public int[] NextGreaterElement(int[] findNums, int[] nums)
+        {
+            Stack<int> stack = new Stack<int>();
+            Dictionary<int, int> nextGreat = new Dictionary<int, int>();
+            int i = 0;
+            while (i< nums.Length)
+            {
+                while (stack.Count == 0 || stack.Peek() > nums[i])
+                {
+                    stack.Push(nums[i++]);
+                    if(i == nums.Length)
+                        break;
+                }
+                if (i < nums.Length)
+                {
+                    while (stack.Count > 0 && nums[i] > stack.Peek())
+                    {
+                        nextGreat[stack.Pop()] = nums[i];
+                    }
+                }
+            }
+            for (i = 0; i < findNums.Length; i++)
+            {
+                if (nextGreat.ContainsKey(findNums[i]))
+                {
+                    findNums[i] = nextGreat[findNums[i]];
+                }
+                else
+                {
+                    findNums[i] = -1;
+                }
+            }
+            return findNums;
+        }
+        public bool BackspaceCompare(string S, string T)
+        {
+            Stack<char> s = new Stack<char>();
+            Stack<char> t= new Stack<char>();
+            foreach (char ss in S)
+            {
+                if (ss == '#')
+                {
+                    if(s.Count>0)
+                    s.Pop();
+                }
+                else
+                {
+                    s.Push(ss);
+                }
+            }
+            foreach (var tt in T)
+            {
+                if (tt == '#')
+                {
+                    if (t.Count > 0)
+                        t.Pop();
+                }
+                else
+                {
+                    t.Push(tt);
+                }
+            }
+            while (s.Count > 0)
+            {
+                if (t.Count <= 0) return false;
+                if(s.Pop() != t.Pop())
+                    return false;
+            }
+            
+            return t.Count == 0;
+        }
+        public int MinAddToMakeValid(string S)
+        {
+            Stack<char> left = new Stack<char>();
+            int cnt = 0;
+            foreach (char s in S)
+            {
+                if (s == '(')
+                {
+                    left.Push(s);
+                }
+                else
+                {
+                    if (left.Count > 0)
+                        left.Pop();
+                    else
+                        cnt++;
+                }
+            }
+            cnt += left.Count;
+            return cnt;
+        }
+        public int[] DailyTemperatures(int[] T)
+        {
+            Stack<Pair<int, int>> stack = new Stack<Pair<int, int>>();
+            List<int> ret = new List<int>();
+            for (int i = 0; i < T.Length; i++)
+                ret.Add(0);
+
+            for (int i = 0; i < T.Length; i++)
+            {
+                int cur = T[i];
+                while (stack.Count > 0)
+                {
+                    if (stack.Peek().First < cur)
+                    {
+                        var top = stack.Pop();
+                        ret[top.Second] = i - top.Second;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                stack.Push(new Pair<int, int>(cur, i));
+            }
+            return ret.ToArray();
+        }
+        #endregion
+
     }
 }

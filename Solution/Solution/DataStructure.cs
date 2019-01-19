@@ -8,13 +8,13 @@ namespace Solution
 {
     public class Pair<T1, T2>
     {
-        public T1 Key;
-        public T2 Value;
+        public T1 First;
+        public T2 Second;
 
-        public Pair(T1 key, T2 value)
+        public Pair(T1 first, T2 second)
         {
-            this.Key = key;
-            this.Value = value;
+            this.First = first;
+            this.Second = second;
         }
     }
     public class TreeNode

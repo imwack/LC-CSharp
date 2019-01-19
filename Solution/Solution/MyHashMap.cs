@@ -25,9 +25,9 @@ namespace Solution
             }
             foreach (var p in Hash[key % maxCnt])
             {
-                if (p.Key == key)
+                if (p.First == key)
                 {
-                    p.Value = value;
+                    p.Second = value;
                     return;
                 }
             }
@@ -43,8 +43,8 @@ namespace Solution
             }
             foreach (var p in Hash[key % maxCnt])
             {
-                if (p.Key == key)
-                    return p.Value;
+                if (p.First == key)
+                    return p.Second;
             }
             return -1;
         }
@@ -59,7 +59,7 @@ namespace Solution
             for (int i = 0; i < Hash[key % maxCnt].Count; i++)
             {
                 var p = Hash[key % maxCnt][i];
-                if (p.Key == key)
+                if (p.First == key)
                 {
                     Hash[key % maxCnt].RemoveAt(i);
                     return;

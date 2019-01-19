@@ -17,14 +17,14 @@ namespace Solution
             stopwatch.Start();
 
             MySolution s = new MySolution();
-            int[] n = new[] { 3, 30, 34, 5, 9 };
+            int[] n = new[] { 1, 3, 2, 2, 3, 1 };
             string[] strs = new[] { "abcabc", "abcabc", "abcabc", "abc", "abc", "cca"};
             int[,] arr = new int[3, 2]
             {
                 {1, 0}, {1, 2}, {0, 1}
             };
-            var ret = s.LargestNumber(n);
-            Console.WriteLine(ret);
+            s.WiggleSort(n);
+            
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;
             var second = timespan.TotalSeconds;
