@@ -1018,6 +1018,47 @@ namespace Solution
             }
             return ret.ToArray();
         }
+        public bool ValidateStackSequences(int[] pushed, int[] popped)
+        {
+            int cur = 0;
+            Stack<int> stack = new Stack<int>();
+            foreach (var pp in popped)
+            {
+                while (stack.Count == 0 || stack.Peek() != pp)
+                {
+                    if (cur >= pushed.Length) //push完了
+                        return false; 
+                    stack.Push(pushed[cur++]);
+                }
+                stack.Pop();
+            }
+            return true;
+        }
+        public int ScoreOfParentheses(string S)
+        {
+            int sum = 0;
+            Stack<int> stack = new Stack<int>();
+            foreach (char c in S)
+            {
+                if (c == '(')
+                    stack.Push(-1);
+                else
+                {
+                    int cnt = 0;
+                    while (stack.Peek()!=-1)
+                    {
+                        cnt+=stack.Pop();
+                    }
+                    stack.Pop();
+                    stack.Push(cnt==0?1:cnt*2);
+                }
+            }
+            while (stack.Count>0)
+            {
+                sum += stack.Pop();
+            }
+            return sum;
+        }
         #endregion
 
     }
