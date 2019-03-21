@@ -29,7 +29,7 @@ namespace Solution
             TreeNode t3 = new TreeNode(15);
             t1.left = t2;
             t1.right = t3;
-            s.NextGreaterElements(n);
+            s.LongestCommonPrefix(new []{ "aa", "a"});
 
             stopwatch.Stop();
             TimeSpan timespan = stopwatch.Elapsed;

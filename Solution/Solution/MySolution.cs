@@ -12,6 +12,37 @@ namespace Solution
     public partial class MySolution
     {
         #region misc
+
+        public int[][] KClosest(int[][] points, int K)
+        {
+            int n = points.GetLength(0);
+            Point[] nums = new Point[K];
+            
+            for (int i = 0; i < K; i++)
+            {
+                int x = points[i][0];
+                int y = points[i][1];
+                nums[i] = new Point(x,y);  
+            }
+            Heap<Point> h = new Heap<Point>();
+            h.MakeHeap(nums);
+            for (int i = K; i < n; i++)
+            {
+                int x = points[i][0];
+                int y = points[i][1];
+                int len = x*x + y*y;
+                if(h.Peek.len < len) 
+                    continue;
+                h.Add(new Point(x,y));
+            }
+            int[][] ret = new int[K][];
+            for (int i = 0; i < K; i++)
+            {
+                ret[i] = new[] {h.Nums[i].x, h.Nums[i].y};
+            }
+            return ret;
+
+        }
         //728. Self Dividing Numbers
         public IList<int> SelfDividingNumbers(int left, int right)
         {
@@ -82,58 +113,6 @@ namespace Solution
                 else ++l;
             }
             return maxArea;
-        }
-
-        //003 wrong
-        public int LengthOfLongestSubstring(string str)
-        {
-            int maxLen = 0, start = -1;
-            Dictionary<char, int> lastIndex = new Dictionary<char, int>();
-
-            for (int i = 0; i < str.Length; i++)
-            {
-                char c = str[i];
-                if (lastIndex.ContainsKey(c))
-                    start = lastIndex[c] + 1;
-                maxLen = Math.Max(i - start, maxLen);
-
-                lastIndex[c] = i;
-            }
-
-            return maxLen;
-        }
-
-        //015 
-        public IList<IList<int>> ThreeSum(int[] nums)
-        {
-            Array.Sort(nums);
-            IList<IList<int>> ret = new List<IList<int>>();
-            for (int i = 0; i < nums.Length; ++i)
-            {
-                if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-                int cur = i;
-                int l = cur + 1, r = nums.Length - 1;
-                while (l < r && l < nums.Length)
-                {
-                    if (nums[cur] + nums[l] + nums[r] == 0)
-                    {
-                        IList<int> tmp = new List<int>() {nums[cur], nums[l], nums[r]};
-                        ret.Add(tmp);
-                        ++l;
-                        while (l < nums.Length && nums[l] == nums[l - 1])
-                        {
-                            ++l;
-                        }
-                    }
-                    else if (nums[cur] + nums[l] + nums[r] < 0)
-                        ++l;
-                    else
-                        --r;
-                }
-
-            }
-            return ret;
         }
 
         //017
@@ -1304,38 +1283,37 @@ namespace Solution
         #endregion
     }
 
-    public partial class MySolution
-    {
-        #region queue
 
-        //933. Number of Recent Calls
-        public class RecentCounter
-        {
-            public Queue<int> queue;
-
-            public RecentCounter()
-            {
-                queue = new Queue<int>();
-            }
-
-            public int Ping(int t)
-            {
-                while (queue.Count > 0 && t - queue.Peek() > 3000)
-                {
-                    queue.Dequeue();
-                }
-                queue.Enqueue(t);
-                return queue.Count;
-            }
-        }
-
-        #endregion
-    }
 
     public partial class MySolution
     {
         #region string
+        public bool CheckInclusion(string s1, string s2)
+        {
+            return true;
+        }
+        //003 
+        public int LengthOfLongestSubstring(string s)
+        {
+            int maxLen = 0, start=0;
+            int[] first = new int[1024];
+            for (int i = 0; i < 1024; ++i)
+            {
+                first[i] = -1;
+            }
+            for (int i = 0; i < s.Length; ++i)
+            {
+                if (first[(int) s[i]] >= start)
+                {
+                    start = first[(int) s[i]] + 1;
+                }
 
+                maxLen = Math.Max(maxLen, i-start+1);
+                first[(int)s[i]] = i;
+            }
+
+            return maxLen;
+        }
         public int UniqueMorseRepresentations(string[] words)
         {
             string[] code =
@@ -1369,13 +1347,66 @@ namespace Solution
             }
             return sb.ToString();
         }
-
+        public string LongestCommonPrefix(string[] strs)
+        {
+            if (strs.Length == 0)
+                return "";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < strs[0].Length; i++)
+            {
+                bool same = true;
+                for (int j = 1; j < strs.Length; j++)
+                {
+                    if (strs[j].Length < i || strs[j][i] != strs[0][i])
+                    {
+                        same = false;
+                        break;
+                    }
+                }
+                if(!same) break;
+                sb.Append(strs[0][i]);
+            }
+            return sb.ToString();
+        }
         #endregion
     }
 
     public partial class MySolution
     {
         #region array
+        //015 
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            Array.Sort(nums);
+            IList<IList<int>> ret = new List<IList<int>>();
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+                int cur = i;
+                int l = cur + 1, r = nums.Length - 1;
+                while (l < r && l < nums.Length)
+                {
+                    if (nums[cur] + nums[l] + nums[r] == 0)
+                    {
+                        IList<int> tmp = new List<int>() { nums[cur], nums[l], nums[r] };
+                        ret.Add(tmp);
+                        ++l;
+                        while (l < nums.Length && nums[l] == nums[l - 1])
+                        {
+                            ++l;
+                        }
+                    }
+                    else if (nums[cur] + nums[l] + nums[r] < 0)
+                        ++l;
+                    else
+                        --r;
+                }
+
+            }
+            return ret;
+        }
+
 
         public int RepeatedNTimes(int[] A)
         {
