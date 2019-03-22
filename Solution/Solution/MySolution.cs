@@ -12,6 +12,26 @@ namespace Solution
     public partial class MySolution
     {
         #region misc
+        // * [997] Find the Town Judge
+        // only need to find the one that has indgree = N and out degree=0
+
+        public int FindJudge(int N, int[][] trust)
+        {
+            int[] indegree = new int[N];
+            int[] outdegree = new int[N];
+            for (int i = 0; i < trust.Length; i++)
+            {
+                outdegree[trust[i][0] - 1]++;
+                indegree[trust[i][1] - 1]++;
+            }
+            for (int i = 0; i < N; i++)
+            {
+                if (indegree[i] == N - 1 && outdegree[i] == 0)
+                    return i + 1;
+            }
+            return -1;
+        }
+
         //999. Available Captures for Rook
         public int NumRookCaptures(char[][] board)
         {
