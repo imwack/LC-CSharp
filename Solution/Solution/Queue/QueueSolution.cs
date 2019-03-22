@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Solution.Queue
+namespace Solution
 {
     public partial class MySolution
     {
@@ -31,8 +31,7 @@ namespace Solution.Queue
                 return queue.Count;
             }
         }
-
-
+        
         // 346	Moving Average from Data Stream
         // Like slide window , with max window size, when window is full dequeue
         public class MovingAverage
@@ -56,6 +55,8 @@ namespace Solution.Queue
                 return Sum*1.0/q.Count;
             }
         }
+
+
 
         #endregion
     }
