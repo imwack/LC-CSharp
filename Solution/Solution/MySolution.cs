@@ -12,7 +12,81 @@ namespace Solution
     public partial class MySolution
     {
         #region misc
+        //999. Available Captures for Rook
+        public int NumRookCaptures(char[][] board)
+        {
+            int x = 0, y = 0, cnt = 0;
+            for (int i = 0; i < board.Length; i++)
+            {
+                for (int j = 0; j < board[0].Length; j++)
+                {
+                    if (board[i][j] == 'R')
+                    {
+                        x = i;
+                        y = j;
+                        break;
+                    }
+                }
+            }
+            int row = x - 1;
+            int col = y - 1;
+            while (col >= 0) //left
+            {
+                if (board[x][col] == '.')
+                {
+                    --col;
+                    continue;
+                }
+                else if (board[x][col] == 'p')
+                {
+                    ++cnt;
+                }
+                break;
+            }
+            col = y + 1;
+            while (col < board[0].Length) //right
+            {
+                if (board[x][col] == '.')
+                {
+                    ++col;
+                    continue;
+                }
+                else if (board[x][col] == 'p')
+                {
+                    ++cnt;
+                }
+                break;
+            }
+            while (row >= 0) //up
+            {
+                if (board[row][y] == '.')
+                {
+                    --row;
+                    continue;
+                }
+                else if (board[row][y] == 'p')
+                {
+                    ++cnt;
+                }
+                break;
+            }
+            row = x + 1;
+            while (row < board.Length) //down
+            {
+                if (board[row][y] == '.')
+                {
+                    ++row;
+                    continue;
+                }
+                else if (board[row][y] == 'p')
+                {
+                    ++cnt;
+                }
+                break;
+            }
+            return cnt;
 
+        }
         public int[][] KClosest(int[][] points, int K)
         {
             int n = points.GetLength(0);
