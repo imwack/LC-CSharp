@@ -15,15 +15,15 @@ namespace Solution
         static void Main(string[] args)
         {
             Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
 
-            List<Interval> l = new List<Interval>();
-            l.Add(new Interval(2, 3));
-            l.Add(new Interval(4, 5));
-            l.Add(new Interval(1, 10));
 
+            List<string> l = new List<string>
+            {
+                "9001 discuss.leetcode.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"
+            };
+            int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
             MySolution s = new MySolution();
-            s.Merge(l);
+            s.MatrixScore(A);
         }
     }
 }

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure.cs" />
+    <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="Math\Math.cs" />
     <Compile Include="MyHashMap.cs" />
     <Compile Include="MySolution.cs" />

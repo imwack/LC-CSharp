@@ -12,6 +12,73 @@ namespace Solution
     public partial class MySolution
     {
         #region misc
+        //861. Score After Flipping Matrix
+        // First change 1st column all to 1
+        // Second change 2nd column as much 1 as possible
+        // Then third ...
+        public int MatrixScore(int[][] A)
+        {
+            for (int row = 0; row < A.Length; row++)
+            {
+                if (A[row][0] != 1)
+                {
+                    for (int i = 0; i < A[0].Length; i++)
+                    {
+                        A[row][i] ^= 1;
+                    }
+                }
+            }
+            for (int col = 1; col < A[0].Length; col++)
+            {
+                int numberOf1 = 0;
+                for(int i=0;i<A.Length;i++)
+                    if (A[i][col] == 1)
+                        numberOf1++;
+                if(numberOf1 *2 >= A.Length)
+                    continue;
+                //Flip this row
+                for (int i = 0; i < A.Length; i++)
+                    A[i][col] ^= 1;
+            }
+            //CALC the sum
+            int total = 0;
+            foreach (var row in A)
+            {
+                int sum = 0;
+                for (int i = 0; i < row.Length; i++)
+                    sum = sum*2 + row[i];
+                total += sum;
+            }
+            return total;
+        }
+        //811. Subdomain Visit Count
+        public IList<string> SubdomainVisits(string[] cpdomains)
+        {
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            foreach (var domain in cpdomains)
+            {
+                string[] d = domain.Split(' ');
+                int cnt = int.Parse(d[0]); //TODO: check
+                d = d[1].Split('.');
+                string temp = d.Last();
+                if (!dic.ContainsKey(temp)) dic[temp] = 0;
+                dic[temp] += cnt;
+                for (int i = d.Length - 2; i >= 0; --i)
+                {
+                    temp = d[i] + "." + temp;
+                    if (!dic.ContainsKey(temp)) dic[temp] = 0;
+                    dic[temp] += cnt;
+                }
+            }
+            IList<string> ret = new List<string>();
+            foreach (var pair in dic)
+            {
+                string temp = pair.Value + " " + pair.Key;
+                ret.Add(temp);
+            }
+            return ret;
+        }
+
         // * [997] Find the Town Judge
         // only need to find the one that has indgree = N and out degree=0
 
