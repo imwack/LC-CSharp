@@ -45,5 +45,28 @@ namespace Solution
                 return GetDepth(root, 1);
             }
         }
+
+        public IList<IList<int>> LevelOrder(NodeN root)
+        {
+            IList<IList<int>> list = new List<IList<int>>();
+            Queue<NodeN> q = new Queue<NodeN>();
+            q.Enqueue(root);
+            while (q.Count>0)
+            {
+                int n = q.Count;
+                IList<int> l = new List<int>();
+                for (int i = 0; i < n; i++)
+                {
+                    var node = q.Dequeue();
+                    l.Add(node.val);
+                    foreach (var child in node.children)
+                    {
+                        q.Enqueue(child);
+                    }
+                }
+                list.Add(l);
+            }
+            return list;
+        }
     }
 }

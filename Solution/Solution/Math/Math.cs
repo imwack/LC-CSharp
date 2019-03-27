@@ -27,5 +27,29 @@ namespace Solution
                 return A[r] - K - A[l] - K;
             }
         }
+        // 970. Powerful Integers
+        public IList<int> PowerfulIntegers(int x, int y, int bound)
+        {
+            HashSet<int> s = new HashSet<int>();
+            int a = 1, b = 1;
+            for (int i = 0; a <= bound; i++)
+            {
+                if(i!=0)
+                    a *= x;
+                b = 1;
+                for (int j = 0; a+b<=bound; j++)
+                {
+                    if(!s.Contains(a+b))
+                        s.Add(a + b);
+                    b *= y;
+                    if(b == 1)
+                        break;
+                }
+                if( a == 1)
+                    break;
+                
+            }
+            return s.ToList();
+        }
     }
 }
