@@ -55,5 +55,53 @@ namespace Solution
         {
             return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
         }
+
+        public IList<string> RemoveComments(string[] source)
+        {
+            IList<string> code = new List<string>();
+            bool inCommnet = false;
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in source)
+            {
+                int i = 0;
+                while (i < s.Length)
+                {
+                    if (inCommnet)
+                    {
+                        if (s[i] == '*' && i < s.Length - 1 && s[i + 1] == '/')
+                        {
+                            inCommnet = false;
+                            ++i;
+                        }
+                        ++i;
+                    }
+                    else
+                    {
+                        if (s[i] == '/' && i < s.Length - 1 && s[i + 1] == '/')
+                        {
+                            //注释这行就没了
+                            i = s.Length;
+                        }
+                        else if (s[i] == '/' && i < s.Length - 1 && s[i + 1] == '*')
+                        {
+                            inCommnet = true;
+                            i += 2;
+                        }
+                        else
+                        {
+                            sb.Append(s[i]);
+                            ++i;
+                        }
+                    }
+                }
+                if (!inCommnet && sb.Length > 0)
+                {
+                    code.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+
+            return code;
+        }
     }
 }

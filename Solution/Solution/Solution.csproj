@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array\Array.cs" />
     <Compile Include="BitMap\BitMap.cs" />
     <Compile Include="DataStructure.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />

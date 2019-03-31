@@ -6,6 +6,32 @@ using System.Threading.Tasks;
 
 namespace Solution
 {
+    public class MyHashSet
+    {
+        bool[] set;
+        int cap = 1000000;
+        /** Initialize your data structure here. */
+        public MyHashSet()
+        {
+            set = new bool[cap];
+        }
+
+        public void Add(int key)
+        {
+            set[key] = true;
+        }
+
+        public void Remove(int key)
+        {
+            set[key] = false;
+        }
+
+        /** Returns true if this set contains the specified element */
+        public bool Contains(int key)
+        {
+            return set[key];
+        }
+    }
     public class MyHashMap
     {
         public List<Pair<int, int>>[] Hash;
