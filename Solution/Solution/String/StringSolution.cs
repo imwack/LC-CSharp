@@ -103,5 +103,23 @@ namespace Solution
 
             return code;
         }
+        public string LongestWord(string[] words)
+        {
+            System.Array.Sort(words);
+            HashSet<string> set = new HashSet<string>();
+            string longest = "";
+            foreach (var word in words)
+            {
+                if (word.Length == 1 || set.Contains(word.Substring(0, word.Length - 1)))
+                {
+                    if(!set.Contains(word))
+                        set.Add(word);
+                    if (word.Length > longest.Length)
+                        longest = word;
+                }
+
+            }
+            return longest;
+        }
     }
 }
