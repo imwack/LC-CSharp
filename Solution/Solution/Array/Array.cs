@@ -55,5 +55,33 @@ namespace Solution.Array
             }
             return total;
         }
+
+        public IList<int> AddToArrayForm(int[] A, int K)
+        {
+            LinkedList<int> l = new LinkedList<int>();
+            int pre = 0;
+            int lastId = A.Length - 1;
+            while (K > 0 || lastId >= 0)
+            {
+                int n = pre;
+                if (K > 0)
+                {
+                    n += K % 10;
+                    K /= 10;
+                }
+                if (lastId >= 0)
+                {
+                    n += A[lastId--];
+                }
+                int last = n % 10;
+                pre = n / 10;
+                l.AddFirst(last);
+            }
+            if (pre > 0)
+            {
+                l.AddFirst(pre);
+            }
+            return l.ToList();
+        }
     }
 }
