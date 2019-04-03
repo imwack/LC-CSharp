@@ -24,7 +24,9 @@ namespace Solution
             int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
             MySolution s = new MySolution();
             int[] num = new[] {-1, 0, 1, 2, -1, -4};
-            s.ThreeSum2(num);
+            int[] a = new[] {4, -1, 4, -2, 4};
+            int[][] b = new[] {new int[] {2, 4}};
+            s.RobotSim(a,b);
         }
     }
 }

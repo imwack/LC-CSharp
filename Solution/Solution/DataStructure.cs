@@ -80,6 +80,12 @@ namespace Solution
             this.First = first;
             this.Second = second;
         }
+
+        public override bool Equals(object obj)
+        {
+            var o = (Pair<T1, T2>) obj;
+            return (o.First.Equals(First) && o.Second.Equals(Second));
+        }
     }
     public class TreeNode
     {
