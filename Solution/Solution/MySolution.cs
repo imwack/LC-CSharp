@@ -343,7 +343,7 @@ namespace Solution
         //016
         public int ThreeSumClosest(int[] nums, int target)
         {
-            Array.Sort(nums);
+            System.Array.Sort(nums);
             if (nums.Length < 3) return 0;
             int ret = nums[0] + nums[1] + nums[2];
             for (int i = 0; i < nums.Length; ++i)

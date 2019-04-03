@@ -47,14 +47,6 @@ namespace Solution
         }
 
         //[13] Roman to Integer
-        /*    I             1
-            * V             5
-            * X             10
-            * L             50
-            * C             100
-            * D             500
-            * M             1000
-        */
         public int RomanToInt(string s)
         {
             Dictionary<char, int> dic = new Dictionary<char, int>
@@ -81,5 +73,54 @@ namespace Solution
             }
             return n;
         }
+
+        //[15] 3Sum
+        public IList<IList<int>> ThreeSum2(int[] nums)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            System.Array.Sort(nums);
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i > 0 && nums[i] == nums[i - 1])
+                {
+                    continue;
+                }
+                var ret = TwoSum(nums, i + 1, nums.Length - 1, nums[i]);
+                foreach (var l in ret)
+                {
+                    result.Add(l);
+                }
+            }
+
+            return result;
+        }
+
+        public List<List<int>> TwoSum(int[] nums, int l, int r, int tar)
+        {
+            List<List<int>> ret = new List<List<int>>();
+            while (l < r)
+            {
+                if (nums[l] + nums[r] + tar == 0)
+                {
+                    ret.Add(new List<int>{tar, nums[l], nums[r]});
+                    ++l;
+                    --r;
+                    while (l < nums.Length  && nums[l - 1] == nums[l])
+                        ++l;
+                    while (r >= 0 && nums[r + 1] == nums[r])
+                        --r;
+                }
+                else if (nums[l] + nums[r] + tar < 0)
+                {
+                    l++;
+                }
+                else
+                {
+                    r--;
+                }
+            }
+            return ret;
+        }
+
     }
 }

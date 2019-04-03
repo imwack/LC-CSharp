@@ -23,7 +23,8 @@ namespace Solution
             };
             int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
             MySolution s = new MySolution();
-            s.MatrixScore(A);
+            int[] num = new[] {-1, 0, 1, 2, -1, -4};
+            s.ThreeSum2(num);
         }
     }
 }
