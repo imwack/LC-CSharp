@@ -48,6 +48,7 @@
     <Compile Include="DataStructure.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="Math\Math.cs" />
+    <Compile Include="MS\MS.cs" />
     <Compile Include="MyHashMap.cs" />
     <Compile Include="MySolution.cs" />
     <Compile Include="Program.cs" />
