@@ -121,5 +121,59 @@ namespace Solution
             }
             return longest;
         }
+
+        public string RemoveOuterParentheses(string S)
+        {
+            StringBuilder sb = new StringBuilder();
+            int left = 0;
+            bool push = false;
+            foreach (char c in S)
+            {
+                if (push)
+                    sb.Append(c);
+
+                if (c == '(')
+                {
+                    if (left == 0)
+                    {
+                        push = true;
+                    }
+                    left++;
+                }
+                else
+                {
+                    left--;
+                    if (left == 0)
+                    {
+                        push = false;
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        public string ToGoatLatin(string S)
+        {
+            StringBuilder sb = new StringBuilder();
+            string[] str = S.Split(' ');
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (i != 0)
+                    sb.Append(" ");
+                if (str[i][0] == 'a' || str[i][0] == 'e' || str[i][0] == 'i' || str[i][0] == 'o' || str[i][0] == 'u' ||
+                   str[i][0] == 'A' || str[i][0] == 'E' || str[i][0] == 'I' || str[i][0] == 'O' || str[i][0] == 'U')
+                {
+                    sb.Append(str[i]);
+                }
+                else
+                {
+                    sb.Append(str[i], 1, str[i].Length - 1);
+                    sb.Append(str[i][0]);
+                }
+                sb.Append("ma");
+                sb.Append('a', i + 1);
+            }
+            return sb.ToString();
+        }
     }
 }
