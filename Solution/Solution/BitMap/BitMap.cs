@@ -25,5 +25,20 @@ namespace Solution.BitMap
             }
             return true;
         }
+
+        public int BitwiseComplement(int N)
+        {
+            if (N == 0) return 1;
+            int cur = 0;
+            int index = 1;
+            while (N > 0)
+            {
+                int tail = (N % 2 == 0) ? 1 : 0;
+                cur += tail * index;
+                index *= 2;
+                N /= 2;
+            }
+            return cur;
+        }
     }
 }
