@@ -92,5 +92,25 @@ namespace Solution
                 return n;
             return Dfs(root.right, x, d + 1);
         }
+
+        public TreeNode IncreasingBST(TreeNode root)
+        {
+            TreeNode t = new TreeNode(0);
+            TreeNode newRoot = t;
+            PreOrder(root,ref newRoot);
+            return t.right;
+        }
+
+        public void PreOrder(TreeNode root,ref TreeNode newRoot)
+        {
+            if (root != null)
+            {
+                PreOrder(root.left,ref newRoot);
+                newRoot.right = root;
+                newRoot.left = null;
+                newRoot = newRoot.right;
+                PreOrder(root.right,ref newRoot);
+            }
+        }
     }
 }

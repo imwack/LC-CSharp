@@ -70,5 +70,34 @@ namespace Solution
             }
             return count;
         }
+
+        public int ProjectionArea(int[][] grid)
+        {
+            int total = 0;
+            foreach (var g in grid)
+            {
+                int curMax = 0;
+                foreach (var h in g)
+                {
+                    if (h > 0) total++;
+                    if (h > curMax) curMax = h;
+                }
+                total += curMax;
+            }
+            int n = grid[0].Length;
+            for(int i = 0;i<n;i++)
+            {
+                int curMax = 0;
+                foreach (var g in grid)
+                {
+                    if (g[i] > curMax)
+                    {
+                        curMax = g[i];
+                    }
+                }
+                total += curMax;
+            }
+            return total;
+        }
     }
 }

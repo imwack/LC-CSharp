@@ -26,7 +26,12 @@ namespace Solution
             int[] num = new[] {-1, 0, 1, 2, -1, -4};
             int[] a = new[] {4, -1, 4, -2, 4};
             int[][] b = new[] {new int[] {2, 4}};
-            s.RobotSim(a,b);
+            TreeNode r1 = new TreeNode(2);
+            TreeNode r2 = new TreeNode(1);
+            TreeNode r3 = new TreeNode(3);
+            r1.left = r2;
+            r1.right = r3;
+            s.IncreasingBST(r1);
         }
     }
 }
