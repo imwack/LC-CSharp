@@ -370,32 +370,6 @@ namespace Solution
             return ret;
         }
 
-        //024
-        public ListNode SwapPairs(ListNode head)
-        {
-            ListNode pre = new ListNode(0);
-            pre.next = head;
-            bool fistTime = true;
-            while (pre.next != null)
-            {
-                ListNode first = pre.next;
-                ListNode second = first.next;
-                if (second == null) return head;
-                ListNode third = second.next;
-
-                first.next = third;
-                second.next = first;
-                pre.next = second;
-                pre = first;
-                if (fistTime)
-                {
-                    fistTime = false;
-                    head = second;
-                }
-            }
-            return head;
-        }
-
         //031
         public int[] NextPermutation(int[] nums)
         {
