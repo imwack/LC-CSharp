@@ -122,5 +122,114 @@ namespace Solution
             return ret;
         }
 
+        public ListNode MergeKLists(ListNode[] lists)
+        {
+            ListNode head = new ListNode(0);
+            ListNode cur = head;
+            SortedDictionary<int, ListNode> headToIndex = new SortedDictionary<int, ListNode>();
+            for (int i = 0; i < lists.Length; i++)
+            {
+                if(lists[i]!=null)
+                headToIndex[lists[i].val] = lists[i];
+            }
+            while (headToIndex.Count > 0)
+            {
+                var pair = headToIndex.First();
+                cur.next = pair.Value;
+                cur = cur.next;
+                headToIndex.Remove(pair.Key);
+                if (pair.Value.next != null)
+                {
+                    headToIndex[pair.Value.next.val] = pair.Value.next;
+                }
+            }
+            return head.next;
+        }
+
+        public ListNode SwapPairs(ListNode head)
+        {
+            /* recursion
+            ListNode first = head;
+            if (first == null)
+                return head;
+            ListNode second = first.next;
+            if (second != null)
+            {
+                first.next = second.next;
+                second.next = first;
+                head = second;
+            }
+            first.next = SwapPairs(first.next);
+            return head;
+            */
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            ListNode nHead = pre;
+            ListNode first = head;
+            while (first != null && first.next!=null)
+            {
+                ListNode second = first.next;
+                ListNode third = second.next;
+                first.next = third;
+                second.next = first;
+                nHead.next = second;
+                nHead = first;
+                first = third;
+            }
+            return pre.next;
+        }
+
+
+        public ListNode ReverseKGroup(ListNode head, int k)
+        {
+            if (k == 1)
+            {
+                return head;
+            }
+            ListNode nHead = new ListNode(0);
+            nHead.next = head;
+            ListNode pre = nHead;
+            ListNode first = head;
+
+            while (first != null)
+            {
+                ListNode tail = first;
+                for (int i = 0; i < k-1; i++)
+                {
+                    tail = tail.next;
+                    if (tail == null)
+                    {
+                        return nHead.next;
+                    }
+                }
+                pre.next = ReverseRange(first, tail);
+                pre = first;
+                first = first.next;
+            }
+            return nHead.next;
+        }
+        public ListNode ReverseRange(ListNode head, ListNode tail)
+        {
+            ListNode pre = new ListNode(0);
+            pre.next = head;
+            bool last = false;
+            ListNode second = head.next;
+            while (true)
+            {
+                if (second == tail)
+                {
+                    last = true;
+                }
+                head.next = second.next;
+                second.next = pre.next;
+                pre.next = second;
+                second = head.next;
+                if (last)
+                {
+                    break;
+                }
+            }
+            return pre.next;
+        }
     }
 }
