@@ -83,5 +83,51 @@ namespace Solution
             }
             return l.ToList();
         }
+
+        //874. Walking Robot Simulation
+        public int RobotSim(int[] commands, int[][] obstacles)
+        {
+            int max = 0, d = 0, x = 0, y = 0;
+            HashSet<string> s = new HashSet<string>();
+            int[][] dir = new int[4][];
+            dir[0] = new[] {0, 1};
+            dir[1] = new[] {1, 0};
+            dir[2] = new[] { 0, -1 };
+            dir[3] = new[] { -1, 0 };
+            foreach (var obstacle in obstacles)
+            {
+                s.Add(obstacle[0] + " " + obstacle[1]);
+            }
+            foreach (var command in commands)
+            {
+                if (command == -1)
+                {
+                    d = (d + 1)%4;
+                }else if (command == -2)
+                {
+                    d = (d - 1)%4; --d;
+                    if (d == -1)
+                        d = 3;
+                }
+                else
+                {
+                    for (int i = 0; i < command; i++)
+                    {
+                        int a = x + dir[d][0];
+                        int b = y + dir[d][1];
+                        if (s.Contains(a +" " + b))
+                        {
+                            break;
+                        }
+                        x += dir[d][0];
+                        y += dir[d][1];
+                    }
+                    max = Math.Max(max, x*x + y*y);
+                }
+            }
+            return max;
+        }
+
+
     }
 }

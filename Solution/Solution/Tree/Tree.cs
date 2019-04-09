@@ -51,7 +51,7 @@ namespace Solution
             IList<IList<int>> list = new List<IList<int>>();
             Queue<NodeN> q = new Queue<NodeN>();
             q.Enqueue(root);
-            while (q.Count>0)
+            while (q.Count > 0)
             {
                 int n = q.Count;
                 IList<int> l = new List<int>();
@@ -67,6 +67,30 @@ namespace Solution
                 list.Add(l);
             }
             return list;
+        }
+
+        //993. Cousins in Binary Tree
+        public bool IsCousins(TreeNode root, int x, int y)
+        {
+            int l = Dfs(root, x, 0);
+            int r = Dfs(root, y, 0);
+            if (l == r && l!=-1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public int Dfs(TreeNode root, int x, int d)
+        {
+            if (root == null)
+                return -1;
+            if (root.val == x)
+                return d;
+            int n = Dfs(root.left, x, d + 1);
+            if (n != -1)
+                return n;
+            return Dfs(root.right, x, d + 1);
         }
     }
 }

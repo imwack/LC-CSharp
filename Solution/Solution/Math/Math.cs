@@ -51,5 +51,24 @@ namespace Solution
             }
             return s.ToList();
         }
+
+        public int CountPrimeSetBits2(int L, int R)
+        {
+            HashSet<int> prime = new HashSet<int> {2,3,5,7,11,13,17,19,23};
+            int count = 0;
+            for (int i = L; i <= R; i++)
+            {
+                int n = i;
+                int cnt = 0;
+                while (n > 0)
+                {
+                    cnt++;
+                    n &= (n - 1);
+                }
+                if (prime.Contains(cnt))
+                    count++;
+            }
+            return count;
+        }
     }
 }
