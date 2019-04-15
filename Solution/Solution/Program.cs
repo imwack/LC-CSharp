@@ -17,10 +17,7 @@ namespace Solution
             Stopwatch stopwatch = new Stopwatch();
 
 
-            List<string> l = new List<string>
-            {
-                "9001 discuss.leetcode.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"
-            };
+            string[] strs = new[] {"aa", "bb", "ab", "ba"};
             int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
             MySolution s = new MySolution();
             int[] num = new[] {-1, 0, 1, 2, -1, -4};
@@ -31,7 +28,7 @@ namespace Solution
             TreeNode r3 = new TreeNode(3);
             r1.left = r2;
             r1.right = r3;
-            s.IncreasingBST(r1);
+            s.NumSpecialEquivGroups(strs);
         }
     }
 }

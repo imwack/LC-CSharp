@@ -175,5 +175,58 @@ namespace Solution
             }
             return sb.ToString();
         }
+        public int NumSpecialEquivGroups(string[] A)
+        {
+            HashSet<string> s = new HashSet<string>();
+            foreach (string str in A)
+            {
+                char[] odd = new char[26];
+                char[] even = new char[26];
+                for(int i = 0; i<str.Length; i++)
+                {
+                    if (i%2 == 0)
+                    {
+                        odd[str[i] - 'a']++;
+                    }
+                    else
+                    {
+                        even[str[i] - 'a']++;
+                    }
+                }
+                string code = new string(odd) + new string(even);
+                if (!s.Contains(code))
+                {
+                    s.Add(code);
+                }
+            }
+            return s.Count;
+        }
+
+        public string[] UncommonFromSentences(string A, string B)
+        {
+            string AB = A + " " + B;
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            List<string> result = new List<string>();
+            var strs = AB.Split(' ');
+            foreach (var s in strs)
+            {
+                if (!dic.ContainsKey(s))
+                {
+                    dic[s] = 0;
+                }
+                else
+                {
+                    dic[s]++;
+                }
+            }
+            foreach (var s in dic)
+            {
+                if (s.Value == 1)
+                {
+                    result.Add(s.Key);
+                }
+            }
+            return result.ToArray();
+        }
     }
 }
