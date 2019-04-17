@@ -123,6 +123,31 @@ namespace Solution
         }
     }
 
+    public class QuadNode
+    {
+        public bool val;
+        public bool isLeaf;
+        public QuadNode topLeft;
+        public QuadNode topRight;
+        public QuadNode bottomLeft;
+        public QuadNode bottomRight;
+
+        public QuadNode()
+        {
+        }
+
+        public QuadNode(bool _val, bool _isLeaf, QuadNode _topLeft, QuadNode _topRight, QuadNode _bottomLeft,
+            QuadNode _bottomRight)
+        {
+            val = _val;
+            isLeaf = _isLeaf;
+            topLeft = _topLeft;
+            topRight = _topRight;
+            bottomLeft = _bottomLeft;
+            bottomRight = _bottomRight;
+        }
+    }
+
     public class DataStructure
     {
     }

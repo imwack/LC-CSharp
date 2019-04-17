@@ -112,5 +112,42 @@ namespace Solution
                 PreOrder(root.right,ref newRoot);
             }
         }
+
+        public QuadNode Construct(int[][] grid)
+        {
+            return ConstructQuad(grid, 0, 0, grid.Length - 1, grid[0].Length);
+        }
+
+        private QuadNode ConstructQuad(int[][] grid, int x1, int y1, int x2, int y2)
+        {
+            //Console.WriteLine($"({x1}, {y1}) ({x2}, {y2})");
+            QuadNode root = new QuadNode();
+            root.isLeaf = true;
+            if (x2 == x1)
+            {
+                return new QuadNode(grid[x1][y1] == 1, true, null, null, null, null);
+
+            }
+            else
+            {
+                int len = (x2 - x1 + 1) / 2;
+                root.topLeft = ConstructQuad(grid, x1, y1, x1 + len - 1, y1 + len - 1);
+                root.topRight = ConstructQuad(grid, x1, y1 + len, x1 + len - 1, y2);
+                root.bottomLeft = ConstructQuad(grid, x1 + len, y1, x2, y1 + len - 1);
+                root.bottomRight = ConstructQuad(grid, x1 + len, y1 + len, x2, y2);
+            }
+            root.val = (root.topLeft.val && root.topRight.val && root.bottomLeft.val && root.bottomRight.val);
+            root.isLeaf = ((root.topLeft.val && root.topRight.val && root.bottomLeft.val && root.bottomRight.val) || (!root.topLeft.val && !root.topRight.val && !root.bottomLeft.val && !root.bottomRight.val)) &&
+                   (root.topLeft.isLeaf && root.topRight.isLeaf && root.bottomLeft.isLeaf && root.bottomRight.isLeaf);
+            if (root.isLeaf)
+            {
+                root.topLeft = null;
+                root.topRight = null;
+                root.bottomLeft = null;
+                root.bottomRight = null;
+            }
+
+            return root;
+        }
     }
 }
