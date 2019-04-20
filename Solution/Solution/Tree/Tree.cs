@@ -69,30 +69,6 @@ namespace Solution
             return list;
         }
 
-        //993. Cousins in Binary Tree
-        public bool IsCousins(TreeNode root, int x, int y)
-        {
-            int l = Dfs(root, x, 0);
-            int r = Dfs(root, y, 0);
-            if (l == r && l!=-1)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public int Dfs(TreeNode root, int x, int d)
-        {
-            if (root == null)
-                return -1;
-            if (root.val == x)
-                return d;
-            int n = Dfs(root.left, x, d + 1);
-            if (n != -1)
-                return n;
-            return Dfs(root.right, x, d + 1);
-        }
-
         public TreeNode IncreasingBST(TreeNode root)
         {
             TreeNode t = new TreeNode(0);
@@ -169,6 +145,40 @@ namespace Solution
             {
                 return SumRootToLeaf(root.left, sum) + SumRootToLeaf(root.right, sum);
             }
+        }
+
+        //993. Cousins in Binary Tree
+        public bool IsCousins(TreeNode root, int x, int y)
+        {
+            int l = GetHeight(root, x, y, 0);
+            if (l == -2)
+                return false;
+            int r = GetHeight(root, y, x, 0);
+            return l == r && l != -1;
+        }
+        //-1 means not fount -2 means invalid cousin
+        public int GetHeight(TreeNode root, int x, int y, int h)
+        {
+            if (root == null)
+            {
+                return -1;
+            }
+            if (root.left != null && root.left.val == x)
+            {
+                if (root.right != null && root.right.val == y)
+                    return -2;
+                return h + 1;
+            }
+            if (root.right != null && root.right.val == x)
+            {
+                if (root.left != null && root.left.val == y)
+                    return -2;
+                return h + 1;
+            }
+            int height = GetHeight(root.left, x, y, h + 1);
+            if (height != -1)
+                return height;
+            return GetHeight(root.right, x, y, h + 1);
         }
     }
 }
