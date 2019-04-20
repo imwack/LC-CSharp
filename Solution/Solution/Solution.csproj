@@ -54,6 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\QueueSolution.cs" />
+    <Compile Include="Search\Search.cs" />
     <Compile Include="Sort\Sort.cs" />
     <Compile Include="String\StringSolution.cs" />
     <Compile Include="Tree\Tree.cs" />
