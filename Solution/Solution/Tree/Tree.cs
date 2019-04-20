@@ -149,5 +149,26 @@ namespace Solution
 
             return root;
         }
+
+        public int SumRootToLeaf(TreeNode root)
+        {
+            return SumRootToLeaf(root, 0);
+        }
+        public int SumRootToLeaf(TreeNode root, int sum)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            sum = sum * 2 + root.val;
+            if (root.left == null && root.right == null) //leaf
+            {
+                return sum;
+            }
+            else
+            {
+                return SumRootToLeaf(root.left, sum) + SumRootToLeaf(root.right, sum);
+            }
+        }
     }
 }
