@@ -99,5 +99,29 @@ namespace Solution
             }
             return total;
         }
+
+        public int LargestPerimeter(int[] A)
+        {
+            Array.Sort(A);
+            for (int i = A.Length - 1; i >= 2; i--)
+            {
+                if (A[i - 1] + A[i - 2] <= A[i])
+                    continue;
+                for (int j = i - 1; j >= 1; j--)
+                {
+                    if (A[j - 1] + A[j] <= A[i])
+                        break;
+                    for (int k = j - 1; k >= 0; k--)
+                    {
+                        if (A[k] + A[j] <= A[i])
+                        {
+                            break;
+                        }
+                        return A[k] + A[j] + A[i];
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }
