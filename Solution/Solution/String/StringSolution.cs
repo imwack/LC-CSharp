@@ -228,5 +228,41 @@ namespace Solution
             }
             return result.ToArray();
         }
+
+        public string LargestTimeFromDigits(int[] A)
+        {
+            string ret = "";
+            int sum = -1;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (j == i) continue;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        if (k == i || k == j) continue;
+                        for (int l = 0; l < 4; l++)
+                        {
+                            if (l == k || l == i || l == j) continue;
+                            if (CheckTimeValid(A, i, j, k, l))
+                            {
+                                int s = (A[i] * 10 + A[j]) * 3600 + A[k] * 10 + A[l];
+                                if (s > sum)
+                                {
+                                    sum = s;
+                                    ret = A[i].ToString() + A[j].ToString() + ":" + A[k].ToString() + A[l].ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private bool CheckTimeValid(int[] A, int i0, int i1, int i2, int i3)
+        {
+            return A[i0] * 10 + A[i1] < 24 && A[i2] * 10 + A[i3] < 60;
+        }
     }
 }
