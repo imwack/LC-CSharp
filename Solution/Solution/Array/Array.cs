@@ -128,6 +128,34 @@ namespace Solution
             return max;
         }
 
-
+        public int LargestSumAfterKNegations(int[] A, int K)
+        {
+            Array.Sort(A);
+            int negativeCount = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (A[i] < 0)
+                {
+                    ++negativeCount;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            int cur = 0;
+            while (K > 0 && cur< negativeCount)
+            {
+                A[cur] = -A[cur];
+                cur++;
+                K--;
+            }
+            Array.Sort(A);
+            if (K > 0 && K % 2 == 1)
+            {
+                A[0] = -A[0];
+            }
+            return A.Sum();
+        }
     }
 }
