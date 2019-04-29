@@ -139,5 +139,35 @@ namespace Solution
  
             return true;
         }
+
+        public int RotatedDigits(int N)
+        {
+            int cnt = 0;
+            for (int i = 1; i <= N; i++)
+            {
+                int k = i;
+                bool valid = false;
+                while (k > 0)
+                {
+                    int remain = k % 10;
+                    if (remain == 4 || remain == 3 || remain == 7)
+                    {
+                        valid = false;
+                        break;
+                    }
+                    if (remain == 2 || remain == 5 || remain == 6 || remain == 9)
+                    {
+                        valid = true;
+                    }
+                    k /= 10;
+                }
+                if (valid)
+                {
+                    //Console.WriteLine(i);
+                    cnt++;
+                }
+            }
+            return cnt;
+        }
     }
 }
