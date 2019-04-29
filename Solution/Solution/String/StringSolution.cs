@@ -264,5 +264,32 @@ namespace Solution
         {
             return A[i0] * 10 + A[i1] < 24 && A[i2] * 10 + A[i3] < 60;
         }
+        public int CountBinarySubstrings(string s)
+        {
+            if (s.Length == 0) return 0;
+            List<int> cnt = new List<int>();
+            char cur = s[0];
+            int count = 1, total = 0;
+            for (int i = 1; i < s.Length; i++)
+            {
+                if (s[i] == cur)
+                {
+                    count++;
+                }
+                else
+                {
+                    cur = s[i];
+                    cnt.Add(count);
+                    count = 1;
+                }
+            }
+            cnt.Add(count);
+            for (int i = 1; i < cnt.Count; i++)
+            {
+                total += Math.Min(cnt[i], cnt[i - 1]);
+            }
+            return total;
+        }
+
     }
 }

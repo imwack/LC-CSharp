@@ -12,11 +12,31 @@ namespace Solution
 
     class Program
     {
+        public class Camp
+        {
+            public int Rank;
+        }
+        public static void Test()
+        {
+            Camp a = new Camp() {Rank = 1};
+            Camp b = new Camp() {Rank = 3};
+            Camp c = new Camp() {Rank = 2};
+            List<Camp> l = new List<Camp>();
+            l.Add(a);
+            l.Add(b);
+            l.Add(c);
+            l.Sort((aa,bb)=>aa.Rank<bb.Rank?-1:1);
+            foreach (var camp in l)
+            {
+                Console.WriteLine(camp.Rank);
+            }
+
+        }
         static void Main(string[] args)
         {
+            //Test();
+            
             Stopwatch stopwatch = new Stopwatch();
-
-
             string[] strs = new[] {"aa", "bb", "ab", "ba"};
             int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
             MySolution s = new MySolution();
@@ -28,7 +48,9 @@ namespace Solution
             TreeNode r3 = new TreeNode(3);
             r1.left = r2;
             r1.right = r3;
-            s.NumSpecialEquivGroups(strs);
+            s.CountBinarySubstrings("10101");
+
+
         }
     }
 }
