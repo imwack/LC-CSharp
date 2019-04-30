@@ -180,5 +180,29 @@ namespace Solution
                 return height;
             return GetHeight(root.right, x, y, h + 1);
         }
+
+        private int minDiff = int.MaxValue;
+        private int lastVal = int.MinValue;
+        public int MinDiffInBST(TreeNode root)
+        {
+            BSTDfs(root);
+            return minDiff;
+        }
+        //PreOrder and record last value;
+        public void BSTDfs(TreeNode root)
+        {
+            if (root != null)
+            {
+                BSTDfs(root.left);
+                if (lastVal < root.val)
+                {
+                    minDiff = Math.Min(minDiff, root.val - lastVal);
+                }
+                lastVal = root.val;
+                //Console.WriteLine(lastVal);
+                BSTDfs(root.right);
+
+            }
+        }
     }
 }
