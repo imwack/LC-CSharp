@@ -169,5 +169,24 @@ namespace Solution
             }
             return cnt;
         }
+
+
+        public int ReachNumber(int target)
+        {
+            double t = Math.Abs(target);
+            long n = (long)Math.Ceiling((-1 + Math.Sqrt(1 + 8 * t)) / 2);
+            long sum = n * (n + 1) / 2;
+            if  (sum < target)
+            {
+                ++n;
+                sum = n * (n + 1) / 2;
+            }
+            //Console.WriteLine(n);
+            long diff = sum - target;
+            if (diff % 2 == 0) return (int)n;
+            return (int)((n % 2 == 0) ? n + 1 : n + 2);
+        }
+
+
     }
 }
