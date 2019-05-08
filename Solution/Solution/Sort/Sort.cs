@@ -51,5 +51,86 @@ namespace Solution
             }
             return ret;
         }
+
+        public class MHeap
+        {
+            private int[] heap;
+            public int Peek => heap[0];
+            private int count = 0;
+            private bool CanAdd => count < heap.Length;
+            public MHeap(int k, int[] nums)
+            {
+                heap = new int[k];
+                for (int i = 0; i < k; i++)
+                    heap[i] = int.MaxValue;
+
+                for (int i = 0; i < k && i < nums.Length; i++)
+                {
+                    heap[i] = nums[i];
+                    count++;
+                }
+                for (int i = count/2 ; i >= 0; i--)
+                    AdjustDown(i);
+            }
+
+            public void Push(int n)
+            {
+                if (CanAdd)
+                {
+                    heap[count] = n;
+                    count++;
+                    for (int i = count/2; i >= 0; i--)
+                        AdjustDown(i);
+
+                }
+                else if (heap[0] < n)
+                {
+                    heap[0] = n;
+                    AdjustDown(0);
+                }
+            }
+            public void AdjustDown(int index)
+            {
+                int left = index * 2 + 1;
+                while (left < count)
+                {
+                    if (left + 1 < count && heap[left + 1] < heap[left])
+                    {
+                        left++;
+                    }
+                    if (heap[left] < heap[index])
+                    {
+                        int temp = heap[index];
+                        heap[index] = heap[left];
+                        heap[left] = temp;
+                        index = left;
+                        left = left * 2 + 1;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        public class KthLargest
+        {
+
+            private MHeap hp;
+            public KthLargest(int k, int[] nums)
+            {
+                hp = new MHeap(k, nums);
+                for (int i = k; i < nums.Length; i++)
+                {
+                    hp.Push(nums[i]);
+                }
+            }
+
+            public int Add(int val)
+            {
+                hp.Push(val);
+                return hp.Peek;
+            }
+        }
     }
 }

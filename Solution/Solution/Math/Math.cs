@@ -170,7 +170,6 @@ namespace Solution
             return cnt;
         }
 
-
         public int ReachNumber(int target)
         {
             double t = Math.Abs(target);
@@ -187,6 +186,33 @@ namespace Solution
             return (int)((n % 2 == 0) ? n + 1 : n + 2);
         }
 
-
+        public int SurfaceArea(int[][] grid)
+        {
+            int sum = 0;
+            foreach (int[] line in grid)
+            {
+                foreach (int l in line)
+                {
+                    if (l != 0)
+                        sum += l * 4 + 2;
+                }
+            }
+            foreach (int[] line in grid)
+            {
+                for (int i = 1; i < line.Length; i++)
+                {
+                    sum -= 2 * Math.Min(line[i], line[i - 1]);
+                }
+            }
+            for (int i = 1; i < grid.Length; i++)
+            {
+                int[] row = grid[i];
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    sum -= 2 * Math.Min(grid[i][j], grid[i - 1][j]);
+                }
+            }
+            return sum;
+        }
     }
 }

@@ -32,10 +32,36 @@ namespace Solution
             }
 
         }
+        public enum CalMatchName
+        {
+            CalMatchName1 = 0,  //普通局
+            CalMatchName2 = 1,  //高端局
+            CalMatchName3 = 2,  //大神局
+        }
+        public static CalMatchName GetCalMatchName(int MatchIndex, int realPlayerNum)
+        {
+            CalMatchName matchName = CalMatchName.CalMatchName1;
+            if (MatchIndex >= 3 && MatchIndex <=5 && realPlayerNum > 13)
+            {
+                matchName = CalMatchName.CalMatchName2;
+            }
+            if (MatchIndex > 5)
+            {
+                matchName = CalMatchName.CalMatchName2;
+                if (realPlayerNum > 20)
+                {
+                    matchName = CalMatchName.CalMatchName3;
+                }
+            }
+            Console.WriteLine("GetCalMatchName matchName={0} matchIndex={1} realPlayerNum={2}", matchName, MatchIndex+1, realPlayerNum);
+            return matchName;
+        }
+
         static void Main(string[] args)
         {
             //Test();
-            
+ 
+
             Stopwatch stopwatch = new Stopwatch();
             string[] strs = new[] {"aa", "bb", "ab", "ba"};
             int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};

@@ -80,7 +80,34 @@ namespace Solution
             return cnt;
         }
 
+        public int[][] FloodFill(int[][] image, int x, int y, int newColor)
+        {
+            bool[][] visit = new bool[image.Length][];
+            for (int i = 0; i < visit.Length; i++)
+            {
+                visit[i] = new bool[image[0].Length];
+            }
+            int originColor = image[x][y];
+            Dfs(ref image, ref visit, x, y, originColor, newColor);
+            return image;
+        }
 
+        public void Dfs(ref int[][] image, ref bool[][] visit, int x, int y, int originColor, int newColor)
+        {
+            int[][] dir = new int[4][] {new int[] {-1, 0}, new int[] {1, 0}, new int[] {0, -1}, new int[] {0, -1}};
+            image[x][y] = newColor;
+            int newX, newY;
+            foreach (int[] d in dir)
+            {
+                newX = x + d[0];
+                newY = y + d[1];
+                if (newX >= 0 && newY >= 0 && newX < image.Length && newY < image[0].Length && originColor==image[newX][newY] && !visit[newX][newY])
+                {
+                    visit[newX][newY] = true;
+                    Dfs(ref image, ref visit, x + d[0], y + d[1], originColor, newColor);
+                }
+            }
+        }
 
     }
 }
