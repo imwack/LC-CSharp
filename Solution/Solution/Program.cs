@@ -60,7 +60,12 @@ namespace Solution
         static void Main(string[] args)
         {
             //Test();
- 
+            MyLinkedList linkedList = new MyLinkedList();
+            linkedList.AddAtHead(1);
+            linkedList.AddAtIndex(1,2);
+            linkedList.Get(7,4);
+            linkedList.Get(6);
+
 
             Stopwatch stopwatch = new Stopwatch();
             string[] strs = new[] {"aa", "bb", "ab", "ba"};

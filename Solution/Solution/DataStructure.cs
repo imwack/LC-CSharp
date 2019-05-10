@@ -148,6 +148,124 @@ namespace Solution
         }
     }
 
+    public class LinkedListNode
+    {
+        public int val;
+        public LinkedListNode pre;
+        public LinkedListNode next;
+
+        public LinkedListNode(int v)
+        {
+            this.val = v;
+            pre = null;
+            next = null;
+        }
+    }
+    public class MyLinkedList
+    {
+        private LinkedListNode head;
+        private LinkedListNode tail;
+
+        public int Count = 0;
+        /** Initialize your data structure here. */
+        public MyLinkedList()
+        {
+            head = new LinkedListNode(-1);
+            tail = new LinkedListNode(-1);
+            head.next = tail;
+            tail.pre = head;
+        }
+
+        /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+        public int Get(int index)
+        {
+            if (index >= Count || index <0)
+            {
+                return -1;
+            }
+            LinkedListNode tmp = head.next;
+            for (int i = 0; i < index; i++)
+            {
+                tmp = tmp.next;
+            }
+            return tmp.val;
+        }
+
+        /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+        public void AddAtHead(int val)
+        {
+            LinkedListNode headNext = head.next;
+            LinkedListNode newNode = new LinkedListNode(val);
+            head.next = newNode;
+            newNode.pre = head;
+            newNode.next = headNext;
+            headNext.pre = newNode;
+            Count++;
+        }
+
+        /** Append a node of value val to the last element of the linked list. */
+        public void AddAtTail(int val)
+        {
+            LinkedListNode newNode = new LinkedListNode(val);
+            LinkedListNode tailPre = tail.pre;
+            newNode.pre = tailPre;
+            tailPre.next = newNode;
+            newNode.next = tail;
+            tail.pre = newNode;
+            Count++;
+        }
+
+        /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+        public void AddAtIndex(int index, int val)
+        {
+            if (index == -1 && Count == 0)
+            {
+                AddAtTail(val);
+                return;
+            }
+            if (index <= Count && index >= 0)
+            {
+                LinkedListNode tmp = head;
+                for (int i = 0; i < index; i++)
+                {
+                    tmp = tmp.next;
+                }
+                if (tmp == tail)
+                {
+                    AddAtTail(val);
+                }
+                else
+                {
+                    LinkedListNode tmpNext = tmp.next;
+                    LinkedListNode newNode = new LinkedListNode(val);
+                    tmp.next = newNode;
+                    newNode.pre = tmp;
+                    newNode.next = tmpNext;
+                    tmpNext.pre = newNode;
+                    Count++;
+                }
+            }
+        }
+
+        /** Delete the index-th node in the linked list, if the index is valid. */
+        public void DeleteAtIndex(int index)
+        {
+            if (index < Count && index >= 0)
+            {
+                LinkedListNode tmp = head.next;
+                for (int i = 0; i < index; i++)
+                {
+                    tmp = tmp.next;
+                }
+                LinkedListNode tmpPre = tmp.pre;
+                LinkedListNode tmpNext = tmp.next;
+
+                tmpPre.next = tmpNext;
+                tmpNext.pre = tmpPre;
+                Count--;
+            }
+        }
+    }
     public class DataStructure
     {
     }
