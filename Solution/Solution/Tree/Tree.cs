@@ -204,5 +204,38 @@ namespace Solution
 
             }
         }
+
+        public QuadNode Intersect(QuadNode n1, QuadNode n2)
+        {
+            QuadNode n = new QuadNode();
+            if (n1.isLeaf && n2.isLeaf)
+            {
+                n.isLeaf = true;
+                n.val = n1.val || n2.val;
+            }
+            else if (n1.isLeaf)
+            {
+                return n1.val ? n1 : n2;
+            }
+            else if (n2.isLeaf)
+            {
+                return n2.val ? n2 : n1;
+            }
+            else
+            {
+                n.topLeft = Intersect(n1.topLeft, n2.topLeft);
+                n.topRight = Intersect(n1.topRight, n2.topRight);
+                n.bottomLeft = Intersect(n1.bottomLeft, n2.bottomLeft);
+                n.bottomRight = Intersect(n1.bottomRight, n2.bottomRight);
+                if (n.topLeft.isLeaf && n.topRight.isLeaf && n.bottomLeft.isLeaf && n.bottomRight.isLeaf &&
+                    n.topLeft.val == n.topRight.val && n.topLeft.val == n.bottomLeft.val && n.topLeft.val == n.bottomRight.val)
+                {
+                    n.isLeaf = true;
+                    n.val = n.topLeft.val;
+                }
+
+            }
+            return n;
+        }
     }
 }

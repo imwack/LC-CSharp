@@ -109,5 +109,68 @@ namespace Solution
             }
         }
 
+        public class Cell
+        {
+            public int x;
+            public int y;
+
+            public Cell()
+            {
+                
+            }
+
+            public Cell(int xx, int yy)
+            {
+                x = xx;
+                y = yy;
+            }
+        }
+        public int[][] AllCellsDistOrder(int R, int C, int r0, int c0)
+        {
+            int[][] retsult = new int[R * C][];
+            bool[][] visited = new bool[R][];
+            for (int i = 0; i < R; i++)
+            {
+                visited[i] = new bool[C];
+            }
+            for (int i = 0; i < R * C; i++)
+                retsult[i] = new int[2];
+            int index = 0;
+            Queue<Cell> queue = new Queue<Cell>();
+            queue.Enqueue(new Cell(r0, c0));
+            visited[r0][c0] = true;
+            while (queue.Count > 0)
+            {
+                int n = queue.Count;
+                for (int i = 0; i < n; i++)
+                {
+                    Cell front = queue.Dequeue();
+                    retsult[index][0] = front.x;
+                    retsult[index][1] = front.y;
+                    index++;
+                    if (front.x - 1 >= 0 && !visited[front.x - 1][front.y])
+                    {
+                        queue.Enqueue(new Cell(front.x - 1, front.y));
+                        visited[front.x - 1][front.y] = true;
+                    }
+                    if (front.y - 1 >= 0 && !visited[front.x][front.y - 1])
+                    {
+                        queue.Enqueue(new Cell(front.x, front.y - 1));
+                        visited[front.x][front.y - 1] = true;
+                    }
+                    if (front.x + 1 < R && !visited[front.x + 1][front.y])
+                    {
+                        queue.Enqueue(new Cell(front.x + 1, front.y));
+                        visited[front.x + 1][front.y] = true;
+                    }
+                    if (front.y + 1 < C && !visited[front.x][front.y + 1])
+                    {
+                        queue.Enqueue(new Cell(front.x, front.y + 1));
+                        visited[front.x][front.y + 1] = true;
+                    }
+                }
+            }
+            return retsult;
+        }
     }
 }

@@ -311,5 +311,28 @@ namespace Solution
             }
             return ret;
         }
+
+        public string ShortestCompletingWord(string licensePlate, string[] words)
+        {
+            Dictionary<char,uint> dic = new Dictionary<char, uint>();
+            foreach (char c in licensePlate)
+            {
+                char cc = c;
+                if (cc >= 'A' && cc <= 'Z')
+                {
+                    cc = (char)(cc - 'A' + 'a');
+                }
+                if (cc >= 'a' && cc <= 'z')
+                {
+                    if (!dic.ContainsKey(cc))
+                    {
+                        dic[cc] = 0;
+                    }
+                    dic[cc]++;
+                }
+            }
+
+            return "";
+        }
     }
 }

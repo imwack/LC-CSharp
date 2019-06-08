@@ -63,7 +63,6 @@ namespace Solution
             MyLinkedList linkedList = new MyLinkedList();
             linkedList.AddAtHead(1);
             linkedList.AddAtIndex(1,2);
-            linkedList.Get(7,4);
             linkedList.Get(6);
 
 
@@ -81,7 +80,7 @@ namespace Solution
             r1.right = r3;
             s.CountBinarySubstrings("10101");
 
-
+            s.AllCellsDistOrder(1, 2, 0, 0);
         }
     }
 }

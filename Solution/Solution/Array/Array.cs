@@ -158,5 +158,15 @@ namespace Solution
             return A.Sum();
         }
 
+        public int HeightChecker(int[] heights)
+        {
+            int[] sHeight = new int[heights.Length];
+            for (int i = 0; i < heights.Length; i++)
+            {
+                sHeight[i] = heights[i];
+            }
+            Array.Sort(sHeight);
+            return heights.Where((t, i) => t != sHeight[i]).Count();
+        }
     }
 }
