@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -334,5 +335,85 @@ namespace Solution
 
             return "";
         }
+
+        public string[] FindOcurrences(string text, string first, string second)
+        {
+            List<string> result = new List<string>();
+            string[] arr = text.Split(' ');
+            for (int i = 0; i < arr.Length - 1;i++)
+            {
+                if (arr[i] == first && arr[i + 1] == second)
+                {
+                    if(i+2< arr.Length)
+                        result.Add(arr[i+2]);
+                }
+            }
+            return result.ToArray();
+        }
+        public TreeNode SufficientSubset(TreeNode root, int limit)
+        {
+            if (root == null) return root;
+            TreeNode sumTree = new TreeNode(root.val);
+            SufficientSubsetDfs(root, sumTree);
+
+            SufficientSubsetDelet(root, root.left, sumTree.left, limit, true);
+            SufficientSubsetDelet(root, root.right, sumTree.right, limit, false);
+            return root;
+        }
+
+        public void SufficientSubsetDelet(TreeNode parent, TreeNode current, TreeNode sumTree, int limit, bool left)
+        {
+            if (current != null && sumTree.val < limit)
+            {
+                if (left) parent.left = null;
+                else parent.right = null;
+            }
+        }
+        public void SufficientSubsetDfs(TreeNode root, TreeNode sumTree)
+        {
+            if(root == null)
+                return;
+            if(root.left!=null)
+                sumTree.left =  new TreeNode(root.left.val + root.val);
+            if (root.right != null)
+                sumTree.right = new TreeNode(root.right.val + root.val);
+            SufficientSubsetDfs(root.left, sumTree.left);
+            SufficientSubsetDfs(root.right, sumTree.right);
+        }
+
+        public string SmallestSubsequence(string text)
+        {
+            List<char> seq = new List<char>();
+            int[] cnt = new int[256];
+            int[] use = new int[256];
+            foreach (char c in text)
+            {
+                cnt[c - 'a']++;
+            }
+            foreach (char c in text)
+            {
+                if (use[c - 'a'] > 0)
+                {
+                    cnt[c - 'a']--;
+                    continue;
+                }
+                while (seq.Count > 0 && c < seq.Last() && cnt[seq.Last() - 'a'] > 0)
+                {
+                    use[seq.Last() - 'a'] = 0;
+                    seq.RemoveAt(seq.Count - 1);
+                }
+                seq.Add(c);
+                use[c - 'a']++;
+                cnt[c - 'a']--;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in seq)
+            {
+                sb.Append(c);
+            }
+            return sb.ToString();
+        }
+
+
     }
 }

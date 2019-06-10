@@ -172,5 +172,35 @@ namespace Solution
             }
             return retsult;
         }
+
+        public HashSet<string> set = new HashSet<string>();
+        public int NumTilePossibilities(string tiles)
+        {
+            Dictionary<char, int> alphaDic = new Dictionary<char, int>();
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (!alphaDic.ContainsKey(tiles[i]))
+                    alphaDic[tiles[i]] = 0;
+                alphaDic[tiles[i]]++;
+            }
+            NumTilePossibilitiesDic(alphaDic, "");
+            return set.Count;
+        }
+
+        public void NumTilePossibilitiesDic(Dictionary<char, int> alphaDic, string str)
+        {
+            foreach (var pair in alphaDic)
+            {
+                if(pair.Value <= 0 )
+                    continue;
+
+                str += pair.Key;
+                set.Add(str);
+                Dictionary<char, int> dic = new Dictionary<char, int>(alphaDic);
+                dic[pair.Key]--;
+                NumTilePossibilitiesDic(dic, str);
+                str = str.Substring(0, str.Length - 1);
+            }
+        }
     }
 }
