@@ -237,5 +237,31 @@ namespace Solution
             }
             return n;
         }
+
+        public TreeNode SufficientSubset(TreeNode root, int limit)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+            if (root.left == root.right)
+            {
+                return root.val >= limit ? root : null;
+            }
+            if (root.left != null)
+            {
+                root.left = SufficientSubset(root.left, limit - root.val);
+            }
+            if (root.right != null)
+            {
+                root.right = SufficientSubset(root.right, limit - root.val);
+            }
+            if (root.left == root.right)
+            {
+                return null;
+            }
+            return root;
+        }
+
     }
 }

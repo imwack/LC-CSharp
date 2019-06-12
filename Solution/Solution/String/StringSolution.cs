@@ -350,36 +350,6 @@ namespace Solution
             }
             return result.ToArray();
         }
-        public TreeNode SufficientSubset(TreeNode root, int limit)
-        {
-            if (root == null) return root;
-            TreeNode sumTree = new TreeNode(root.val);
-            SufficientSubsetDfs(root, sumTree);
-
-            SufficientSubsetDelet(root, root.left, sumTree.left, limit, true);
-            SufficientSubsetDelet(root, root.right, sumTree.right, limit, false);
-            return root;
-        }
-
-        public void SufficientSubsetDelet(TreeNode parent, TreeNode current, TreeNode sumTree, int limit, bool left)
-        {
-            if (current != null && sumTree.val < limit)
-            {
-                if (left) parent.left = null;
-                else parent.right = null;
-            }
-        }
-        public void SufficientSubsetDfs(TreeNode root, TreeNode sumTree)
-        {
-            if(root == null)
-                return;
-            if(root.left!=null)
-                sumTree.left =  new TreeNode(root.left.val + root.val);
-            if (root.right != null)
-                sumTree.right = new TreeNode(root.right.val + root.val);
-            SufficientSubsetDfs(root.left, sumTree.left);
-            SufficientSubsetDfs(root.right, sumTree.right);
-        }
 
         public string SmallestSubsequence(string text)
         {
