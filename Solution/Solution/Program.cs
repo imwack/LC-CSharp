@@ -80,7 +80,7 @@ namespace Solution
             r1.right = r3;
             s.CountBinarySubstrings("10101");
 
-            s.SmallestSubsequence("cdadabcc");
+            s.RemoveDuplicates("abbaca");
         }
     }
 }

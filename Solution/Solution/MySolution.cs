@@ -1026,6 +1026,27 @@ namespace Solution
     public partial class MySolution
     {
         #region stack
+        public string RemoveDuplicates(string S)
+        {
+            Stack<char> queue = new Stack<char>();
+            foreach (char c in S)
+            {
+                bool find = false;
+                while (queue.Count > 0 && queue.Peek() == c)
+                {
+                    queue.Pop();
+                    find = true;
+                }
+                if (!find)
+                {
+                    queue.Push(c);
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            while (queue.Count > 0)
+                sb.Insert(0,queue.Pop());
+            return sb.ToString();
+        }
 
         public int CalPoints(string[] ops)
         {
