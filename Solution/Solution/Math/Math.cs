@@ -214,5 +214,43 @@ namespace Solution
             }
             return sum;
         }
+        public int[] CorpFlightBookings(int[][] bookings, int n)
+        {
+            int[] cnt = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                int index = i + 1;
+                cnt[i] = 0;
+                foreach (var booking in bookings)
+                {
+                    if (index >= booking[0] && index <= booking[1])
+                        cnt[i] += booking[2];
+                }
+            }
+            return cnt;
+
+        }
+        public bool IsRobotBounded(string instructions)
+        {
+            int[][] direction = new[] { new int[2] { 0, 1 }, new int[2] { -1, 0 }, new int[2] { 0, -1 }, new int[2] { 1, 0 } };
+            int dir = 0, x = 0, y = 0;
+            foreach (char instruction in instructions)
+            {
+                if (instruction == 'G')
+                {
+                    x += direction[dir][0];
+                    y += direction[dir][1];
+                }
+                if (instruction == 'L')
+                {
+                    dir = (dir + 1) % 4;
+                }
+                if (instruction == 'R')
+                {
+                    dir = (dir - 1 + 4) % 4;
+                }
+            }
+            return (x == 0 && y == 0) || (dir != 0); //方向不是向北则能回到原点
+        }
     }
 }

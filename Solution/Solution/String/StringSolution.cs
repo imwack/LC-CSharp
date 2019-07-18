@@ -350,7 +350,17 @@ namespace Solution
             }
             return result.ToArray();
         }
+        public string GcdOfStrings(string str1, string str2)
+        {
+            if (str1.Length < str2.Length)
+                return GcdOfStrings(str2, str1);
+            if (str2 == "")
+                return str1;
+            if (!str1.StartsWith(str2))
+                return "";
+            return str1.Substring(str1.IndexOf(str2) + str2.Length);
 
+        }
         public string SmallestSubsequence(string text)
         {
             List<char> seq = new List<char>();

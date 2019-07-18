@@ -168,5 +168,54 @@ namespace Solution
             Array.Sort(sHeight);
             return heights.Where((t, i) => t != sHeight[i]).Count();
         }
+
+        public int[] NumMovesStones(int a, int b, int c)
+        {
+            List<int> list = new List<int>() {a, b, c};
+            list.Sort();
+            if (list[2] - list[0] == 2) return new[] {0, 0};
+            int min = Math.Min(list[1] - list[0], list[2] - list[1]) <= 2 ? 1 : 2;
+            return new[] {min, list[2] - list[0] - 2};
+        }
+
+        private int GetMinMove(int a, int b, int c)
+        {
+            int minMove = 2;
+            if (a - b == 1 || a - b == -1)
+            {
+                if (a - c == 1 || a - c == -1 || b - c == 1 || b - c == -1)
+                    return 0;
+                return 1;
+            }
+            if (a - c == 1 || a - c == -1)
+            {
+                if (a - b == 1 || a - b == -1 || b - c == 1 || b - c == -1)
+                    return 0;
+                return 1;
+            }
+            if (b - c == 1 || b - c == -1)
+            {
+                if (a - c == 1 || a - c == -1 || a - b == 1 || a - b == -1)
+                    return 0;
+                return 1;
+            }
+            if (Math.Abs(a - b) == 2 || Math.Abs(a - c) == 2 || Math.Abs(b - c) == 2)
+                return 1;
+            return minMove;
+        }
+
+        private int GetMaxMove(int a, int b, int c)
+        {
+            if((a > b && b>c) || (c>b && b>a))
+            {
+                return Math.Abs(a - b ) + Math.Abs(c - b ) - 2;
+            }
+            if( (a > c && c > b)||(b>c && c>a))
+            {
+                return Math.Abs(a - c) + Math.Abs(c - b) - 2;
+            }
+
+            return Math.Abs(a - c) + Math.Abs(a - b) - 2;
+        }
     }
 }

@@ -132,5 +132,45 @@ namespace Solution
                 return hp.Peek;
             }
         }
+
+        public class Item
+        {
+            public int v;
+            public int l;
+        }
+        public int LargestValsFromLabels(int[] values, int[] labels, int num_wanted, int use_limit)
+        {
+            if (use_limit == 0)
+                return 0;
+            int sum = 0;
+            List< Item > items = new List<Item>();
+            for (int i = 0; i < values.Length; i++)
+            {
+                items.Add(new Item() {v=values[i], l=labels[i]});
+            }
+            items.Sort((a,b)=> { return a.v >= b.v ? -1 : 1; });
+            Dictionary<int,int> labelCountDic = new Dictionary<int, int>();
+            int cur = 0; //物品index
+            for (int i = 0; i < num_wanted; i++)
+            {
+                for (int j = cur; j < items.Count; j++)
+                {
+                    if (!labelCountDic.ContainsKey(items[j].l) || labelCountDic[items[j].l] < use_limit)
+                    {
+                        if (!labelCountDic.ContainsKey(items[j].l))
+                            labelCountDic[items[j].l] = 0;
+                        labelCountDic[items[j].l]++;
+                        sum += items[j].v;
+                        cur++;
+                        break;
+                    }
+                    else
+                    {
+                        cur++;
+                    }
+                }
+            }
+            return sum;
+        }
     }
 }

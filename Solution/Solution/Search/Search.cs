@@ -202,5 +202,76 @@ namespace Solution
                 str = str.Substring(0, str.Length - 1);
             }
         }
+
+        List<string> result = new List<string>();
+        public string[] Permute(string S)
+        {
+            List<List<char>> strs = GetStrs(S);
+            PermuteDfs(strs,0,"");
+            return result.ToArray();
+        }
+
+        public void PermuteDfs(List<List<char>> strs,int depth, string cur)
+        {
+            if (depth >= strs.Count)
+            {
+                result.Add(cur);
+                return;
+            }
+            foreach (char c in strs[depth])
+            {
+                PermuteDfs(strs, depth + 1, cur + c);
+            }
+        }
+        public List<List<char>> GetStrs(string str)
+        {
+            int i = 0;
+            List<List<char>> strs = new List<List<char>>();
+            while (i<str.Length)
+            {
+                if (str[i] == '{')
+                {
+                    List<char> s = new List<char>();
+                    int j = i + 1;
+                    while ( j<str.Length && str[j] != '}')
+                    {
+                        if (str[j] != ',') 
+                            s.Add(str[j]);
+                        j++;
+                    }
+                    i = j + 1;
+                    strs.Add(s);
+                }
+                else
+                {
+                    strs.Add(new List<char> { str[i++]});
+                }
+            }
+            return strs;
+        }
+        public void DuplicateZeros(int[] arr)
+        {
+            List<int> lst = new List<int>(arr);
+            foreach (int a in arr)
+            {
+                lst.Add(a);
+            }
+            int cnt = 0, i = 0;
+            while (cnt<arr.Length)
+            {
+                if (lst[i] == 0)
+                {
+                    if(cnt<arr.Length)
+                        arr[cnt++] = 0;
+                    if (cnt < arr.Length)
+                        arr[cnt++] = 0;
+                }
+                else
+                {
+                    arr[cnt++] = lst[i];
+                }
+                i++;
+            }
+        }
     }
 }
