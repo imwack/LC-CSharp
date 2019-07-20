@@ -252,5 +252,45 @@ namespace Solution
             }
             return (x == 0 && y == 0) || (dir != 0); //方向不是向北则能回到原点
         }
+        public int[] GardenNoAdj(int N, int[][] paths)
+        {
+            Dictionary<int, List<int>> dic = new Dictionary<int, List<int>>();
+            int[] result = new int[N];
+            for (int i = 0; i < N; i++)
+            {
+                dic[i + 1] = new List<int>();
+            }
+            foreach (int[] path in paths)
+            {
+                dic[path[0]].Add(path[1]);
+                dic[path[1]].Add(path[0]);
+            }
+            foreach (var pair in dic)
+            {
+                int node = pair.Key;
+                if (result[node - 1] != 0)
+                {
+                    continue;
+                }
+                for (int color = 1; color < 5; color++)
+                {
+                    bool ok = true;
+                    foreach (var neighbour in pair.Value)
+                    {
+                        if (result[neighbour - 1] == color)
+                        {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok)
+                    {
+                        result[node - 1] = color;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
