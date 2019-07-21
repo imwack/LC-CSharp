@@ -80,11 +80,12 @@ namespace Solution
             r1.right = r3;
             s.CountBinarySubstrings("10101");
 
-            int[][]arr = new int[7][]
-            {new int[] {0, 0, 1, 0, 0, 0, 0},new int[] {0, 1, 0, 0, 0, 0, 1},new int[] {0, 0, 1, 0, 1, 0, 0},new int[] {0, 0, 0, 1, 1, 1, 0},
-            new int[] {1, 0, 0, 1, 1, 0, 0},new int[] {1, 1, 1, 1, 1, 0, 1},new int[] {0, 0, 1, 0, 0, 0, 0} 
+            int[][]arr = new int[6][]
+            {new int[] {1,1},new int[] {2,2},new int[] {1,1},new int[] {1,2},new int[] {1,1},new int[] {1,2}
             };
-            s.ShortestPathBinaryMatrix(arr);
+
+            s.LastStoneWeight(new int[]{2, 7, 4, 1, 8, 1});
+
         }
     }
 }

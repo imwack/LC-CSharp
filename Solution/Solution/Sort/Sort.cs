@@ -172,5 +172,27 @@ namespace Solution
             }
             return sum;
         }
+
+        public int LastStoneWeight(int[] stones)
+        {
+            int result = 0;
+            MaxHeap<int> heap = new MaxHeap<int>(stones);
+            while (heap.Count > 0)
+            {
+                if (heap.Count == 1)
+                {
+                    result = heap.Peek;
+                    break;
+                }
+                int peek1 = heap.Pop();
+                int peek2 = heap.Pop();
+                int remain = Math.Abs(peek2 - peek1);
+                if (remain != 0)
+                {
+                    heap.Push(remain);
+                }
+            }
+            return result;
+        }
     }
 }

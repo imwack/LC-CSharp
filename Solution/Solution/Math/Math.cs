@@ -292,5 +292,44 @@ namespace Solution
             }
             return result;
         }
+
+        public int NumEquivDominoPairs(int[][] dominoes)
+        {
+            int cnt = 0, i=0;
+            Array.Sort(dominoes, (a, b) =>
+            {
+                if (Math.Min(a[0], a[1]) < Math.Min(b[0], b[1]))
+                    return -1;
+                if (Math.Min(a[0], a[1]) > Math.Min(b[0], b[1]))
+                    return 1;
+                return (Math.Max(a[0], a[1]) < Math.Max(b[0], b[1])) ? -1 : 1;
+            });
+            while (i < dominoes.Length-1)
+            {
+                int count = 0,j;
+                for (j = i; j < dominoes.Length - 1;j++)
+                {
+                    if (dominoes[j][0] == dominoes[j + 1][0] && dominoes[j][1] == dominoes[j + 1][1])
+                    {
+                        count++;
+                    }
+                    else if (dominoes[j][1] == dominoes[j + 1][0] && dominoes[j][0] == dominoes[j + 1][1])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (count > 0)
+                {
+                    cnt += count * (count + 1)/ 2;
+                }
+
+                i = j + 1;
+            }
+            return cnt;
+        }
     }
 }

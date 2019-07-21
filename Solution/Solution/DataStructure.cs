@@ -6,6 +6,74 @@ using System.Threading.Tasks;
 
 namespace Solution
 {
+    public class MaxHeap<T> where T : IComparable
+    {
+        public int Count;
+        private T[] Element;
+        public T Peek => Element[0];
+
+        public MaxHeap(T[] n)
+        {
+            Count = n.Length;
+            Element = new T[Count];
+            for (int i = 0; i < n.Length; i++)
+            {
+                Element[i] = n[i];
+            }
+            for (int i = Count/2 - 1; i >= 0; --i)
+            {
+                AdjustDown(i);
+            }
+        }
+
+        public void AdjustDown(int index)
+        {
+            int l = 2*index + 1;
+            while (l < Count)
+            {
+                if (l+1 < Count && Element[l].CompareTo(Element[l+1]) < 0) //取l和r中大的
+                {
+                    l++;
+                }
+                if (Element[index].CompareTo(Element[l]) < 0)
+                {
+                    T temp = Element[l];
+                    Element[l] = Element[index];
+                    Element[index] = temp;
+                    index = l;
+                    l = 2*l + 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        //把头部元素扔到最后
+        public T Pop()
+        {
+            T front = Element[0];
+            T last = Element[Count-1];
+            Element[Count - 1] = front;
+            Element[0] = last;
+            Count--;
+
+            AdjustDown(0);
+            return front;
+        }
+
+        public void Push(T n)
+        {
+            if (Count >= Element.Length)
+            {
+                return; //先不考虑扩容
+            }
+            Element[Count] = n;
+            Count++;
+            AdjustDown(0);
+        }
+    }
     public class Heap<T> where T : IComparable
     {
         public int Count;
