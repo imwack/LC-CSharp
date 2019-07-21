@@ -194,5 +194,26 @@ namespace Solution
             }
             return result;
         }
+
+        public IList<int> PancakeSort(int[] A)
+        {
+            IList<int> result = new List<int>();
+            for (int n = A.Length; n > 0; --n)
+            {
+                //每次把最大的换到最后去
+                for (int i = 0; i < n; i++)
+                {
+                    if (A[i] == n)
+                    {
+                        result.Add(i+1);
+                        Array.Reverse(A,0,i+1);
+                        result.Add(n);
+                        Array.Reverse(A, 0, n);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

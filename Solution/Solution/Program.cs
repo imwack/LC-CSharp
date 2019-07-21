@@ -84,7 +84,7 @@ namespace Solution
             {new int[] {1,1},new int[] {2,2},new int[] {1,1},new int[] {1,2},new int[] {1,1},new int[] {1,2}
             };
 
-            s.LastStoneWeight(new int[]{2, 7, 4, 1, 8, 1});
+            s.PancakeSort(new int[]{3,2,4,1});
 
         }
     }
