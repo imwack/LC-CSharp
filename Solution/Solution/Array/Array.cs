@@ -217,5 +217,34 @@ namespace Solution
 
             return Math.Abs(a - c) + Math.Abs(a - b) - 2;
         }
+        IList<IList<int>> candidate = new List<IList<int>>();
+        public IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            Array.Sort(candidates);
+            CombinationSum(0, candidates, target, new List<int>());
+            return candidate;
+        }
+
+        public void CombinationSum(int index, int[] candidates, int target, List<int> cand)
+        {
+            if (target < 0)
+            {
+                return;
+            }
+            if (target == 0)
+            {
+                if (cand.Count > 0)
+                {
+                    candidate.Add(new List<int>(cand)); //cand is reference!!!
+                }
+                return;
+            }
+            for (int i = index; i < candidates.Length; i++)
+            {
+                cand.Add(candidates[i]);
+                CombinationSum(i, candidates, target-candidates[i], cand);
+                cand.RemoveAt(cand.Count-1);
+            }
+        }
     }
 }
