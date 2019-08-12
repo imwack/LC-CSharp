@@ -393,7 +393,90 @@ namespace Solution
             }
             return sb.ToString();
         }
+        public bool CheckInclusion(string s1, string s2)
+        {
+            return true;
+        }
+        //003 
+        public int LengthOfLongestSubstring(string s)
+        {
+            int maxLen = 0, start = 0;
+            int[] first = new int[1024];
+            for (int i = 0; i < 1024; ++i)
+            {
+                first[i] = -1;
+            }
+            for (int i = 0; i < s.Length; ++i)
+            {
+                if (first[(int)s[i]] >= start)
+                {
+                    start = first[(int)s[i]] + 1;
+                }
 
+                maxLen = Math.Max(maxLen, i - start + 1);
+                first[(int)s[i]] = i;
+            }
 
+            return maxLen;
+        }
+        public int UniqueMorseRepresentations(string[] words)
+        {
+            string[] code =
+            {
+                ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
+                ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."
+            };
+            HashSet<string> s = new HashSet<string>();
+            foreach (string w in words)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (char c in w)
+                {
+                    sb.Append(code[c - 'a']);
+                }
+                if (!s.Contains(sb.ToString()))
+                    s.Add(sb.ToString());
+            }
+            return s.Count;
+        }
+
+        public string ToLowerCase(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in str)
+            {
+                if (c >= 'A')
+                    sb.Append((char)(c - 'A' + 'a'));
+                else
+                    sb.Append(c);
+            }
+            return sb.ToString();
+        }
+        public string LongestCommonPrefix(string[] strs)
+        {
+            if (strs.Length == 0)
+                return "";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < strs[0].Length; i++)
+            {
+                bool same = true;
+                for (int j = 1; j < strs.Length; j++)
+                {
+                    if (strs[j].Length < i || strs[j][i] != strs[0][i])
+                    {
+                        same = false;
+                        break;
+                    }
+                }
+                if (!same) break;
+                sb.Append(strs[0][i]);
+            }
+            return sb.ToString();
+        }
+        public int OrdinalOfDate(string date)
+        {
+            DateTime dt = DateTime.Parse(date);
+            return dt.DayOfYear;
+        }
     }
 }

@@ -8,23 +8,41 @@ namespace Solution
 {
     public partial class MySolution
     {
+        //965. Univalued Binary Tree
+        public bool IsUnivalTree(TreeNode root, int val)
+        {
+            if (root == null)
+                return true;
+            if (root.val != val)
+                return false;
+            return IsUnivalTree(root.left, val) && IsUnivalTree(root.right, val);
+
+        }
+        public bool IsUnivalTree(TreeNode root)
+        {
+            if (root == null)
+                return true;
+            return IsUnivalTree(root, root.val);
+        }
+
+
         //559. Maximum Depth of N-ary Tree
-        public class NodeN
+        public class Node
         {
             public int val;
-            public IList<NodeN> children;
+            public IList<Node> children;
 
-            public NodeN()
+            public Node()
             {
             }
 
-            public NodeN(int _val, IList<NodeN> _children)
+            public Node(int _val, IList<Node> _children)
             {
                 val = _val;
                 children = _children;
             }
 
-            public int GetDepth(NodeN root, int h)
+            public int GetDepth(Node root, int h)
             {
                 if (root == null)
                 {
@@ -38,7 +56,7 @@ namespace Solution
                 return maxh;
             }
 
-            public int MaxDepth(NodeN root)
+            public int MaxDepth(Node root)
             {
                 if (root == null)
                     return 0;
@@ -46,10 +64,10 @@ namespace Solution
             }
         }
 
-        public IList<IList<int>> LevelOrder(NodeN root)
+        public IList<IList<int>> LevelOrder(Node root)
         {
             IList<IList<int>> list = new List<IList<int>>();
-            Queue<NodeN> q = new Queue<NodeN>();
+            Queue<Node> q = new Queue<Node>();
             q.Enqueue(root);
             while (q.Count > 0)
             {
@@ -261,6 +279,10 @@ namespace Solution
                 return null;
             }
             return root;
+        }
+        public bool BtreeGameWinningMove(TreeNode root, int n, int x)
+        {
+            return true;
         }
 
     }

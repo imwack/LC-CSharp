@@ -174,20 +174,20 @@ namespace Solution
         }
     }
 
-    public class Node
+    public class GraphNode
     {
         public int id;
-        public List<Node> Next;
+        public List<GraphNode> Next;
     }
     public class Graph
     {
         public int Count; //节点数量
-        public Dictionary<int,Node> Nodes;
+        public Dictionary<int,GraphNode> Nodes;
 
         public Graph(int c)
         {
             Count = c;
-            Nodes = new Dictionary<int, Node>();
+            Nodes = new Dictionary<int, GraphNode>();
         }
     }
 
@@ -334,7 +334,26 @@ namespace Solution
             }
         }
     }
-    public class DataStructure
+    public class TopVotedCandidate
     {
+        public int[] persons;
+        public int[] times;
+        public TopVotedCandidate(int[] persons, int[] times)
+        {
+            this.persons = persons;
+            this.times = times;
+        }
+
+        public int Q(int t)
+        {
+            int l = 0, r = times.Length - 1;
+            while (l<r)
+            {
+                if (times[l] > t)
+                {
+                    
+                }
+            }
+        }
     }
 }

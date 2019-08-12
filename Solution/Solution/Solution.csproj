@@ -57,6 +57,7 @@
     <Compile Include="Queue\QueueSolution.cs" />
     <Compile Include="Search\Search.cs" />
     <Compile Include="Sort\Sort.cs" />
+    <Compile Include="Stack\StackSolution.cs" />
     <Compile Include="String\StringSolution.cs" />
     <Compile Include="Tree\Tree.cs" />
     <Compile Include="Trie.cs" />

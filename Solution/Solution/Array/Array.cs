@@ -10,6 +10,122 @@ namespace Solution
 {
     public partial class MySolution
     {
+        #region array
+        //015 
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            Array.Sort(nums);
+            IList<IList<int>> ret = new List<IList<int>>();
+            for (int i = 0; i < nums.Length; ++i)
+            {
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+                int cur = i;
+                int l = cur + 1, r = nums.Length - 1;
+                while (l < r && l < nums.Length)
+                {
+                    if (nums[cur] + nums[l] + nums[r] == 0)
+                    {
+                        IList<int> tmp = new List<int>() { nums[cur], nums[l], nums[r] };
+                        ret.Add(tmp);
+                        ++l;
+                        while (l < nums.Length && nums[l] == nums[l - 1])
+                        {
+                            ++l;
+                        }
+                    }
+                    else if (nums[cur] + nums[l] + nums[r] < 0)
+                        ++l;
+                    else
+                        --r;
+                }
+
+            }
+            return ret;
+        }
+
+
+        public int RepeatedNTimes(int[] A)
+        {
+            for (int i = 2; i < A.Length; i++)
+            {
+                if (A[i] == A[i - 1] || A[i] == A[i - 2])
+                {
+                    return A[i];
+                }
+            }
+            return A[0];
+        }
+
+        public int[] SortedSquares(int[] A)
+        {
+            int[] ret = new int[A.Length];
+            int mid = 0, cur = 0;
+            while (mid < A.Length && A[mid] < 0)
+            {
+                ++mid;
+            }
+            int l = mid - 1, r = mid;
+            while (l >= 0 && r < A.Length)
+            {
+                if (Math.Abs(A[l]) < Math.Abs(A[r]))
+                {
+                    ret[cur++] = A[l] * A[l];
+                    --l;
+                }
+                else
+                {
+                    ret[cur++] = A[r] * A[r];
+                    ++r;
+                }
+            }
+            while (l >= 0)
+            {
+                ret[cur++] = A[l] * A[l];
+                --l;
+            }
+            while (r < A.Length)
+            {
+                ret[cur++] = A[r] * A[r];
+                ++r;
+            }
+
+            return ret;
+        }
+
+        public int[] DiStringMatch(string S)
+        {
+            int[] ret = new int[S.Length + 1];
+            int l = 0, r = S.Length, cur = 0;
+            foreach (char c in S)
+            {
+                if (c == 'I')
+                {
+                    ret[cur++] = l++;
+                }
+                else
+                {
+                    ret[cur++] = r--;
+                }
+            }
+            ret[cur] = l;
+            return ret;
+        }
+
+        //852. Peak Index in a Mountain Array
+        public int PeakIndexInMountainArray(int[] A)
+        {
+            int index = 1;
+            while (A[index - 1] < A[index])
+            {
+                index++;
+            }
+            return index - 1;
+        }
+        #endregion
+    }
+    public partial class MySolution
+    {
         public int Search(int[] nums, int target)
         {
             int l = 0, r = nums.Length - 1;
@@ -245,6 +361,127 @@ namespace Solution
                 CombinationSum(i, candidates, target-candidates[i], cand);
                 cand.RemoveAt(cand.Count-1);
             }
+        }
+        public int MovesToMakeZigzag(int[] nums)
+        {
+            int odd = 0, even = 0;
+            for (int i = 0; i < nums.Length; i += 2)
+            {
+                if (i == 0)
+                {
+                    if (nums[i] >= nums[i + 1])
+                    {
+                        odd += nums[i] - nums[i + 1] + 1;
+                    }
+                }
+                else
+                {
+                    int minor;
+                    if (i + 1 < nums.Length)
+                        minor = Math.Min(nums[i - 1], nums[i + 1]);
+                    else
+                        minor = nums[i - 1];
+                    if (nums[i] >= minor)
+                    {
+                        odd += nums[i] - minor + 1;
+                    }
+                }
+            }
+            for (int i = 1; i < nums.Length; i += 2)
+            {
+
+                int minor;
+                if (i + 1 < nums.Length)
+                    minor = Math.Min(nums[i - 1], nums[i + 1]);
+                else
+                    minor = nums[i - 1];
+                if (nums[i] >= minor)
+                {
+                    even += nums[i]-minor + 1;
+                }
+            }
+            return Math.Min(odd, even);
+        }
+        public class SnapshotArray
+        {
+            Dictionary<int, List<int>> ops = new Dictionary<int, List<int>>();
+            int[] arr;
+            int cur = 0;
+            public SnapshotArray(int length)
+            {
+                arr = new int[length];
+            }
+
+            public void Set(int index, int val)
+            {
+                if (!ops.ContainsKey(cur))
+                    ops[cur] = new List<int>();
+                ops[cur].Add(index);
+                ops[cur].Add(val);
+            }
+
+            public int Snap()
+            {
+                cur++;
+                return cur - 1;
+            }
+
+            public int Get(int index, int snap_id)
+            {
+                int cur = -1;
+                for (int i = snap_id; i >= 0; i--)
+                {
+                    if (!ops.ContainsKey(i))
+                        continue;
+                    List<int> op = ops[i];
+                    for (int j = op.Count - 2; j >= 0; j -= 2)
+                    {
+                        if (op[j] == index)
+                        {
+                            cur = op[j + 1];
+                            break;
+                        }
+                    }
+                    if (cur != -1)
+                    {
+                        break;
+                    }
+                }
+                if (cur == -1) return 0;
+                return cur;
+            }
+        }
+        public int MaxIncreaseKeepingSkyline(int[][] grid)
+        {
+            List<int> row = new List<int>();
+            List<int> col = new List<int>();
+            int sum = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                row.Add(grid[i][0]);
+            }
+            for (int i = 0; i < grid[0].Length; i++)
+            {
+                col.Add(grid[0][i]);
+            }
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    row[i] = Math.Max(row[i], grid[i][j]);
+                    col[j] = Math.Max(col[j], grid[i][j]);
+                }
+            }
+
+
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    sum += Math.Min(row[i], col[j]) - grid[i][j];
+                }
+            }
+            return sum;
         }
     }
 }

@@ -273,5 +273,63 @@ namespace Solution
                 i++;
             }
         }
+
+        Dictionary<TreeNode, int>  rootRobCount = new Dictionary<TreeNode, int>();
+        public int Rob(TreeNode root)
+        {
+            return RobDfs(root);
+        }
+
+        public int RobDfs(TreeNode root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            if (rootRobCount.ContainsKey(root))
+            {
+                return rootRobCount[root];
+            }
+            int val1 =  root.val;
+            if (root.left != null)
+            {
+                val1 += Rob(root.left.left) + Rob(root.left.right);
+            }
+            if (root.right != null)
+            {
+                val1 += Rob(root.right.left) + Rob(root.right.right);
+            }
+            int val2 = Rob(root.left) + Rob(root.right);
+            rootRobCount[root] = Math.Max(val1, val2);
+            return Math.Max(val1, val2);
+        }
+
+        Dictionary<TreeNode, int> nodeDeepth = new Dictionary<TreeNode, int>();
+        public TreeNode SubtreeWithAllDeepest(TreeNode root)
+        {
+            if (root == null) return null;
+            int l = GetTreeHeight(root.left);
+            int r = GetTreeHeight(root.right);
+            if (l == r) return root;
+            if (l > r) return SubtreeWithAllDeepest(root.left);
+            return SubtreeWithAllDeepest(root.right);
+
+        }
+
+        public int GetTreeHeight(TreeNode root)
+        {
+            if (nodeDeepth.ContainsKey(root))
+            {
+                return nodeDeepth[root];
+            }
+            if (root == null) return 0;
+            int l = GetTreeHeight(root.left);
+            int r = GetTreeHeight(root.right);
+            int deep = Math.Max(l, r) + 1;
+            nodeDeepth[root] = deep;
+            return deep;
+        }
+
+
     }
 }
