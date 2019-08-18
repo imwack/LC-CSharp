@@ -331,5 +331,74 @@ namespace Solution
         }
 
 
+        public class Point1
+        {
+            public int X;
+            public int Y;
+
+            public Point1(int x, int y)
+            {
+                X = x;
+                Y = y;  
+            }
+        }
+
+        public int MaxDistance(int[][] grid)
+        {
+            Queue<Point1> queue = new Queue<Point1>();
+            int[,] distance = new int[grid.Length, grid[0].Length];
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        queue.Enqueue(new Point1(i, j));
+                    }
+                }
+            }
+            int dis = 0;
+            while (queue.Count > 0)
+            {
+                int n = queue.Count;
+                for (int i = 0; i < n; i++)
+                {
+                    Point1 front = queue.Dequeue();
+                    distance[front.X, front.Y] = dis;
+                    if (front.X - 1 >= 0 && grid[front.X - 1][front.Y] == 0)
+                    {
+                        queue.Enqueue(new Point1(front.X - 1, front.Y));
+                        grid[front.X - 1][front.Y] = 2;
+                    }
+                    if (front.X + 1 < grid.Length && grid[front.X + 1][front.Y] == 0)
+                    {
+                        queue.Enqueue(new Point1(front.X + 1, front.Y));
+                        grid[front.X + 1][front.Y] = 2;
+                    }
+                    if (front.Y - 1 >= 0 && grid[front.X][front.Y - 1] == 0)
+                    {
+                        queue.Enqueue(new Point1(front.X, front.Y - 1));
+                        grid[front.X][front.Y - 1] = 2;
+                    }
+                    if (front.Y + 1 < grid[0].Length && grid[front.X][front.Y + 1] == 0)
+                    {
+                        queue.Enqueue(new Point1(front.X, front.Y + 1));
+                        grid[front.X][front.Y + 1] = 2;
+                    }
+                }
+                dis++;
+            }
+            int maxDis = -1;
+            for (int i = 0; i < distance.GetLength(0); i++)
+            {
+                for (int j = 0; j < distance.GetLength(1); j++)
+                {
+                    if (distance[i, j] != 0 && distance[i, j] > maxDis)
+                        maxDis = distance[i, j];
+                }
+            }
+            return maxDis;
+        }
+
     }
 }

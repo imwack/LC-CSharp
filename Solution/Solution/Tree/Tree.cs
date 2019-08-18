@@ -285,5 +285,81 @@ namespace Solution
             return true;
         }
 
+        public int lastValue = 0;
+        public TreeNode BstToGst(TreeNode root)
+        {
+            //这道题从最又往左遍历就行了吧，右根左的顺序来遍历 每次加上前一个数就ok了吧
+            BstToGstDfs(root);
+            return root;
+        }
+
+        public void BstToGstDfs(TreeNode root)
+        {
+            if(root == null)return;
+            BstToGstDfs(root.right);
+            lastValue += root.val;
+            root.val = lastValue;
+            BstToGstDfs(root.left);
+        }
+        public TreeNode BstFromPreorder(int[] preorder)
+        {
+            return BstFromPreorder(preorder, 0, preorder.Length - 1);
+        }
+
+        public TreeNode BstFromPreorder(int[] preorder, int l, int r)
+        {
+            if (l > r) return null;
+            if (l == r) return new TreeNode(preorder[l]);
+            TreeNode root = new TreeNode(preorder[l]);
+            int rootVal = root.val;
+            int i = l;
+            for (i = l + 1; i <= r; i++)
+            {
+                if (preorder[i] > rootVal)
+                {
+                    break;
+                }
+            }
+            if (i != l + 1) //有左子树
+            {
+                root.left = BstFromPreorder(preorder, l + 1, i - 1);
+            }
+            if (i != r || preorder[r] > rootVal)     //有右子树
+            {
+                root.right = BstFromPreorder(preorder, i, r);
+            }
+            return root;
+        }
+
+        public int MaxLevelSum(TreeNode root)
+        {
+            if (root == null) return 0;
+            int maxVal = root.val, maxLevel = 1;
+            int curLevel = 0;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count>0)
+            {
+                curLevel++;
+                int n = queue.Count;
+                int sum = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    var front = queue.Dequeue();
+                    sum += front.val;
+                    if(front.left!=null) queue.Enqueue(front.left);
+                    if(front.right!=null) queue.Enqueue(front.right);
+                }
+                if (sum > maxVal)
+                {
+                    Console.WriteLine(sum);
+                    Console.WriteLine(maxVal);
+                    maxVal = sum;
+                    maxLevel = curLevel;
+                }
+            }
+
+            return maxLevel;
+        }
     }
 }

@@ -344,16 +344,6 @@ namespace Solution
             this.times = times;
         }
 
-        public int Q(int t)
-        {
-            int l = 0, r = times.Length - 1;
-            while (l<r)
-            {
-                if (times[l] > t)
-                {
-                    
-                }
-            }
-        }
+
     }
 }

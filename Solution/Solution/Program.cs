@@ -80,11 +80,11 @@ namespace Solution
             r1.right = r3;
             s.CountBinarySubstrings("10101");
 
-            int[][]arr = new int[6][]
-            {new int[] {1,1},new int[] {2,2},new int[] {1,1},new int[] {1,2},new int[] {1,1},new int[] {1,2}
+            int[][]arr = new int[3][]
+            {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.PancakeSort(new int[]{3,2,4,1});
+            s.MaxDistance(arr);
 
         }
     }

@@ -478,5 +478,40 @@ namespace Solution
             DateTime dt = DateTime.Parse(date);
             return dt.DayOfYear;
         }
+
+        public int CountCharacters(string[] words, string chars)
+        {
+            int len = 0;
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+            foreach (var c in chars)
+            {
+                if (!dic.ContainsKey(c)) dic[c] = 0;
+                dic[c]++;
+            }
+            foreach (var word in words)
+            {
+                if (CanSpell(dic, word))
+                    len += word.Length;
+            }
+            return len;
+        }
+
+        public bool CanSpell(Dictionary<char, int> dic, string word)
+        {
+            Dictionary<char, int> newDic = new Dictionary<char, int>();
+            foreach (var c in word)
+            {
+                if (!newDic.ContainsKey(c)) newDic[c] = 0;
+                newDic[c]++;
+            }
+            foreach (var pair in newDic)
+            {
+                if(!dic.ContainsKey(pair.Key)) return false;
+                if (dic[pair.Key] < pair.Value) return false;
+            }
+            return true;
+        }
+
+
     }
 }
