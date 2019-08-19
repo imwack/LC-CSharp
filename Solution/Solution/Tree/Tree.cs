@@ -361,5 +361,31 @@ namespace Solution
 
             return maxLevel;
         }
+
+        public TreeNode ConstructMaximumBinaryTree(int[] nums)
+        {
+            return ConstructMaximumBinaryTree(nums, 0, nums.Length - 1);
+        }
+
+        private TreeNode ConstructMaximumBinaryTree(int[] nums, int l, int r)
+        {
+            if (l > r) return null;
+            if(l == r) return new TreeNode(nums[l]);
+            int max = nums[l];
+            int maxIndex = l;
+            for (int i = l + 1; i <= r; i++)
+            {
+                if (nums[i] > max)
+                {
+                    max = nums[i];
+                    maxIndex = i;
+                }
+            }
+            
+            TreeNode root = new TreeNode(max);
+            root.left = ConstructMaximumBinaryTree(nums, l, maxIndex - 1);
+            root.right = ConstructMaximumBinaryTree(nums, maxIndex+1, r);
+            return root;
+        }
     }
 }
