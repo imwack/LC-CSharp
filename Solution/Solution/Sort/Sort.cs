@@ -215,5 +215,79 @@ namespace Solution
             }
             return result;
         }
+
+        public class Transcation
+        {
+            public string Name;
+            public string City;
+            public int Time;
+            public int Amount;
+
+            public Transcation(string s)
+            {
+                string[] arr = s.Split(',');
+                Name = arr[0];
+                Time = int.Parse(arr[1]);
+                Amount = int.Parse(arr[2]);
+                City = arr[3];
+            }
+
+            public override string ToString()
+            {
+                return Name + "," + Time+  "," + Amount + "," + City;
+            }
+        }
+        public IList<string> InvalidTransactions(string[] transactions)
+        {
+            IList<string> result = new List<string>();
+            List< Transcation > ts = new List<Transcation>();
+            List<Transcation> invalid = new List<Transcation>();
+
+            foreach (string transaction in transactions)
+            {
+                Transcation t = new Transcation(transaction);
+                    ts.Add(t);
+            }
+            ts.Sort((a,b)=> { return a.Time > b.Time ? 1 : -1; });
+            for(int i = 0;i <ts.Count;i++)
+            {
+                if (ts[i].Amount > 1000)
+                {
+                    invalid.Add(ts[i]);
+                    continue;
+                }
+                if (i > 0)
+                {
+                    bool isThisInvalid = false;
+                    for (int j = i - 1; j >=0; j--)
+                    {
+                        if (ts[j].City != ts[i].City && ts[j].Time + 60 > ts[i].Time && ts[j].Name == ts[i].Name)
+                        {
+                            invalid.Add(ts[i]);
+                            isThisInvalid = true;
+                            break;
+                        }
+                    }
+                    if(isThisInvalid)
+                        continue;
+                }
+                if (i < ts.Count -1)
+                {
+                    for (int j = i + 1; j < ts.Count; j++)
+                    {
+                        if (ts[j].City != ts[i].City && ts[i].Time + 60 > ts[j].Time && ts[j].Name == ts[i].Name)
+                        {
+                            invalid.Add(ts[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+            foreach (Transcation transcation in invalid)
+            {
+                result.Add(transcation.ToString());
+            }
+            return result;
+        }
     }
 }

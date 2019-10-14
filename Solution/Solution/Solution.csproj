@@ -46,6 +46,7 @@
     <Compile Include="Array\Array.cs" />
     <Compile Include="BitMap\BitMap.cs" />
     <Compile Include="DataStructure.cs" />
+    <Compile Include="Design\Design.cs" />
     <Compile Include="DP\DP.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="Math\Math.cs" />

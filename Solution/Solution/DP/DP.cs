@@ -8,6 +8,69 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int[] RollMax;
+        public int CNT = 0;
+        public int DieSimulator(int n, int[] rollMax)
+        {
+            RollMax = rollMax;
+            for (int i = 1; i <= 6; i++)
+                DfsDieSimulator(n-1, i, 1);
+            return CNT;
+        }
+        public void DfsDieSimulator(int n, int last, int countinue)
+        {
+            if (last != -1 && countinue > RollMax[last-1]) return;
+
+            if (n == 0)
+            {
+                CNT++;
+                CNT %= 1000000007;
+                return;
+            }
+            for (int i = 1; i <= 6; i++)
+            {
+                if (last == i)
+                    DfsDieSimulator(n - 1, i, countinue + 1);
+                else
+                    DfsDieSimulator(n - 1, i, 0);
+            }
+        }
+        public int MinDistance(string word1, string word2)
+        {
+            int[,] dp = new int[word1.Length, word2.Length];
+            for (int i = 0; i < word2.Length; i++)
+            {
+                if (word1[0] == word2[i])
+                {
+                    dp[0, i] = 1;
+                    for (int j = i + 1; j < word2.Length; j++)
+                        dp[0, j] = 1;
+                    break;
+                }
+            }
+            for (int i = 0; i < word1.Length; i++)
+            {
+                if (word2[0] == word1[i])
+                {
+                    dp[i, 0] = 1;
+                    for (int j = i + 1; j < word1.Length; j++)
+                        dp[j,0] = 1;
+                    break;
+                }
+            }
+            for (int row = 1; row < word1.Length; row++)
+            {
+                for (int col = 1; col < word2.Length; col++)
+                {
+                    dp[row, col] = Math.Max(dp[row - 1, col], dp[row, col - 1]);
+                    if (word1[row] == word2[col])
+                        dp[row, col] = Math.Max(dp[row - 1, col - 1] + 1, dp[row, col]);
+                }
+            }
+            int lcs = dp[word1.Length - 1, word2.Length - 1];
+            return Math.Max(word1.Length, word2.Length) - lcs;
+        }
+
         public bool DivisorGame(int N)
         {
             if (N == 1) return false;
@@ -69,5 +132,7 @@ namespace Solution
 
             return dp[target, d];
         }
+
+
     }
 }

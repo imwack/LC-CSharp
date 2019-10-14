@@ -68,7 +68,7 @@ namespace Solution
 
             Stopwatch stopwatch = new Stopwatch();
             string[] strs = new[] {"aa", "bb", "ab", "ba"};
-            int[][] A = new int[][] {new int[] {0, 0, 1, 1}, new int[] { 1, 0, 1, 0}, new int[] { 1, 1, 0, 0}};
+            int[][] A = new int[][] {new int[] {1,2}, new int[] { 3}, new int[] {3}, new int[0] };
             MySolution s = new MySolution();
             int[] num = new[] {-1, 0, 1, 2, -1, -4};
             int[] a = new[] {4, -1, 4, -2, 4};
@@ -84,8 +84,7 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.MaxDistance(arr);
-
+            s.DieSimulator(2,new int[] { 1, 1, 2, 2, 2, 3});
         }
     }
 }

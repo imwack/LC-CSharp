@@ -9,6 +9,28 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int BalancedStringSplit(string s)
+        {
+            int l = 0, r = 0, cnt=0;
+            foreach(char c in s)
+            {
+                if (c == 'L')
+                {
+                    l++;
+                }
+                else
+                {
+                    r++;
+                }
+                if (l == r)
+                {
+                    l = 0;
+                    r = 0;
+                    cnt++;
+                }
+            }
+            return cnt + 1;
+        }
         public string MostCommonWord(string paragraph, string[] banned)
         {
             Dictionary<string, int> dic = new Dictionary<string, int>();
@@ -503,7 +525,7 @@ namespace Solution
             {
                 if (!newDic.ContainsKey(c)) newDic[c] = 0;
                 newDic[c]++;
-            }
+            } 
             foreach (var pair in newDic)
             {
                 if(!dic.ContainsKey(pair.Key)) return false;
@@ -511,7 +533,58 @@ namespace Solution
             }
             return true;
         }
-
+        public int[] NumSmallerByFrequency(string[] queries, string[] words)
+        {
+            List<int> result = new List<int>();
+            List<int> f1 = new List<int>();
+            List<int> f2 = new List<int>();
+            foreach (var q in queries)
+            {
+                int[] cnt = new int[26];
+                foreach (char c in q)
+                {
+                    cnt[c - 'a'] ++;
+                }
+                for (int i = 0; i < 26; i++)
+                {
+                    if (cnt[i] != 0)
+                    {
+                        f1.Add(cnt[i]);
+                        break;
+                    }
+                }
+            }
+            foreach (var q in words)
+            {
+                int[] cnt = new int[26];
+                foreach (char c in q)
+                {
+                    cnt[c - 'a']++;
+                }
+                for (int i = 0; i < 26; i++)
+                {
+                    if (cnt[i] != 0)
+                    {
+                        f2.Add(cnt[i]);
+                        break;
+                    }
+                }
+            }
+            f2.Sort();
+            foreach (var cnt in f1)
+            {
+                int i = 0;
+                for (; i < f2.Count; i++)
+                {
+                    if (f2[i] > cnt)
+                    {
+                        break;
+                    }
+                }
+                result.Add( f2.Count - i);
+            }
+            return result.ToArray();
+        }
 
     }
 }

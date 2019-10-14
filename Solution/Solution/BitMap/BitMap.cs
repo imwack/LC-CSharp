@@ -40,5 +40,25 @@ namespace Solution.BitMap
             }
             return cur;
         }
+        public int SingleNumber(int[] nums)
+        {
+            int[] bits = new int[32];
+            foreach (int n in nums)
+            {
+                int c = n;
+                for (int i = 0; i < 32; i++)
+                {
+                    int bit = c & 1;
+                    bits[i] += bit;
+                    c = c >> 1;
+                }
+            }
+            int result = 0;
+            for (int i = 31; i >= 0; i--)
+            {
+                result = result << 1 + (bits[i] % 3);
+            }
+            return result;
+        }
     }
 }

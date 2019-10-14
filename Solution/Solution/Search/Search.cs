@@ -9,6 +9,81 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public IList<IList<int>> QueensAttacktheKing(int[][] queens, int[] king)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            int[,] array = new int[8,8];
+            for (int i = 0; i < queens.Length; i++)
+            {
+                array[queens[i][0], queens[i][1]] = 1; //mark queue
+            }
+            int x = king[0], y = king[1];
+            for (int i = x; i >= 0; i--)
+            {
+                if (array[i, y] == 1)
+                {
+                    result.Add(new List<int>() { i,y});
+                    break;
+                }
+            }
+            for (int i = x; i < 8; i++)
+            {
+                if (array[i, y] == 1)
+                {
+                    result.Add(new List<int>() { i, y });
+                    break;
+                }
+            }
+            for (int i = y; i >= 0; i--)
+            {
+                if (array[x, i] == 1)
+                {
+                    result.Add(new List<int>() { x, i});
+                    break;
+                }
+            }
+            for (int i = y; i < 8; i++)
+            {
+                if (array[x, i] == 1)
+                {
+                    result.Add(new List<int>() { x, i });
+                    break;
+                }
+            }
+            for (int i = x,j=y; i>=0 &&j>=0; i--,j--)
+            {
+                if (array[i, j] == 1)
+                {
+                    result.Add(new List<int>() { i, j });
+                    break;
+                }
+            }
+            for (int i = x, j = y; i >= 0 && j <8; i--, j++)
+            {
+                if (array[i, j] == 1)
+                {
+                    result.Add(new List<int>() { i, j });
+                    break;
+                }
+            }
+            for (int i = x, j = y; i <8 && j >= 0; i++, j--)
+            {
+                if (array[i, j] == 1)
+                {
+                    result.Add(new List<int>() { i, j });
+                    break;
+                }
+            }
+            for (int i = x, j = y; i <8 && j < 8; i++, j++)
+            {
+                if (array[i, j] == 1)
+                {
+                    result.Add(new List<int>(){ i, j });
+                    break;
+                }
+            }
+            return result;
+        }
         public int OrangesRotting(int[][] grid)
         {
             int row = grid.Length;
@@ -399,6 +474,7 @@ namespace Solution
             }
             return maxDis;
         }
+
 
     }
 }

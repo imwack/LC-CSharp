@@ -331,5 +331,35 @@ namespace Solution
             }
             return cnt;
         }
+
+        public int NumPrimeArrangements(int n)
+        {
+            int cnt = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                if (IsPrime(i)) cnt++;
+            }
+            int notPirme = n - cnt;
+            Console.WriteLine(cnt);
+            long result = 1;
+            for (int i = 1; i < cnt; i++)
+            {
+                result = (result*i)%100000007;
+            }
+            for (int i = 1; i < notPirme; i++)
+            {
+                result = (result * i) % 100000007;
+            }
+            return (int)result;
+        }
+        public bool IsPrime(int n)
+        {
+            for (int i = 2; i <= n / 2; i++)
+            {
+                if (n % i == 0)
+                    return false;
+            }
+            return true;
+        }
     }
 }

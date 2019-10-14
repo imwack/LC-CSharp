@@ -11,6 +11,66 @@ namespace Solution
     public partial class MySolution
     {
         #region array
+        IList<IList<int>> path = new List<IList<int>>();
+
+        public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
+        {
+            IList<int> currentPath = new List<int>() {0};
+            path.Add(currentPath);
+            DfsAllPathsSourceTarget(graph, 0);
+            return path;
+        }
+
+        public void DfsAllPathsSourceTarget(int[][] graph, int i)
+        {
+            if (i == graph.Length)
+            {
+                return;
+            }
+            int[] g = graph[i];
+            IList<IList<int>> currentPath = new List<IList<int>>();
+            foreach(var p in path)
+                currentPath.Add(new List<int>(p));
+            path.Clear();
+            foreach (var p in currentPath)
+            {
+                foreach (var point in g)
+                {
+                    if (p.Last() != point)
+                    {
+                        IList<int> cur = new List<int>(p);
+                        cur.Add(point);
+                        path.Add(cur);
+                    }
+                }
+            }
+            DfsAllPathsSourceTarget(graph, i + 1);
+        }
+
+        public int MinAddToMakeValid(string S)
+        {
+            int left = 0, cnt = 0;
+            foreach (char c in S)
+            {
+                if (c == '(')
+                {
+                    left++;
+                }
+                else
+                {
+                    if (left > 0)
+                    {
+                        left--;
+                    }
+                    else
+                    {
+                        cnt++;
+                    }
+                }
+            }
+            return cnt;
+        }
+
         //015 
         public IList<IList<int>> ThreeSum(int[] nums)
         {

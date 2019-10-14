@@ -44,5 +44,44 @@ namespace Solution
             }
             return result;
         }
+        public ListNode RemoveZeroSumSublists(List<int> values )
+        {
+            //List<int> values = new List<int>();
+            //ListNode h = head;
+            //while (h!=null)
+            //{
+            //    if(h.val != 0)
+            //        values.Add(h.val);
+            //    h = h.next;
+            //}
+
+            for (int start = 0; start < values.Count; start++)
+            {
+                int sum = 0, i=start;
+                for (; i < values.Count; i++)
+                {
+                    sum += values[i];
+                    if (sum == 0)
+                    {
+                        List<int> newValue = new List<int>();
+                        for(int j=0;j<start;j++)
+                            newValue.Add(values[j]);
+                        for(int j = i+1;j<values.Count;j++)
+                            newValue.Add(values[j]);
+                        values = newValue;
+                        start = -1;
+                        break;
+                    }
+                }
+            }
+            ListNode newListNode = new ListNode(0);
+            ListNode newHead = newListNode;
+            foreach (var i in values)
+            {
+                newHead.next = new ListNode(i);
+                newHead = newHead.next;
+            }
+            return newListNode.next;
+        }
     }
 }
