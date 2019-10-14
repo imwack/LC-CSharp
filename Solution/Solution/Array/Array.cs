@@ -11,6 +11,35 @@ namespace Solution
     public partial class MySolution
     {
         #region array
+        public int EqualSubstring(string s, string t, int maxCost)
+        {
+            int maxLen = 0, currentCost = 0;
+            List<int> cost = new List<int>(s.Length);
+            for (int i = 0; i < s.Length; i++)
+            {
+                cost.Add(Math.Abs(s[i] - t[i]));
+            }
+            int start = 0, end = 0;
+            while (end < s.Length)
+            {
+                if (currentCost > maxCost)
+                {
+                    currentCost -= cost[start];
+                    start++;
+                }
+                else
+                {
+                    currentCost += cost[end];
+                    end++;
+                }
+                if (currentCost <= maxCost)
+                {
+                    maxLen = Math.Max(maxLen, end - start);
+                }
+            }
+            return maxLen;
+        }
+
         IList<IList<int>> path = new List<IList<int>>();
 
         public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
