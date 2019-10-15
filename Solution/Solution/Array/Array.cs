@@ -10,6 +10,127 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public IList<IList<int>> FourSum(int[] nums, int target)
+        {
+            IList < IList < int >> result = new List<IList<int>>();
+            Array.Sort(nums);
+
+            for (int i = 0; i < nums.Length-3; i++)
+            {
+                if(i>0 && nums[i]==nums[i-1]) //去重
+                    continue;
+                int tar = target - nums[i];
+                var xx = ThreeSum(nums, i + 1, nums.Length - 1, tar);
+                foreach (IList<int> x in xx)
+                {
+                    result.Add(x);
+                }
+            }
+            return result;
+        }
+        public IList<IList<int>> ThreeSum(int[] nums, int l, int r, int tar)
+        {
+            int last = nums[l - 1];
+            IList<IList<int>> result = new List<IList<int>>();
+            for (int i = l; i <= r-2; i++)
+            {
+                if (i > l && nums[i] == nums[i - 1])
+                    continue; //去重
+                int target = tar - nums[i];
+                var two = TwoSum1(nums, i + 1, r, target);
+                if (two.Count != 0)
+                {
+                    foreach (List<int> list in two)
+                    {
+                        list.Add(last);
+                        result.Add(list);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i > 0 && nums[i] == nums[i - 1])
+                    continue; //去重
+                int target = nums[i];
+                var two = TwoSum1(nums, i + 1, nums.Length - 1, -target);
+                if (two.Count != 0)
+                {
+                    foreach (List<int> list in two)
+                    {
+                        result.Add(list);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<List<int>> TwoSum1(int[] nums, int l, int r, int tar)
+        {
+            int cur = nums[l - 1];
+            List<List<int>> result = new List<List<int>>();
+
+
+            while (l<r)
+            {
+
+                if (nums[l] + nums[r] == tar)
+                {
+                    result.Add(new List<int>() { cur, nums[l],nums[r]});
+                    l++;
+                    while (l<r && nums[l]==nums[l-1])
+                    {
+                        l++;
+                    }
+                    r--;
+                    while (r>l && nums[r]==nums[r+1])
+                    {
+                        r--;
+                    }
+                }
+                else if (nums[l] + nums[r] < tar)
+                    l++;
+                else
+                    r--;
+            }
+            return result;
+        }
+
+        public int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> pos = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                pos[nums[i]] = i;
+            }
+            Array.Sort(nums);
+            int l = 0, r = nums.Length - 1;
+            while (l < r)
+            {
+                if (nums[l] + nums[r] == target)
+                {
+                    return new int[] { pos[nums[l]], pos[nums[r]] };
+                }
+                if (nums[l] + nums[r] < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    r--;
+                }
+
+            }
+            return null;
+        }
+
+
         #region array
         public int EqualSubstring(string s, string t, int maxCost)
         {
@@ -101,38 +222,7 @@ namespace Solution
         }
 
         //015 
-        public IList<IList<int>> ThreeSum(int[] nums)
-        {
-            Array.Sort(nums);
-            IList<IList<int>> ret = new List<IList<int>>();
-            for (int i = 0; i < nums.Length; ++i)
-            {
-                if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-                int cur = i;
-                int l = cur + 1, r = nums.Length - 1;
-                while (l < r && l < nums.Length)
-                {
-                    if (nums[cur] + nums[l] + nums[r] == 0)
-                    {
-                        IList<int> tmp = new List<int>() { nums[cur], nums[l], nums[r] };
-                        ret.Add(tmp);
-                        ++l;
-                        while (l < nums.Length && nums[l] == nums[l - 1])
-                        {
-                            ++l;
-                        }
-                    }
-                    else if (nums[cur] + nums[l] + nums[r] < 0)
-                        ++l;
-                    else
-                        --r;
-                }
-
-            }
-            return ret;
-        }
-
+ 
 
         public int RepeatedNTimes(int[] A)
         {

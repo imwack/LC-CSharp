@@ -84,7 +84,7 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.DieSimulator(2,new int[] { 1, 1, 2, 2, 2, 3});
+            s.FourSum(new int[] { 0,0,0,0 }, 0);
         }
     }
 }
