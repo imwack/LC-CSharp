@@ -10,6 +10,38 @@ namespace Solution
 {
     public partial class MySolution
     {
+        Dictionary<int, List<int>> Combination = new Dictionary<int, List<int>>();
+        IList<IList<int>> CombinationResult = new List<IList<int>>();
+        public IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            Array.Sort(candidates);
+            List<int> cur = new List<int>();
+            CombinationSum(candidates, target, 0, cur);
+            return CombinationResult;
+        }
+
+        private void CombinationSum(int[] candidates, int target, int start, List<int> cur)
+        {
+            if (target < 0) return;
+            if (target == 0)
+            {
+                CombinationResult.Add(new List<int>(cur));
+                return;
+            }
+            if (Combination.ContainsKey(target))
+            {
+                var list = new List<int>(cur);
+                list.AddRange(Combination[target]);
+                CombinationResult.Add(list);
+                return;
+            }
+            for (int i = start; i < candidates.Length; i++)
+            {
+                cur.Add(candidates[i]);
+                CombinationSum(candidates, target - candidates[i], i, cur);
+                cur.RemoveAt(cur.Count - 1);
+            }
+        }
         public IList<IList<int>> FourSum(int[] nums, int target)
         {
             IList < IList < int >> result = new List<IList<int>>();
@@ -512,35 +544,7 @@ namespace Solution
 
             return Math.Abs(a - c) + Math.Abs(a - b) - 2;
         }
-        IList<IList<int>> candidate = new List<IList<int>>();
-        public IList<IList<int>> CombinationSum(int[] candidates, int target)
-        {
-            Array.Sort(candidates);
-            CombinationSum(0, candidates, target, new List<int>());
-            return candidate;
-        }
 
-        public void CombinationSum(int index, int[] candidates, int target, List<int> cand)
-        {
-            if (target < 0)
-            {
-                return;
-            }
-            if (target == 0)
-            {
-                if (cand.Count > 0)
-                {
-                    candidate.Add(new List<int>(cand)); //cand is reference!!!
-                }
-                return;
-            }
-            for (int i = index; i < candidates.Length; i++)
-            {
-                cand.Add(candidates[i]);
-                CombinationSum(i, candidates, target-candidates[i], cand);
-                cand.RemoveAt(cand.Count-1);
-            }
-        }
         public int MovesToMakeZigzag(int[] nums)
         {
             int odd = 0, even = 0;
