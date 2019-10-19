@@ -10,7 +10,34 @@ namespace Solution
 {
     public partial class MySolution
     {
-        Dictionary<int, List<int>> Combination = new Dictionary<int, List<int>>();
+
+        IList<IList<int>> CombinationSum2Result = new List<IList<int>>();
+        public IList<IList<int>> CombinationSum2(int[] candidates, int target)
+        {
+            Array.Sort(candidates);
+            CombinationSum2(candidates, 0, target, new List<int>());
+            return CombinationSum2Result;
+        }
+
+        private void CombinationSum2(int[] candidates, int start, int target, List<int> path)
+        {
+            if (target < 0) return;
+            if (target == 0)
+            {
+                CombinationSum2Result.Add(new List<int>(path));
+                return;
+            }
+            for (int i = start; i < candidates.Length; i++)
+            {
+                if (i > start && candidates[i] == candidates[i - 1]) continue;
+
+                if (candidates[i] > target) return;
+                path.Add(candidates[i]);
+                CombinationSum2(candidates, i + 1, target - candidates[i], path);
+                path.RemoveAt(path.Count - 1);
+            }
+        }
+
         IList<IList<int>> CombinationResult = new List<IList<int>>();
         public IList<IList<int>> CombinationSum(int[] candidates, int target)
         {
@@ -26,13 +53,6 @@ namespace Solution
             if (target == 0)
             {
                 CombinationResult.Add(new List<int>(cur));
-                return;
-            }
-            if (Combination.ContainsKey(target))
-            {
-                var list = new List<int>(cur);
-                list.AddRange(Combination[target]);
-                CombinationResult.Add(list);
                 return;
             }
             for (int i = start; i < candidates.Length; i++)
