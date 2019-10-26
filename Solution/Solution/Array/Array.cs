@@ -10,6 +10,61 @@ namespace Solution
 {
     public partial class MySolution
     {
+        List<int> Father = new List<int>();
+
+        public int Find(int x)
+        {
+            int f = Father[x];
+            if (f != x)
+            {
+                Father[x] = Find(f);
+            }
+            return Father[x];
+        }
+
+        public void Union(int x, int y)
+        {
+            int fx = Find(x);
+            int fy = Find(y);
+            if (fx != fy)
+            {
+                Father[fx] = fy;
+            }
+        }
+        public string SmallestStringWithSwaps(string s, IList<IList<int>> pairs)
+        {
+            int len = s.Length;
+            for(int i = 0;i<s.Length;i++)
+                Father.Add(i);//默认自己
+            foreach (IList<int> pair in pairs) //已经合并完成， 接下来吧合并的集合里的元素排序
+            {
+                Union(pair[0], pair[1]);
+            }
+            Dictionary<int, List<char>> setCharset = new Dictionary<int, List<char>>();
+            Dictionary<int, int> setIndex = new Dictionary<int, int>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                int f = Find(i);
+                if (!setCharset.ContainsKey(f))
+                {
+                    setCharset[f] = new List<char>();
+                    setIndex[f] = 0;
+                }
+                setCharset[f].Add(s[i]);
+            }
+            foreach (var list in setCharset.Values)
+            {
+                list.Sort();
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+            {
+                int f = Find(i);
+                sb.Append(setCharset[f][setIndex[f]++]);
+            }
+            return sb.ToString();
+        }
 
         IList<IList<int>> CombinationSum2Result = new List<IList<int>>();
         public IList<IList<int>> CombinationSum2(int[] candidates, int target)
