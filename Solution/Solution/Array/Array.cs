@@ -10,6 +10,30 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0)
+                return 0;
+            int cur = nums[0], cnt = 1, write = 1;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] == cur)
+                {
+                    cnt++;
+                }
+                else
+                {
+                    cnt = 1;
+                    cur = nums[i];
+                }
+                if (cnt <= 2)
+                {
+                    nums[write++] = cur;
+                }
+            }
+            return write;
+        }
+
         public bool SearchMatrix(int[][] matrix, int target)
         {
             if (matrix.Length <= 0) return false;
