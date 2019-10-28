@@ -60,7 +60,7 @@ namespace Solution
         static void Main(string[] args)
         {
             Contest.Contest con  = new Contest.Contest();
-            con.BalancedString("WQWRQQQW");
+            con.MaxLength(new List<string>() { "un", "iq", "ue" });
             //Test();
             MyLinkedList linkedList = new MyLinkedList();
             linkedList.AddAtHead(1);

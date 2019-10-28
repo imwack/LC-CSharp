@@ -10,6 +10,23 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public bool SearchMatrix(int[][] matrix, int target)
+        {
+            if (matrix.Length <= 0) return false;
+            int row = 0, col = matrix[0].Length-1;
+            while (row<matrix.Length && col>=0)
+            {
+                if (matrix[row][col] == target)
+                    return true;
+                else if (matrix[row][col] < target)
+                    row++;
+                else col--;
+
+            }
+            return false;
+        }
+
+
         List<int> Father = new List<int>();
 
         public int Find(int x)

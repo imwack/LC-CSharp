@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Array\Array.cs" />
     <Compile Include="BitMap\BitMap.cs" />
-    <Compile Include="Contest\Class1.cs" />
+    <Compile Include="Contest\Contest.cs" />
     <Compile Include="DataStructure.cs" />
     <Compile Include="Design\Design.cs" />
     <Compile Include="DP\DP.cs" />
