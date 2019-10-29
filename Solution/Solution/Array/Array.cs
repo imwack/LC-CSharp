@@ -10,6 +10,24 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int MinimumTotal(IList<IList<int>> triangle)
+        {
+
+            int[] min = new int[triangle.Count];
+            for (int i = 0; i < triangle.Count; i++)
+            {
+                min[i] = triangle[triangle.Count - 1][i];
+            }
+            for (int i = triangle.Count - 2; i >= 0; i--)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    min[j] = Math.Min(min[j], min[j + 1]) + triangle[i][j];
+                }
+            }
+            return min[0];
+        }
+
         public int RemoveDuplicates(int[] nums)
         {
             if (nums.Length == 0)

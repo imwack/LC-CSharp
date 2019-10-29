@@ -8,6 +8,31 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public TreeNode BuildTree(int[] inorder, int[] postorder)
+        {
+            return BuildTree(inorder, postorder, 0, inorder.Length - 1, 0, postorder.Length - 1);
+        }
+
+        public TreeNode BuildTree(int[] inorder, int[] postorder, int l1, int r1, int l2, int r2)
+        {
+            if (l1 > r1 || l2 > r2) return null;
+            if (l1 == r1 || l2 == r2) return new TreeNode(postorder[r2]);
+            TreeNode root = new TreeNode(postorder[r2]); //最后一个是root
+            int index = l1;
+            for (int i = l1; i <= r1; i++)
+            {
+                if (inorder[i] == root.val)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            int leftLen = index - l1;
+            root.left = BuildTree(inorder, postorder, l1, index - 1, l2, l2 + leftLen - 1);
+            root.right = BuildTree(inorder, postorder, index + 1, r1, l2 + leftLen, r2 - 1);
+            return root;
+        }
+
         //965. Univalued Binary Tree
         public bool IsUnivalTree(TreeNode root, int val)
         {
