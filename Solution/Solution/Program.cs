@@ -86,13 +86,7 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.SmallestStringWithSwaps("dcab", new List<IList<int>>()
-            {
-                new List<int> { 0, 3 },
-                new List<int> {1,2 },
-                new List<int> {0,2 }
-            }
-            );
+            s.NextPermutation(new int[] { 1,2,3});
         }
     }
 }

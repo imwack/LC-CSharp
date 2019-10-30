@@ -368,41 +368,7 @@ namespace Solution
                 }
             }
             return ret;
-        }
-
-        //031
-        public int[] NextPermutation(int[] nums)
-        {
-            bool orderFlag = true;
-            int index = 0, index2 = 0;
-            for (int i = 0; i < nums.Length - 1; i++)
-            {
-                if (nums[i] > nums[i + 1])
-                {
-                    orderFlag = false;
-                    index = i;
-                    break;
-                }
-            }
-            if (orderFlag)
-            {
-                Array.Sort(nums);
-                return nums;
-            }
-            for (int i = index + 1; i < nums.Length; ++i)
-            {
-                if (nums[i] >= nums[index]) continue;
-                index2 = i;
-                break;
-            }
-
-            int temp = nums[index2];
-            nums[index2] = nums[index];
-            nums[index] = temp;
-            Array.Sort(nums, index + 1, nums.Length - index - 1);
-
-            return nums;
-        }
+        } 
 
         //029
         public int DivideInteger(int a, int b)

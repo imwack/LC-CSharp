@@ -10,6 +10,49 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public void NextPermutation(int[] nums)
+        {
+            bool find = false;
+            int index = 0;
+            for (int i = nums.Length - 2; i >= 0; i--)
+            {
+                if (nums[i] < nums[i + 1])
+                {
+                    find = true;
+                    index = i;
+                    break;
+                }
+            }
+            if (!find) //降序
+            {
+                Reverse(nums,0,nums.Length-1);
+            }
+            else
+            {
+                int j = index;
+                while (j+1<nums.Length && nums[j+1]>nums[index])
+                {
+                    j++;
+                }
+                int temp = nums[index];
+                nums[index] = nums[j];
+                nums[j] = temp;
+                Reverse(nums,index+1,nums.Length-1);
+            }
+        }
+
+        public void Reverse(int[] nums, int l, int r)
+        {
+            while (l < r)
+            {
+                int temp = nums[l];
+                nums[l] = nums[r];
+                nums[r] = temp;
+                l++;
+                r--;
+            }
+        }
+
         public int MinimumTotal(IList<IList<int>> triangle)
         {
 
