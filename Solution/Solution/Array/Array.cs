@@ -10,25 +10,49 @@ namespace Solution
 {
     public partial class MySolution
     {
-        //public bool Search(int[] nums, int target)
-        //{
-        //    int l = 0, r = nums.Length - 1;
-        //    while (l<r)
-        //    {
-        //        int mid = (r - l)/2;
-        //        if (nums[mid] == target) return true;
-        //        if (nums[mid] < target)
-        //        {
-        //            if (nums[r] < target) r = mid - 1;
-        //            else l = mid + 1;
-        //        }
-        //        else
-        //        {
-        //            if(nums[l]>target) 
-        //        }
-        //    }
-        //    return false;
-        //}
+        public IList<int> MajorityElement(int[] nums)
+        {
+            IList<int> res = new List<int>();
+            if (nums.Length == 0) return res;
+            int a = 0, ca = 0, b = 0, cb = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == a)
+                {
+                    ca++; ;
+                }
+                else if (nums[i] == b)
+                {
+                    cb++;
+                }
+                else if (ca == 0)
+                {
+                    a = nums[i];
+                    ca = 1;
+                }
+                else if (cb == 0)
+                {
+                    b = nums[i];
+                    cb = 1;
+                }
+                else
+                {
+                    ca--;
+                    cb--;
+                }
+            }
+            //here we got a & b we need to check the count
+            ca = 0;
+            cb = 0;
+            foreach (var num in nums)
+            {
+                if (num == a) ca++;
+                if (num == b) cb++;
+            }
+            if (ca > nums.Length / 3) res.Add(a);
+            if (cb > nums.Length / 3 && a != b) res.Add(b);
+            return res;
+        }
         public IList<string> SummaryRanges(int[] nums)
         {
             IList<string> list = new List<string>();
