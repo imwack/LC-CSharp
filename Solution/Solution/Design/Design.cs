@@ -6,7 +6,53 @@ using System.Threading.Tasks;
 
 namespace Solution.Design
 {
-    
+    public class Player : IComparable
+    {
+        public int id;
+        public int score;
+
+        public Player(int i, int s)
+        {
+            id = i;
+            score = s;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return ((Player) obj).score > score ? -1 : 1;
+        }
+    }
+    public class Leaderboard
+    {
+        SortedList<Player,int>  list = new SortedList<Player, int>();
+        public Leaderboard()
+        {
+
+        }
+
+        public void AddScore(int playerId, int score)
+        {
+            Player p = new Player(playerId, score);
+            list.Add(p,score);
+        }
+
+        public int Top(int K)
+        {
+            int cnt = 0, i = 0;
+            foreach (var l in list)
+            {
+                i++;
+                cnt += l.Value;
+                if(i == K) break;
+            }
+            return cnt;
+        }
+
+        public void Reset(int playerId)
+        {
+
+        }
+    }
 
     public partial class MySolution
     {

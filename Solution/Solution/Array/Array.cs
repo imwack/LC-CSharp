@@ -10,6 +10,78 @@ namespace Solution
 {
     public partial class MySolution
     {
+        //public bool Search(int[] nums, int target)
+        //{
+        //    int l = 0, r = nums.Length - 1;
+        //    while (l<r)
+        //    {
+        //        int mid = (r - l)/2;
+        //        if (nums[mid] == target) return true;
+        //        if (nums[mid] < target)
+        //        {
+        //            if (nums[r] < target) r = mid - 1;
+        //            else l = mid + 1;
+        //        }
+        //        else
+        //        {
+        //            if(nums[l]>target) 
+        //        }
+        //    }
+        //    return false;
+        //}
+        public IList<string> SummaryRanges(int[] nums)
+        {
+            IList<string> list = new List<string>();
+            if (nums.Length == 0)
+                return list;
+            string str;
+
+            int start = nums[0], end = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] == end + 1)
+                {
+                    end = nums[i];
+                }
+                else
+                {
+                    if (start == end)
+                        str = start.ToString();
+                    else
+                        str = start.ToString() + "->" + end.ToString();
+                    list.Add(str);
+                    start = nums[i];
+                    end = nums[i];
+                }
+            }
+            if (start == end)
+                str = start.ToString();
+            else
+                str = start.ToString() + "->" + end.ToString();
+            list.Add(str);
+            return list;
+        }
+
+        public int MinSubArrayLen(int s, int[] nums)
+        {
+            int sum = 0, len = 0;
+            int l = 0, r = 0;
+            while (r < nums.Length)
+            {
+                sum += nums[r];
+                if (sum >= s)
+                {
+                    while (sum > s)
+                    {
+                        sum -= nums[l++];
+                    }
+                    if (len == 0) { len = r - l + 1 +1; }
+                    else { len = Math.Min(r - l + 1 +1 , len); }
+                }
+                r++;
+            }
+            return len;
+        }
         public void NextPermutation(int[] nums)
         {
             bool find = false;

@@ -86,7 +86,7 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.NextPermutation(new int[] { 1,2,3});
+            s.MinSubArrayLen(11,new int[] { 1,2,3,4,5});
         }
     }
 }
