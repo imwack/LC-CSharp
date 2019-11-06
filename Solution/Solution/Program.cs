@@ -86,7 +86,16 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            s.MinSubArrayLen(11,new int[] { 1,2,3,4,5});
+            ListNode l1 = new ListNode(2);
+            ListNode l2 = new ListNode(7);
+            l1.next = l2;
+            ListNode l3 = new ListNode(4);
+            l2.next = l3;
+            ListNode l4 = new ListNode(3);
+            l3.next = l4;
+            ListNode l5 = new ListNode(5);
+            l4.next = l5;
+            s.NextLargerNodes(l1);
         }
     }
 }

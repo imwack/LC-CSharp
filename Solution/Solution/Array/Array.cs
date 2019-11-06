@@ -13,10 +13,16 @@ namespace Solution
         public bool Search2(int[] nums, int target)
         {
             int l = 0, r = nums.Length - 1;
-            while (l<r)
+            while (l <= r)
             {
-                int mid = (r + l)/2;
+                int mid = (r + l) / 2;
                 if (nums[mid] == target) return true;
+                if (nums[l] == nums[r] && nums[l] == nums[mid])
+                {
+                    l++;
+                    r--;
+                    continue;
+                }
                 if (nums[l] <= nums[mid]) //左边有序
                 {
                     if (nums[l] <= target && nums[mid] > target)

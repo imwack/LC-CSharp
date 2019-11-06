@@ -8,6 +8,42 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int LongestCommonSubsequence(string text1, string text2)
+        {
+            if (text1.Length == 0 || text2.Length == 0) return 0;
+            int[,] dp = new int[text1.Length, text2.Length];
+            bool find = false;
+            for (int i = 0; i < text1.Length; i++)
+            {
+                if (find || text2[0] == text1[i])
+                {
+                    find = true;
+                    dp[i, 0] = 1;
+                }
+            }
+            find = false;
+            for (int i = 1; i < text2.Length; i++)
+            {
+                if (find || text1[0] == text2[i])
+                {
+                    find = true;
+                    dp[0, i] = 1;
+                }
+            }
+
+            for (int i = 1; i < text1.Length; i++)
+            {
+                for (int j = 0; j < text2.Length; j++)
+                {
+                    dp[i, j] = Math.Max(dp[i - 1, j], dp[i, j - 1]);
+                    if (text1[i] == text2[j])
+                    {
+                        dp[i, j] = dp[i - 1, j - 1] + 1;
+                    }
+                }
+            }
+            return dp[text1.Length - 1, text2.Length - 1];
+        }
         public int[] RollMax;
         public int CNT = 0;
         public int DieSimulator(int n, int[] rollMax)

@@ -8,6 +8,49 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int[] NextLargerNodes(ListNode head)
+        {
+            Stack<Pair<int, int>> stack = new Stack<Pair<int, int>>();
+
+            ListNode h = head;
+            int cnt = 0;
+            while (h!=null)
+            {
+                cnt++;
+                h = h.next;
+            }
+            int[] result = new int[cnt];
+            cnt = 0;
+            h = head;
+            while (h!=null)
+            {
+                if (stack.Count == 0)
+                {
+                    stack.Push(new Pair<int, int>(h.val, cnt));
+                }
+                else
+                {
+                    if (stack.Peek().First < h.val)
+                    {
+                        while (stack.Count>0 && stack.Peek().First<h.val)
+                        {
+                            result[stack.Peek().Second] = h.val;
+                            stack.Pop();
+                        }
+
+                    }
+                    stack.Push(new Pair<int, int>(h.val, cnt));
+                }
+                cnt++;
+                h = h.next;
+            }
+            while (stack.Count>0)
+            {
+                result[stack.Peek().Second] = 0;
+                stack.Pop();
+            }
+            return result;
+        }
         // 876. Middle of the Linked List
         public ListNode MiddleNode(ListNode head)
         {
