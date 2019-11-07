@@ -10,6 +10,21 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int NthUglyNumber(int n)
+        {
+            List<int> dp = new List<int>() {1};
+            int p2 = 0, p3 = 0, p5 = 0;
+            for (int i = 1; i < n; i++)
+            {
+                dp[i] = Math.Min(Math.Min(dp[p2]*2, dp[p3]*3), dp[p5]*5);
+                if (dp[i] == dp[p2] * 2) p2++;
+                if (dp[i] == dp[p3] * 3) p3++;
+                if (dp[i] == dp[p5] * 5) p5++;
+            }
+
+            return dp[n-1];
+        }
+
         public bool Search2(int[] nums, int target)
         {
             int l = 0, r = nums.Length - 1;

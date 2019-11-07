@@ -8,6 +8,44 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int MaximalSquare(char[][] matrix)
+        {
+            if (matrix.Length == 0) return 0;
+            int maxSquare = 0;
+            int row = matrix.Length, col = matrix[0].Length;
+            int[,] dp = new int[row, col];
+
+            for (int i = 0; i < row; i++)
+            {
+                if (matrix[i][0] == '1')
+                {
+                    dp[i, 0] = 1;
+                    maxSquare = 1;
+                }
+            }
+            for (int i = 0; i < col; i++)
+            {
+                if (matrix[0][i] == '1')
+                {
+                    dp[0, i] = 1;
+                    maxSquare = 1;
+                }
+            }
+            for (int i = 1; i < row; i++)
+            {
+                for (int j = 1; j < col; j++)
+                {
+                    if (matrix[i][j] == '1')
+                    {
+                        dp[i, j] = Math.Min(Math.Min(dp[i - 1, j], dp[i, j - 1]), dp[i - 1, j - 1]) + 1;
+                        if (dp[i, j] > maxSquare)
+                            maxSquare = dp[i, j];
+                    }
+                }
+            }
+            return maxSquare * maxSquare;
+        }
+
         public int LongestCommonSubsequence(string text1, string text2)
         {
             if (text1.Length == 0 || text2.Length == 0) return 0;
