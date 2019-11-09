@@ -8,6 +8,28 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public bool CheckSubarraySum(int[] nums, int k)
+        {
+            int sum = 0;
+            Dictionary<int, int> remainDic = new Dictionary<int, int>();
+            remainDic[0] = -1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                if (k != 0)
+                    sum = sum % k;
+                if (remainDic.ContainsKey(sum))
+                {
+                    if (i - remainDic[sum] > 1)
+                        return true;
+                }
+                else
+                {
+                    remainDic[sum] = i;
+                }
+            }
+            return false;
+        }
 
         public int NumTrees(int n)
         {
