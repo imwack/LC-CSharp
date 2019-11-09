@@ -9,6 +9,45 @@ namespace Solution
 {
     public partial class MySolution
     {
+        List<int> sameDiff = new List<int>();
+        public int[] NumsSameConsecDiff(int N, int K)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                NumsSameConsecDiff(N - 1, K, new List<int>() { i });
+            }
+            if(N == 1)
+                sameDiff.Add(0);
+            return sameDiff.ToArray();
+        }
+
+        public void NumsSameConsecDiff(int N, int K, List<int> cur)
+        {
+            if (N == 0)
+            {
+                int n = 0;
+                foreach (var num in cur)
+                {
+                    n = n * 10 + num;
+                }
+                sameDiff.Add(n);
+                return;
+            }
+            int last = cur.Last();
+            if (last + K < 10)
+            {
+                cur.Add(last + K);
+                NumsSameConsecDiff(N - 1, K, cur);
+                cur.RemoveAt(cur.Count - 1);
+            }
+            if (last - K >= 0 && K!=0)
+            {
+                cur.Add(last - K);
+                NumsSameConsecDiff(N - 1, K, cur);
+                cur.RemoveAt(cur.Count - 1);
+            }
+
+        }
         public IList<IList<int>> QueensAttacktheKing(int[][] queens, int[] king)
         {
             IList<IList<int>> result = new List<IList<int>>();
