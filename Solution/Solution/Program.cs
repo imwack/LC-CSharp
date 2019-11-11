@@ -59,19 +59,19 @@ namespace Solution
 
         static void Main(string[] args)
         {
-            Contest.Contest con  = new Contest.Contest();
-            con.ClosedIsland(new int[][] {
-            new int[] {1,1,0,1,1,1,1,1,1,1},
-            new int[] {0,0,1,0,0,1,0,1,1,1},
-            new int[] {1,0,1,0,0,0,1,0,1,0},
-            new int[] {1,1,1,1,1,0,0,1,0,0},
-            new int[] { 1, 0, 1, 0, 1, 1, 1, 1, 1, 0 },
-            new int[] { 0,0,0,0,1,1,0,0,0,0 },
-            new int[] { 1,0,1,0,0,0,0,1,1,0 },
-            new int[] { 1,1,0,0,1,1,0,0,0,0},
-            new int[] { 0,0,0,1,1,0,1,1,1,0 },
-            new int[] { 1,1,0,1,0,1,0,0,1,0},
-            });
+            //Contest.Contest con  = new Contest.Contest();
+            //con.ClosedIsland(new int[][] {
+            //new int[] {1,1,0,1,1,1,1,1,1,1},
+            //new int[] {0,0,1,0,0,1,0,1,1,1},
+            //new int[] {1,0,1,0,0,0,1,0,1,0},
+            //new int[] {1,1,1,1,1,0,0,1,0,0},
+            //new int[] { 1, 0, 1, 0, 1, 1, 1, 1, 1, 0 },
+            //new int[] { 0,0,0,0,1,1,0,0,0,0 },
+            //new int[] { 1,0,1,0,0,0,0,1,1,0 },
+            //new int[] { 1,1,0,0,1,1,0,0,0,0},
+            //new int[] { 0,0,0,1,1,0,1,1,1,0 },
+            //new int[] { 1,1,0,1,0,1,0,0,1,0},
+            //});
             //Test();
             MyLinkedList linkedList = new MyLinkedList();
             linkedList.AddAtHead(1);
@@ -97,16 +97,16 @@ namespace Solution
             {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
             };
 
-            ListNode l1 = new ListNode(2);
-            ListNode l2 = new ListNode(7);
+            ListNode l1 = new ListNode(1);
+            ListNode l2 = new ListNode(2);
             l1.next = l2;
-            ListNode l3 = new ListNode(4);
+            ListNode l3 = new ListNode(3);
             l2.next = l3;
-            ListNode l4 = new ListNode(3);
+            ListNode l4 = new ListNode(4);
             l3.next = l4;
             ListNode l5 = new ListNode(5);
             l4.next = l5;
-            s.NextLargerNodes(l1);
+            s.ReorderList(l1);
         }
     }
 }

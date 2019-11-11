@@ -8,6 +8,47 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public void ReorderList(ListNode head)
+        {
+            if(head == null) return;
+            ListNode slow = head, fast = head.next;
+            while (fast != null)
+            {
+                fast = fast.next;
+                if (fast != null) fast = fast.next;
+                else break;
+                slow = slow.next;
+            }
+            ListNode mid = slow.next;
+            slow.next = null;
+
+            //Reverse last part
+            ListNode h = new ListNode(0);
+            h.next = mid;
+            ListNode pre = h;
+            ListNode tail = pre.next;
+            while (tail!=null && tail.next!=null)
+            {
+                ListNode nn = tail.next;
+                tail.next = nn.next;
+                nn.next = pre.next;
+                pre.next = nn;
+            }
+
+            //Link
+            ListNode temp = head;
+            mid = h.next;
+            while (temp!=null && mid!=null)
+            {
+                ListNode tnext = temp.next;
+                ListNode mnext = mid.next;
+                temp.next = mid;
+                mid.next = tnext;
+                temp = tnext;
+                mid = mnext;
+            }
+ 
+        }
         public int[] NextLargerNodes(ListNode head)
         {
             Stack<Pair<int, int>> stack = new Stack<Pair<int, int>>();
