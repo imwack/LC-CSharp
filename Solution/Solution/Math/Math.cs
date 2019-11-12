@@ -8,6 +8,33 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int[] CorpFlightBookings(int[][] bookings, int n)
+        {
+            Dictionary<int, int> from = new Dictionary<int, int>();
+            Dictionary<int, int> to = new Dictionary<int, int>();
+            int[] result = new int[n];
+            foreach (var booking in bookings)
+            {
+                int f = booking[0];
+                int t = booking[1];
+                if (!from.ContainsKey(f)) from[f] = 0;
+                from[f] += booking[2];
+                if (!to.ContainsKey(t)) from[t] = 0;
+                to[t] += booking[2];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (i != 0)
+                {
+                    result[i] += result[i - 1];
+                    if (to.ContainsKey(i-1)) result[i] -= to[i-1];
+                }
+                if (from.ContainsKey(i)) result[i] += from[i];
+            }
+
+            return result;
+        }
+
         // 908. Smallest Range I
         // just need to find the range of min and max
         // eg. [min-k, min+k] [max-k, max+k]
@@ -214,22 +241,7 @@ namespace Solution
             }
             return sum;
         }
-        public int[] CorpFlightBookings(int[][] bookings, int n)
-        {
-            int[] cnt = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                int index = i + 1;
-                cnt[i] = 0;
-                foreach (var booking in bookings)
-                {
-                    if (index >= booking[0] && index <= booking[1])
-                        cnt[i] += booking[2];
-                }
-            }
-            return cnt;
-
-        }
+ 
         public bool IsRobotBounded(string instructions)
         {
             int[][] direction = new[] { new int[2] { 0, 1 }, new int[2] { -1, 0 }, new int[2] { 0, -1 }, new int[2] { 1, 0 } };
