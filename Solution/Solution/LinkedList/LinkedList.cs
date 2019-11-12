@@ -8,6 +8,30 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public ListNode Partition(ListNode head, int x)
+        {
+            ListNode less = new ListNode(0);
+            ListNode great = new ListNode(0);
+            ListNode h = head, l = less, g=great;
+            while (h != null)
+            {
+                if (h.val < x)
+                {
+                    l.next = h;
+                    l = l.next;
+                }
+                else
+                {
+                    g.next = h;
+                    g = g.next;
+                }
+                h = h.next;
+            }
+            l.next = great.next;
+            g.next = null;
+            return less.next;
+        }
+
         public ListNode DeleteDuplicates(ListNode head)
         {
             ListNode p = new ListNode(0);
@@ -38,16 +62,19 @@ namespace Solution
             int cnt = 0;
             ListNode temp = head;
             ListNode tail = temp;
-            while (temp!=null)
+            while (temp != null)
             {
                 cnt++;
                 if (temp.next == null)
                     tail = temp;
                 temp = temp.next;
             }
-            k = k%cnt;
+            if (cnt == 0 || k == 0)
+                return head;
+            k = k % cnt;
+            k = cnt - k;
             temp = head;
-            for (int i = 0; i < k-1; i++)
+            for (int i = 0; i < k - 1; i++)
                 temp = temp.next;
             tail.next = head;
             ListNode newHead = temp.next;
