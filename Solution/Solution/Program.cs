@@ -106,7 +106,7 @@ namespace Solution
             l3.next = l4;
             ListNode l5 = new ListNode(5);
             l4.next = l5;
-            s.ReorderList(l1);
+            s.MaxSumAfterPartitioning(new int[] { 1, 15, 7, 9, 2, 5, 10 },3 );
         }
     }
 }

@@ -8,7 +8,25 @@ namespace Solution
 {
     public partial class MySolution
     {
-
+        public int MaxSumAfterPartitioning(int[] A, int K)
+        {
+            int[] dp = new int[A.Length+1];
+            dp[0] = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                dp[i+1] = A[i]+dp[i];
+                int m = A[i];
+                for (int j = 1; j <= K ; j++)
+                {
+                    if (i - j + 1 >= 0)
+                    {
+                        m = Math.Max(m, A[i - j+1]);
+                        dp[i + 1] = Math.Max(dp[i - j + 1] + m * j, dp[i + 1]);
+                    }
+                }
+            }
+            return dp[A.Length];
+        }
         public bool CheckSubarraySum(int[] nums, int k)
         {
             int sum = 0;
