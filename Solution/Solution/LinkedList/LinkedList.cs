@@ -8,6 +8,52 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            ListNode p = new ListNode(0);
+            p.next = head;
+            ListNode h = head, pre = p;
+            while (h!=null)
+            {
+                bool dup = false;
+                while (h.next != null && h.val ==h.next.val)
+                {
+                    h.next = h.next.next;
+                    dup = true;
+                }
+                if (dup)
+                {
+                    pre.next = h.next;
+                }
+                else
+                {
+                    pre = pre.next;
+                }
+                h = h.next;
+            }
+            return p.next;
+        }
+        public ListNode RotateRight(ListNode head, int k)
+        {
+            int cnt = 0;
+            ListNode temp = head;
+            ListNode tail = temp;
+            while (temp!=null)
+            {
+                cnt++;
+                if (temp.next == null)
+                    tail = temp;
+                temp = temp.next;
+            }
+            k = k%cnt;
+            temp = head;
+            for (int i = 0; i < k-1; i++)
+                temp = temp.next;
+            tail.next = head;
+            ListNode newHead = temp.next;
+            temp.next = null;
+            return newHead;
+        }
         public void ReorderList(ListNode head)
         {
             if(head == null) return;
