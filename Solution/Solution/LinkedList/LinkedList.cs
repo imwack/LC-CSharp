@@ -8,6 +8,34 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public ListNode ReverseBetween(ListNode head, int m, int n)
+        {
+            ListNode nhead = new ListNode(0);
+            nhead.next = head;
+            ListNode l = nhead, r = nhead;
+            for (int i = 1; i < m; i++)
+            {
+                l = l.next;
+            }
+            for (int j = 0; j < n+1; j++)
+            {
+                r = r.next;
+            }
+            ListNode last = l.next;
+            ListNode pre = l;
+            while (last!=null)
+            {
+                ListNode lnext = last.next;
+                ListNode pnext = pre.next;
+                pre.next = lnext;
+                last.next = lnext.next;
+                lnext.next = pnext;
+                if(last.next == r)
+                    break;
+            }
+
+            return nhead.next;
+        }
         public ListNode Partition(ListNode head, int x)
         {
             ListNode less = new ListNode(0);
