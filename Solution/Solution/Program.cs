@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Solution.Design;
 
 namespace Solution
 {
@@ -73,10 +74,6 @@ namespace Solution
             //new int[] { 1,1,0,1,0,1,0,0,1,0},
             //});
             //Test();
-            MyLinkedList linkedList = new MyLinkedList();
-            linkedList.AddAtHead(1);
-            linkedList.AddAtIndex(1,2);
-            linkedList.Get(6);
 
 
             Stopwatch stopwatch = new Stopwatch();
@@ -106,7 +103,15 @@ namespace Solution
             l3.next = l4;
             ListNode l5 = new ListNode(5);
             l4.next = l5;
-            s.MaxSumAfterPartitioning(new int[] { 1, 15, 7, 9, 2, 5, 10 },3 );
+            s.ReverseBetween(l1,2,4 );
+            MyLinkedList linkedList = new MyLinkedList();
+            linkedList.AddAtHead(1);
+            linkedList.AddAtTail(3);
+            linkedList.AddAtIndex(1, 2);   //链表变为1-> 2-> 3
+            linkedList.Get(1);            //返回2
+            linkedList.DeleteAtIndex(1);  //现在链表是1-> 3
+            linkedList.Get(1);            //返回3
+ 
         }
     }
 }

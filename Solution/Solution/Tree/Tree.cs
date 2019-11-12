@@ -52,22 +52,22 @@ namespace Solution
 
 
         //559. Maximum Depth of N-ary Tree
-        public class Node
+        public class NNode
         {
             public int val;
-            public IList<Node> children;
+            public IList<NNode> children;
 
-            public Node()
+            public NNode()
             {
             }
 
-            public Node(int _val, IList<Node> _children)
+            public NNode(int _val, IList<NNode> _children)
             {
                 val = _val;
                 children = _children;
             }
 
-            public int GetDepth(Node root, int h)
+            public int GetDepth(NNode root, int h)
             {
                 if (root == null)
                 {
@@ -81,7 +81,7 @@ namespace Solution
                 return maxh;
             }
 
-            public int MaxDepth(Node root)
+            public int MaxDepth(NNode root)
             {
                 if (root == null)
                     return 0;
@@ -89,10 +89,10 @@ namespace Solution
             }
         }
 
-        public IList<IList<int>> LevelOrder(Node root)
+        public IList<IList<int>> LevelOrder(NNode root)
         {
             IList<IList<int>> list = new List<IList<int>>();
-            Queue<Node> q = new Queue<Node>();
+            Queue<NNode> q = new Queue<NNode>();
             q.Enqueue(root);
             while (q.Count > 0)
             {
