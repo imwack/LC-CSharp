@@ -8,34 +8,82 @@ namespace Solution
 {
     public partial class MySolution
     {
-        public ListNode ReverseBetween(ListNode head, int m, int n)
+        public class Node
         {
-            ListNode nhead = new ListNode(0);
-            nhead.next = head;
-            ListNode l = nhead, r = nhead;
-            for (int i = 1; i < m; i++)
+            public int val;
+            public Node next;
+            public Node random;
+
+            public Node()
             {
-                l = l.next;
-            }
-            for (int j = 0; j < n+1; j++)
-            {
-                r = r.next;
-            }
-            ListNode last = l.next;
-            ListNode pre = l;
-            while (last!=null)
-            {
-                ListNode lnext = last.next;
-                ListNode pnext = pre.next;
-                pre.next = lnext;
-                last.next = lnext.next;
-                lnext.next = pnext;
-                if(last.next == r)
-                    break;
             }
 
-            return nhead.next;
+            public Node(int _val, Node _next, Node _random)
+            {
+                val = _val;
+                next = _next;
+                random = _random;
+            }
         }
+
+        public Node CopyRandomList(Node head)
+        {
+            Node h = head;
+            //copy
+            while (h!=null)
+            {
+                Node hn = h.next;
+                Node newH = new Node(h.val,hn,null);
+                h.next = newH;
+                h = hn;
+            }
+            //link
+            h = head;
+            while (h!=null)
+            {
+                Node hn = h.next;
+                hn.random = h.random.next;
+                h = hn.next;
+            }
+            h = head;
+            Node nHead = h.next;
+            Node temp = nHead;
+            while (h!=null)
+            {
+                h.next = h.next.next;
+                temp.next = h.next.next;
+                h = h.next;
+                temp = temp.next;
+            }
+
+            return nHead;
+        }
+
+        public ListNode ReverseBetween(ListNode head, int m, int n)
+        {
+            ListNode nHead = new ListNode(0);
+            nHead.next = head;
+            ListNode l = nHead, r = nHead;
+            for (int i = 1; i < m; i++) l = l.next; //指向l前一个
+            for (int i = 0; i <= n; i++) r = r.next; //指向r后一个
+
+            ListNode pre = l;
+            ListNode next = l.next;
+
+            while (next!=r&&next!=null)
+            {
+                if(next.next == r)
+                    break;
+                ListNode nnext = next.next;
+                ListNode pnext = pre.next;
+                pre.next = nnext;
+                next.next = nnext.next;
+                nnext.next = pnext;
+            }
+
+            return nHead.next;
+        }
+
         public ListNode Partition(ListNode head, int x)
         {
             ListNode less = new ListNode(0);
