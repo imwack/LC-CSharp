@@ -8,6 +8,44 @@ namespace Solution
 {
     public partial class MySolution
     {
+
+        public ListNode[] SplitListToParts(ListNode root, int k)
+        {
+            int len = 0;
+            ListNode h = root;
+            while (h != null)
+            {
+                len++;
+                h = h.next;
+            }
+            int remain = len % k;
+            int cnt = len / k;
+            ListNode[] result = new ListNode[k];
+            h = root;
+            for (int i = 0; i < k; i++)
+            {
+                if(h == null)
+                    break;
+                result[i] = h;
+                int ex = 0;
+                if (remain > 0)
+                {
+                    remain--;
+                    ex = 1;
+                }
+
+                for (int j = 0; j < cnt+ex-1&&h!=null; j++)
+                    h = h.next;
+
+                if (h != null)
+                {
+                    ListNode next = h.next;
+                    h.next = null;
+                    h = next;
+                }
+            }
+            return result;
+        }
         public class Node
         {
             public int val;
@@ -42,6 +80,7 @@ namespace Solution
             while (h!=null)
             {
                 Node hn = h.next;
+                if(h.random !=null)
                 hn.random = h.random.next;
                 h = hn.next;
             }
@@ -51,6 +90,7 @@ namespace Solution
             while (h!=null)
             {
                 h.next = h.next.next;
+                if(h.next==null)break;
                 temp.next = h.next.next;
                 h = h.next;
                 temp = temp.next;

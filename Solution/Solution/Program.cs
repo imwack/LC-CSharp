@@ -101,16 +101,7 @@ namespace Solution
             l2.next = l3;
             ListNode l4 = new ListNode(4);
             l3.next = l4;
-            ListNode l5 = new ListNode(5);
-            l4.next = l5;
-            s.ReverseBetween(l1,2,4 );
-            MyLinkedList linkedList = new MyLinkedList();
-            linkedList.AddAtHead(1);
-            linkedList.AddAtTail(3);
-            linkedList.AddAtIndex(1, 2);   //链表变为1-> 2-> 3
-            linkedList.Get(1);            //返回2
-            linkedList.DeleteAtIndex(1);  //现在链表是1-> 3
-            linkedList.Get(1);            //返回3
+            s.SplitListToParts(l1,5);
  
         }
     }
