@@ -4,11 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Solution.Stack
+namespace Solution
 {
     public partial class MySolution
     {
         #region stack
+        public bool Find132pattern(int[] nums)
+        {
+            int curMax = Int32.MinValue;
+            Stack<int> stack = new Stack<int>();
+            for (int i = nums.Length-1;i>=0; i--)
+            {
+ 
+                if (nums[i] < curMax)
+                    return true;
+
+                if (stack.Peek() < nums[i])
+                {
+                    while (stack.Count>0 && stack.Peek() < nums[i])
+                    {
+                        curMax = stack.Peek();
+                        stack.Pop();
+                    }
+                }
+                stack.Push(nums[i]);
+
+            }
+            return false;
+        }
+
         public string RemoveOuterParentheses(string S)
         {
             int l = 0, r = 0;
@@ -48,27 +72,7 @@ namespace Solution.Stack
         }
 
 
-        public int[] NextLargerNodes(ListNode head)
-        {
-            Stack<int> stack = new Stack<int>();
-            List<int> nums = new List<int>();
-            while (head != null)
-            {
-                nums.Add(head.val);
-                head = head.next;
-            }
-            int[] ret = new int[nums.Count];
-            for (int i = 0; i < nums.Count; i++)
-            {
-                while (stack.Count > 0 && nums[stack.Peek()] < nums[i])
-                {
-                    int top = stack.Pop();
-                    ret[top] = nums[i];
-                }
-                stack.Push(i);
-            }
-            return ret;
-        }
+
         public string RemoveDuplicates(string S)
         {
             Stack<char> queue = new Stack<char>();
@@ -199,27 +203,7 @@ namespace Solution.Stack
             return t.Count == 0;
         }
 
-        public int MinAddToMakeValid(string S)
-        {
-            Stack<char> left = new Stack<char>();
-            int cnt = 0;
-            foreach (char s in S)
-            {
-                if (s == '(')
-                {
-                    left.Push(s);
-                }
-                else
-                {
-                    if (left.Count > 0)
-                        left.Pop();
-                    else
-                        cnt++;
-                }
-            }
-            cnt += left.Count;
-            return cnt;
-        }
+
 
         public int[] DailyTemperatures(int[] T)
         {

@@ -145,36 +145,6 @@ namespace Solution
             return longest;
         }
 
-        public string RemoveOuterParentheses(string S)
-        {
-            StringBuilder sb = new StringBuilder();
-            int left = 0;
-            bool push = false;
-            foreach (char c in S)
-            {
-                if (push)
-                    sb.Append(c);
-
-                if (c == '(')
-                {
-                    if (left == 0)
-                    {
-                        push = true;
-                    }
-                    left++;
-                }
-                else
-                {
-                    left--;
-                    if (left == 0)
-                    {
-                        push = false;
-                    }
-                }
-            }
-            return sb.ToString();
-        }
-
         public string ToGoatLatin(string S)
         {
             StringBuilder sb = new StringBuilder();
