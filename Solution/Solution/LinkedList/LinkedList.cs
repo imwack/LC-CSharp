@@ -8,6 +8,26 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public TreeNode SortedListToBST(ListNode head)
+        {
+            if (head == null) return null;
+            if(head.next == null) return new TreeNode(head.val);
+            int len = 0;
+            ListNode fast = head.next,slow=head,last=slow;
+            while (fast!=null)
+            {
+                fast = fast.next;
+                if (fast != null)
+                    fast = fast.next;
+                last = slow;
+                slow = slow.next;
+            }
+            TreeNode root = new TreeNode(slow.val);
+            root.right = SortedListToBST(slow.next);
+            last.next = null;
+            root.left = SortedListToBST(head);
+            return root;
+        }
 
         public ListNode[] SplitListToParts(ListNode root, int k)
         {
