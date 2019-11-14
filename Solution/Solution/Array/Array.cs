@@ -10,6 +10,22 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int MinIncrementForUnique(int[] A)
+        {
+            int sum = 0;
+            Array.Sort(A);
+            for (int i = 1; i < A.Length; i++)
+            {
+                if (A[i] <= A[i - 1])
+                {
+                    sum = sum+A[i-1]-A[i]+1;
+
+                    A[i] = A[i-1]-A[i]+1;
+                }
+            }
+            return sum;
+        }
+
         public int NthUglyNumber(int n)
         {
             List<int> dp = new List<int>() {1};
