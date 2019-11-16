@@ -8,49 +8,43 @@ namespace Solution
 {
     public partial class MySolution
     {
-
-        public int LargestOverlap(int[][] A, int[][] B)
+        public int Divide(int dividend, int divisor)
         {
-            List<Pair<int,int>> a = new List<Pair<int, int>>();
-            List<Pair<int, int>> b = new List<Pair<int, int>>();
 
-            Dictionary<int,int> dic = new Dictionary<int, int>();
-            for (int i = 0; i < A.Length; i++)
+            bool sign = false;
+            if (dividend < 0 && divisor > 0) sign = true;
+            if (dividend > 0 && divisor < 0) sign = true;
+            if (dividend < 0) dividend = -dividend;
+            if (divisor < 0) divisor = -divisor;
+
+            int result = BinarySearchDivide(dividend, divisor);
+            if (sign)
             {
-                for (int j = 0; j < A[i].Length; j++)
-                {
-                    if (A[i][j] == 1)
-                    {
-                        a.Add(new Pair<int, int>(i,j));
-                    }
-                }
+                result = -result;
             }
-            for (int i = 0; i < B.Length; i++)
-            {
-                for (int j = 0; j < B[i].Length; j++)
-                {
-                    if (B[i][j] == 1)
-                    {
-                        b.Add(new Pair<int, int>(i, j));
-                    }
-                }
-            }
-            for (int i = 0; i < a.Count; i++)
-            {
-                for (int j = 0; j < b.Count; j++)
-                {
-                    int key = (b[j].First - a[i].First)*1000 + b[j].Second -a[i].Second;
-                    if (!dic.ContainsKey(key)) dic[key] = 0;
-                    dic[key]++;
-                }
-            }
-            int max = 0;
-            foreach (var i in dic.Values)
-            {
-                if (i > max) max = i;
-            }
-            return max; 
+            if (result <= int.MinValue) return int.MaxValue;
+
+            return result;
         }
+
+        public int BinarySearchDivide(int divident, int divisor)
+        {
+            if (divisor == 1) return divident;
+
+            int temp = divisor;
+            if (divident < divisor) return 0;
+            int i = 1;
+            for (; i < divident; i++)
+            {
+                if (divident < (divisor << 1)) break;
+                if (divisor <= int.MinValue >> 1) break;
+                divisor = divisor << 1;
+            }
+            int result = i;
+            return result + BinarySearchDivide(divident - divisor, temp);
+        }
+
+
 
         public int[] CorpFlightBookings(int[][] bookings, int n)
         {

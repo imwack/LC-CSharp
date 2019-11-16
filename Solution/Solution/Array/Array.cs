@@ -10,6 +10,7 @@ namespace Solution
 {
     public partial class MySolution
     {
+   
         public int FindPairs(int[] nums, int k)
         {
             if (k < 0) return 0;
