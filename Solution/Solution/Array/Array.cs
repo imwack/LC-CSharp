@@ -10,6 +10,28 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int FindPairs(int[] nums, int k)
+        {
+            if (k < 0) return 0;
+            HashSet<int> set = new HashSet<int>();
+            HashSet<int> usedSet = new HashSet<int>();
+            foreach (var xx in nums)
+            {
+
+                if (set.Contains(xx + k) )
+                {
+                    usedSet.Add(xx);
+                }
+                if (set.Contains(xx - k) )
+                {
+                    usedSet.Add(xx-k);
+                }
+
+                set.Add(xx);
+
+            }
+            return usedSet.Count;
+        }
         public int MinIncrementForUnique(int[] A)
         {
             int sum = 0;

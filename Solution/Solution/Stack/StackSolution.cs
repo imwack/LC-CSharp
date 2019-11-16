@@ -19,7 +19,7 @@ namespace Solution
                 if (nums[i] < curMax)
                     return true;
 
-                if (stack.Peek() < nums[i])
+                if (stack.Count>0 && stack.Peek() < nums[i])
                 {
                     while (stack.Count>0 && stack.Peek() < nums[i])
                     {
