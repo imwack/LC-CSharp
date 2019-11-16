@@ -101,8 +101,8 @@ namespace Solution
             l2.next = l3;
             ListNode l4 = new ListNode(4);
             l3.next = l4;
-            s.Find132pattern(new int[] { -2, 1, 2, -2, 1, 2 });
- 
+            s.Divide(10, 3);
+
         }
     }
 }
