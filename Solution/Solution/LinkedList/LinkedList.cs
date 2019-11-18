@@ -8,6 +8,15 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public ListNode SwapPairs(ListNode head)
+        {
+            if (head == null || head.next == null) return head;
+            ListNode next = head.next;
+            ListNode nnext = next.next;
+            next.next = head;
+            head.next = SwapPairs(nnext);
+            return next;
+        }
         public int NumComponents(ListNode head, int[] G)
         {
             HashSet<int> set = new HashSet<int>();

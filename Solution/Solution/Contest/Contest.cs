@@ -7,8 +7,136 @@ using System.Threading.Tasks;
 
 namespace Solution.Contest
 {
+
     public class Contest
     {
+
+        public class FindElements
+        {
+            HashSet<int> valSet = new HashSet<int>();
+            public FindElements(TreeNode root)
+            {
+                if (root == null) return;
+                root.val = 0;
+                valSet.Add(0);
+                Construst(root);
+            }
+
+            public void Construst(TreeNode root)
+            {
+                if (root != null)
+                {
+                    if (root.left != null)
+                    {
+                        root.left.val = 2 * root.val + 1;
+                        valSet.Add(root.left.val);
+                        Construst(root.left);
+                    }
+                    if (root.right != null)
+                    {
+                        root.right.val = 2 * root.val + 2;
+                        valSet.Add(root.right.val);
+
+                        Construst(root.right);
+                    }
+
+                }
+            }
+            public bool Find(int target)
+            {
+                return valSet.Contains(target);
+            }
+        }
+
+
+        public int MaxSumDivThree(int[] nums)
+        {
+            Array.Sort(nums);
+            List<int> mod1 = new List<int>();
+            List<int> mod2 = new List<int>();
+            int sum = 0;
+            foreach (var num in nums)
+            {
+                sum += num;
+                if(num%3 == 1) mod1.Add(num);
+                if(num%3 == 2) mod2.Add(num);
+            }
+            if (sum%3 == 0) return sum;
+            if (sum%3 == 1)
+            {
+                int min = -1;
+                if (mod1.Count > 0) min = mod1[0];
+                if (mod2.Count > 1) min = Math.Min(min, mod2[0] + mod2[1]);
+                if (min == -1) return 0;
+                return sum - min;
+            }
+            else
+            {
+                int min = -1;
+                if (mod2.Count > 0) min = mod2[0];
+                if (mod1.Count > 1) min = Math.Min(min, mod1[0] + mod1[1]);
+                if (min == -1) return 0;
+                return sum - min;
+            }
+        }
+
+        public int DfsMaxSumDivThree(int[] nums, int sum, HashSet<int> removed)
+        {
+            if (sum%3 == 0) return sum;
+
+            for (int i = 0; i < nums.Length; i++) //减去一个
+            {
+                if(removed.Contains(i)) continue;
+
+                removed.Add(i);
+                if ((sum - nums[i])%3 == 0)
+                    return sum - nums[i];
+ 
+                removed.Remove(i);
+            }
+
+            return -1;
+        }
+        
+        public IList<IList<int>> ShiftGrid(int[][] grid, int k)
+        {
+            int row = grid.Length, col = grid[0].Length;
+            IList<IList<int>> newGrid = new List<IList<int>>();
+            for (int i = 0; i < grid.Length; i++)
+            {
+                newGrid.Add(new List<int>());
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    newGrid[i].Add(grid[i][j]);
+                }
+            }
+            k = k%(row*col);
+            int r = k/col;
+            int c = k%col;
+            for (int i = 0; i < r; i++)
+            {
+                List<int> last = new List<int>(newGrid[newGrid.Count-1]);
+                for (int j = newGrid.Count-1;j>0; j--)
+                {
+                    newGrid[j] = newGrid[j - 1];
+                }
+                newGrid[0] = last;
+            }
+            for (int i = 0; i < c; i++)
+            {
+                int last = newGrid[row - 1][col - 1];
+                for (int j = 0; j < row; j++)
+                {
+                    for (int l=0;l<col;l++)
+                    {
+                        int temp = newGrid[j][l];
+                        newGrid[j][l] = last;
+                        last = temp;
+                    }
+                }
+            }
+            return newGrid;
+        }
         public int ClosedIslandCnt = 0;
         public int ClosedIsland(int[][] grid)
         {

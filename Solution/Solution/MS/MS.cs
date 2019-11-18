@@ -145,40 +145,7 @@ namespace Solution
             }
             return head.next;
         }
-
-        public ListNode SwapPairs(ListNode head)
-        {
-            /* recursion
-            ListNode first = head;
-            if (first == null)
-                return head;
-            ListNode second = first.next;
-            if (second != null)
-            {
-                first.next = second.next;
-                second.next = first;
-                head = second;
-            }
-            first.next = SwapPairs(first.next);
-            return head;
-            */
-            ListNode pre = new ListNode(0);
-            pre.next = head;
-            ListNode nHead = pre;
-            ListNode first = head;
-            while (first != null && first.next!=null)
-            {
-                ListNode second = first.next;
-                ListNode third = second.next;
-                first.next = third;
-                second.next = first;
-                nHead.next = second;
-                nHead = first;
-                first = third;
-            }
-            return pre.next;
-        }
-
+         
 
         public ListNode ReverseKGroup(ListNode head, int k)
         {
