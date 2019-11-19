@@ -8,6 +8,31 @@ namespace Solution
 {
     public partial class MySolution
     {
+
+        public bool CanJump(int[] nums)
+        {
+            if (nums.Length < 1) return false;
+
+            int[] dp = new int[nums.Length];
+            dp[0] = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (dp[i-1] > 0)
+                {
+                    dp[i] =dp[i - 1] - 1 + nums[i];
+                }
+            }
+            return dp[nums.Length - 1] > 0;
+        }
+
+        public bool DfsNumSquares(int n, int x)
+        {
+            if (n - x*x == 0) return true;
+            if (n < x*x) return false;
+            return DfsNumSquares(n - x*x, x);
+        }
+
         public int MinEditDistance(string word1, string word2)
         {
             int[,] dp = new int[word1.Length+1,word2.Length+1];
@@ -67,7 +92,7 @@ namespace Solution
                 if (remainDic.ContainsKey(sum))
                 {
                     if (i - remainDic[sum] > 1)
-                        return true;
+                        return true; 
                 }
                 else
                 {

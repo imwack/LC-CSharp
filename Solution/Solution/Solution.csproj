@@ -63,6 +63,7 @@
     <Compile Include="String\StringSolution.cs" />
     <Compile Include="Tree\Tree.cs" />
     <Compile Include="Trie.cs" />
+    <Compile Include="TwoPointer\MySolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

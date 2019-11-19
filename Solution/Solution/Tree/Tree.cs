@@ -8,6 +8,36 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public IList<TreeNode> GenerateTrees(int n)
+        {
+            return GenerateTrees(1, n);
+        }
+
+        public IList<TreeNode> GenerateTrees(int start, int end)
+        {
+            IList<TreeNode> result = new List<TreeNode>();
+            if (start > end)
+            {
+                result.Add(null);
+                return result;
+            } 
+            for (int i = start; i <= end; i++)
+            {
+                IList<TreeNode> l = GenerateTrees(start, i - 1);
+                IList<TreeNode> r = GenerateTrees(i + 1, end);
+                foreach (var left in l)
+                {
+                    foreach (var right in r)
+                    {
+                        TreeNode root = new TreeNode(i);
+                        root.left = left;
+                        root.right = right;
+                        result.Add(root);
+                    }
+                }
+            }
+            return result;
+        }
         public TreeNode BuildTree(int[] inorder, int[] postorder)
         {
             return BuildTree(inorder, postorder, 0, inorder.Length - 1, 0, postorder.Length - 1);

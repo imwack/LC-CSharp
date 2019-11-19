@@ -9,6 +9,44 @@ namespace Solution
 {
     public partial class MySolution
     {
+        int numIsland = 0;
+        int[][] dir = new[] {new[] {0, 1}, new[] {0, -1}, new[] {-1, 0}, new[] {1, 0}};
+         
+        public int NumIslands(char[][] grid)
+        {
+            if (grid.Length == 0 || grid[0].Length == 0)
+            {
+                return 0;
+            }
+            bool[,] isVisit = new bool[grid.Length,grid[0].Length];
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[i].Length; j++)
+                {
+                    if (!isVisit[i, j] && grid[i][j] == '1')
+                    {
+                        DsfNumIslands(grid, i, j,isVisit);
+                        numIsland++;
+                    }
+                }
+            }
+            return numIsland;
+        }
+
+        public void DsfNumIslands(char[][] grid, int i, int j, bool[,] isVisit)
+        {
+            if(isVisit[i,j]) return;
+            isVisit[i, j] = true;
+            if(grid[i][j] == '0')
+                return;
+            foreach (int[] d in dir)
+            {
+                if(i+d[0] <0 || i+d[0]>grid.Length-1) continue;
+                if(j+d[1]<0|| j+d[1]>grid[0].Length) continue;
+                DsfNumIslands(grid, i + d[0], j + d[1], isVisit);
+            }
+        }
+
         List<int> sameDiff = new List<int>();
         public int[] NumsSameConsecDiff(int N, int K)
         {

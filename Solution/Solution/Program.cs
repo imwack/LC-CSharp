@@ -101,8 +101,9 @@ namespace Solution
             l2.next = l3;
             ListNode l4 = new ListNode(4);
             l3.next = l4;
-            s.Divide(10, 3);
-
+            l4.next = l2;
+            s.GenerateTrees(3);
+ 
         }
     }
 }

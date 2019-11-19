@@ -8,6 +8,62 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public ListNode SwapPairs(ListNode head)
+        {
+            if (head == null || head.next == null) return head;
+            ListNode next = head.next;
+            ListNode nnext = next.next;
+            next.next = head;
+            head.next = SwapPairs(nnext);
+            return next;
+        }
+        public int NumComponents(ListNode head, int[] G)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach (int g in G)
+            {
+                set.Add(g);
+            }
+            int count = 0;
+            ListNode h = head;
+            while (h != null)
+            {
+                while ( h!=null && set.Contains(h.val))
+                {
+                    h = h.next;
+                }
+                h = h.next;
+                count++;
+            }
+
+            return count;
+        }
+        public ListNode DetectCycle(ListNode head)
+        {
+            if (head == null) return null;
+            ListNode fast = head.next, slow = head;
+            if (slow == fast) return slow;
+            bool hasCycle = false;
+            while (fast != null && fast.next!=null)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+                if (fast == slow)
+                {
+                    hasCycle = true;
+                    break;
+                }
+            }
+            if (!hasCycle) return null;
+            fast = head;
+            slow = slow.next;
+            while (fast != slow)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            return slow;
+        }
         public TreeNode SortedListToBST(ListNode head)
         {
             if (head == null) return null;
