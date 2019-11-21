@@ -47,20 +47,46 @@ namespace Solution
 
             return result.Reverse().ToList();
         }
-
-        public double NthPersonGetsNthSeat(int n)
+        public int Rob(int[] nums)
         {
-            if (n == 0) return 0;
-            if (n == 1) return 1;
-            if (n == 2) return 0.5;
-            double[] dp=new double[n+1];
-            dp[1] = 1;
-            dp[2] = 0.5;
-            for (int i = 2; i <= n; i++)
+            // [0,n-2]  or [1,n-1]
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return nums[0];
+            if (nums.Length == 2) return Math.Max(nums[0], nums[1]);
+
+            int[] dp = new int[nums.Length];
+            dp[0] = nums[0];
+            dp[1] = Math.Max(nums[0], nums[1]);
+            for (int i = 2; i < nums.Length-1; i++)
             {
-                dp[i] = 1.0/i + dp[i - 1]*(i-2)/i;
+                dp[i] = Math.Max(dp[i - 1], dp[i - 2] + nums[i]);
             }
-            return dp[n];
+            int a = dp[nums.Length - 2];
+
+
+            dp = new int[nums.Length];
+            dp[0] = nums[1];
+            dp[1] = Math.Max(nums[2], nums[1]);
+            for (int i = 3; i < nums.Length; i++)
+            {
+                dp[i-1] = Math.Max(dp[i-2], dp[i - 3] + nums[i]);
+            }
+            int b = dp[nums.Length - 2];
+            return Math.Max(a, b);
+        }
+
+        public int Rob1(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return nums[0];
+            int[] dp = new int[nums.Length];
+            dp[0] = nums[0];
+            dp[1] = Math.Max(nums[0], nums[1]);
+            for (int i = 2; i < nums.Length; i++)
+            {
+                dp[i] = Math.Max(dp[i - 1], dp[i - 2] + nums[i]);
+            }
+            return dp[nums.Length-1];
         }
         public bool CanJump(int[] nums)
         {

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Array\Array.cs" />
+    <Compile Include="BinarySearch\BinarySearch.cs" />
     <Compile Include="BitMap\BitMap.cs" />
     <Compile Include="Contest\Contest.cs" />
     <Compile Include="DataStructure.cs" />
