@@ -9,7 +9,7 @@ namespace Solution
 {
     public partial class MySolution
     {
-        int numIsland = 0;
+        int IslandNums = 0;
         int[][] dir = new[] {new[] {0, 1}, new[] {0, -1}, new[] {-1, 0}, new[] {1, 0}};
          
         public int NumIslands(char[][] grid)
@@ -26,11 +26,11 @@ namespace Solution
                     if (!isVisit[i, j] && grid[i][j] == '1')
                     {
                         DsfNumIslands(grid, i, j,isVisit);
-                        numIsland++;
+                        IslandNums++;
                     }
                 }
             }
-            return numIsland;
+            return IslandNums;
         }
 
         public void DsfNumIslands(char[][] grid, int i, int j, bool[,] isVisit)

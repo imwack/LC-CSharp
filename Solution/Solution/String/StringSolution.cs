@@ -9,6 +9,41 @@ namespace Solution
 {
     public partial class MySolution
     {
+ 
+        public int Compress(char[] chars)
+        {
+            int read = 1, write = 0;
+            int count = 1;
+            char first = chars[0];
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] == chars[i - 1])
+                {
+                    count++;
+                }
+                if(chars[i] != chars[i - 1] || i == chars.Length-1)
+                {
+                    chars[write++] =first;
+
+                    if (count > 1)
+                    {
+                        List<int> num  = new List<int>();
+                        while (count>0)
+                        {
+                            num.Add(count % 10);
+                            count /= 10;
+                        }
+                        for(int j = num.Count-1;j>=0;j--)
+                        {
+                            chars[write++] = (char) (num[j] + '0');
+                        }
+                    }
+                    first = chars[i];
+                    count = 1;
+                }
+            }
+            return write;
+        }
         public int BalancedStringSplit(string s)
         {
             int l = 0, r = 0, cnt=0;

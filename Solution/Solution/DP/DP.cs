@@ -8,7 +8,60 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public IList<int> LargestDivisibleSubset(int[] nums)
+        {
+            Array.Sort(nums);
+            IList<int> result = new List<int>();
+            if (nums.Length == 0)
+                return result;
+            int[] dp = new int[nums.Length];
+            int[] last = new int[nums.Length];
+            int maxLen = 1, maxIndex = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                dp[i] = 1; //自己可以和自己
+                last[i] = i;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i+1; j <nums.Length; j++)
+                {
+                    if (dp[j] <= dp[i] && nums[j]%nums[i] == 0)
+                    {
+                        dp[j] = dp[i] + 1;
+                        last[j] = i;
+                    }
+                }
+                if (dp[i]>maxLen)
+                {
+                    maxLen = dp[i];
+                    maxIndex = i;
+                }
+            }
+            result.Add(nums[maxIndex]);
+            while (last[maxIndex]!=maxIndex)
+            {
+                result.Add(nums[last[maxIndex]]);
+                maxIndex = last[maxIndex];
+            }
 
+            return result.Reverse().ToList();
+        }
+
+        public double NthPersonGetsNthSeat(int n)
+        {
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            if (n == 2) return 0.5;
+            double[] dp=new double[n+1];
+            dp[1] = 1;
+            dp[2] = 0.5;
+            for (int i = 2; i <= n; i++)
+            {
+                dp[i] = 1.0/i + dp[i - 1]*(i-2)/i;
+            }
+            return dp[n];
+        }
         public bool CanJump(int[] nums)
         {
             if (nums.Length < 1) return false;
