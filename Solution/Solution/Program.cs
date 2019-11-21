@@ -102,7 +102,7 @@ namespace Solution
             ListNode l4 = new ListNode(4);
             l3.next = l4;
             l4.next = l2;
-            s.Rob(new int[] {1,7,9,2});
+            s.HIndex(new int[] {0});
  
         }
     }
