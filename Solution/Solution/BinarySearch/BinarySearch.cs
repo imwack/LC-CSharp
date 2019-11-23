@@ -50,7 +50,7 @@ namespace Solution
             }
             if (l == r)
             {
-                return 2 >> l - 1;
+                return (2 >> l) - 1;
             }
             return 1 + CountNodes(root.left) + CountNodes(root.right);
         }
