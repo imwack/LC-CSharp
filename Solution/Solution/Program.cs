@@ -17,6 +17,7 @@ namespace Solution
         {
             public int Rank;
         }
+
         public static void Test()
         {
             Camp a = new Camp() {Rank = 1};
@@ -26,23 +27,25 @@ namespace Solution
             l.Add(a);
             l.Add(b);
             l.Add(c);
-            l.Sort((aa,bb)=>aa.Rank<bb.Rank?-1:1);
+            l.Sort((aa, bb) => aa.Rank < bb.Rank ? -1 : 1);
             foreach (var camp in l)
             {
                 Console.WriteLine(camp.Rank);
             }
 
         }
+
         public enum CalMatchName
         {
-            CalMatchName1 = 0,  //普通局
-            CalMatchName2 = 1,  //高端局
-            CalMatchName3 = 2,  //大神局
+            CalMatchName1 = 0, //普通局
+            CalMatchName2 = 1, //高端局
+            CalMatchName3 = 2, //大神局
         }
+
         public static CalMatchName GetCalMatchName(int MatchIndex, int realPlayerNum)
         {
             CalMatchName matchName = CalMatchName.CalMatchName1;
-            if (MatchIndex >= 3 && MatchIndex <=5 && realPlayerNum > 13)
+            if (MatchIndex >= 3 && MatchIndex <= 5 && realPlayerNum > 13)
             {
                 matchName = CalMatchName.CalMatchName2;
             }
@@ -54,7 +57,8 @@ namespace Solution
                     matchName = CalMatchName.CalMatchName3;
                 }
             }
-            Console.WriteLine("GetCalMatchName matchName={0} matchIndex={1} realPlayerNum={2}", matchName, MatchIndex+1, realPlayerNum);
+            Console.WriteLine("GetCalMatchName matchName={0} matchIndex={1} realPlayerNum={2}", matchName,
+                MatchIndex + 1, realPlayerNum);
             return matchName;
         }
 
@@ -78,7 +82,7 @@ namespace Solution
 
             Stopwatch stopwatch = new Stopwatch();
             string[] strs = new[] {"aa", "bb", "ab", "ba"};
-            int[][] A = new int[][] {new int[] {1,2}, new int[] { 3}, new int[] {3}, new int[0] };
+            int[][] A = new int[][] {new int[] {1, 2}, new int[] {3}, new int[] {3}, new int[0]};
             MySolution s = new MySolution();
             int[] num = new[] {-1, 0, 1, 2, -1, -4};
             int[] a = new[] {4, -1, 4, -2, 4};
@@ -90,8 +94,9 @@ namespace Solution
             r1.right = r3;
             s.CountBinarySubstrings("10101");
 
-            int[][]arr = new int[3][]
-            {new int[] {1,0, 1},new int[] {0,0,0},new int[] {1,0,1}
+            int[][] arr = new int[3][]
+            {
+                new int[] {1, 0, 1}, new int[] {0, 0, 0}, new int[] {1, 0, 1}
             };
 
             ListNode l1 = new ListNode(1);
@@ -102,8 +107,11 @@ namespace Solution
             ListNode l4 = new ListNode(4);
             l3.next = l4;
             l4.next = l2;
-            s.Compress(new char[] {'a', 'b','c'});
- 
+            s.LastStoneWeight2(new int[] {2, 7, 4, 1, 8, 1});
+
+            Contest.Contest con = new Contest.Contest();
+            int n = con.NumWays(500, 969997);
+            Console.WriteLine(n);
         }
     }
 }

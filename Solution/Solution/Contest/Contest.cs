@@ -10,6 +10,125 @@ namespace Solution.Contest
 
     public class Contest
     {
+        Dictionary<string,int>  waysDic = new Dictionary<string, int>();
+        public int NumWays(int steps, int arrLen)
+        {
+            if (steps == 0) return 0;
+            if (arrLen == 0 || steps == 1) return 1;
+            return DFSNumWays(steps, arrLen,0);
+        }
+
+        public int DFSNumWays(int steps, int arrLen, int cur)
+        {
+            if (steps <= 0)
+            {
+                return cur == 0 ? 1 : 0;
+            }
+            string key = steps + "," + cur;
+            if (waysDic.ContainsKey(key)) return waysDic[key];
+
+            int ans = DFSNumWays(steps-1, arrLen, cur+0);
+            ans %= 1000000007;
+            if (cur + 1 < arrLen)
+            {
+                ans+=DFSNumWays(steps-1, arrLen, cur+1);
+                ans %= 1000000007;
+            }
+            if (cur > 0)
+            {
+                ans+=DFSNumWays(steps-1, arrLen, cur-1);
+                ans %= 1000000007;
+            }
+            waysDic[key] = ans;
+
+            return ans;
+        }
+
+        public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
+        {
+            IList<IList<string>> result = new List<IList<string>>();
+            if (products==null||products.Length == 0) return result;
+            Trie tree = new Trie();
+            foreach (var product in products)
+            {
+                tree.Insert(product);
+            }
+            StringBuilder sb = new StringBuilder();
+            result.Add(new List<string>(tree.SearchWithPrefix("eucgsmpsyndddijvpxfagngnjbzxuajxmrmszwtjvwswgdroj")));
+
+            foreach (var c in searchWord)
+            {
+                sb.Append(c);
+                Console.WriteLine(sb.ToString());
+                result.Add(new List<string>( tree.SearchWithPrefix(sb.ToString())));
+            }
+            return result;
+        }
+
+        public int CountServers(int[][] grid)
+        {
+            Dictionary<int,int> x = new Dictionary<int, int>();
+            Dictionary<int, int> y = new Dictionary<int, int>();
+
+            int sum = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    if (grid[i][j] == 1)
+                    {
+                        if (!x.ContainsKey(i)) x[i] = 0;
+                        x[i]++;
+                        if (!y.ContainsKey(j)) y[j] = 0;
+                        y[j]++;
+                    }
+
+                }
+            }
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
+                {
+                    if ((x.ContainsKey(i)&&x[i]>1) || (y.ContainsKey(j) && y[j]>1))
+                    {
+                        sum++;
+                    }
+
+                }
+            }
+            return sum;
+        }
+
+        public int MinTimeToVisitAllPoints(int[][] points)
+        {
+            int sum = 0;
+            if (points.Length == 0) return 0;
+            int start = 0;
+            int x = points[0][0], y = points[0][1];
+            for (int i = 1; i < points.Length; i++)
+            {
+                int xx = points[i][0], yy = points[i][1];
+                int a = Math.Abs(xx - x);
+                int b = Math.Abs(yy - y);
+                if (a > b)
+                {
+                    sum += b;
+                    a -= b;
+                    sum += a;
+                }
+                else
+                {
+                    sum += a;
+                    b -= a;
+                    sum += b;
+                }
+
+
+                x = xx;
+                y = yy;
+            }
+            return sum;
+        }
 
         public class FindElements
         {

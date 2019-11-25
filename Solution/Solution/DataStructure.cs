@@ -127,9 +127,9 @@ namespace Solution
             int i = 2 * index + 1;
             while (i < count)
             {
-                if (i + 1 < count && Array[i + 1].CompareTo(Array[i]) < 0) //取大的
+                if (i + 1 < count && Array[i + 1].CompareTo(Array[i]) > 0) //取大的
                     ++i;
-                if (temp.CompareTo(Array[i]) < 0)
+                if (temp.CompareTo(Array[i]) > 0)
                     break;
                 Array[index] = Array[i];
                 index = i;
@@ -165,9 +165,9 @@ namespace Solution
             {
                 int l = cur * 2 + 1;
                 if (l >= Count) break;
-                if (l + 1 < Count && Array[l].CompareTo(Array[l + 1]) < 0)
+                if (l + 1 < Count && Array[l].CompareTo(Array[l + 1]) > 0)
                     l++;
-                if (Array[cur].CompareTo(Array[l]) < 0)
+                if (Array[cur].CompareTo(Array[l]) > 0)
                 {
                     T t = Array[cur];
                     Array[cur] = Array[l];

@@ -50,10 +50,11 @@
     <Compile Include="DataStructure.cs" />
     <Compile Include="Design\Design.cs" />
     <Compile Include="DP\DP.cs" />
+    <Compile Include="Heap\Heap.cs" />
     <Compile Include="LinkedList\LinkedList.cs" />
     <Compile Include="Math\Math.cs" />
     <Compile Include="MS\MS.cs" />
-    <Compile Include="MyHashMap.cs" />
+    <Compile Include="Design\MyHashMap.cs" />
     <Compile Include="MySolution.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Stack\StackSolution.cs" />
     <Compile Include="String\StringSolution.cs" />
     <Compile Include="Tree\Tree.cs" />
-    <Compile Include="Trie.cs" />
+    <Compile Include="Design\Trie.cs" />
     <Compile Include="TwoPointer\MySolution.cs" />
   </ItemGroup>
   <ItemGroup>
