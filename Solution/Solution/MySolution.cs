@@ -174,36 +174,6 @@ namespace Solution
             return cnt;
 
         }
-        public int[][] KClosest(int[][] points, int K)
-        {
-            int n = points.GetLength(0);
-            Point[] nums = new Point[K];
-            
-            for (int i = 0; i < K; i++)
-            {
-                int x = points[i][0];
-                int y = points[i][1];
-                nums[i] = new Point(x,y);  
-            }
-            Heap<Point> h = new Heap<Point>();
-            h.MakeHeap(nums);
-            for (int i = K; i < n; i++)
-            {
-                int x = points[i][0];
-                int y = points[i][1];
-                int len = x*x + y*y;
-                if(h.Peek.len < len) 
-                    continue;
-                h.Add(new Point(x,y));
-            }
-            int[][] ret = new int[K][];
-            for (int i = 0; i < K; i++)
-            {
-                ret[i] = new[] {h.Nums[i].x, h.Nums[i].y};
-            }
-            return ret;
-
-        }
         //728. Self Dividing Numbers
         public IList<int> SelfDividingNumbers(int left, int right)
         {

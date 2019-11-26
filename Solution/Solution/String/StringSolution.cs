@@ -318,28 +318,7 @@ namespace Solution
             }
             return total;
         }
-        public char NextGreatestLetter(char[] letters, char target)
-        {
-            char ret = letters[0]>target? letters[0]: (char)(letters[0]+26);
-            for (int i = 1; i < letters.Length; i++)
-            {
-                if (letters[i] <= target)
-                {
-                    letters[i] = (char)((int)letters[i] + 26);
-                }
-                if (letters[i] > target && letters[i] < ret)
-                {
-                    ret = letters[i];
-                }
-            }
  
-            if (ret > 'z')
-            {
-                ret = (char) ((int) ret - 26);
-            }
-            return ret;
-        }
-
         public string ShortestCompletingWord(string licensePlate, string[] words)
         {
             Dictionary<char,uint> dic = new Dictionary<char, uint>();
