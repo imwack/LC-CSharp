@@ -14,33 +14,33 @@ namespace Solution
             bool sign = false;
             if (dividend < 0 && divisor > 0) sign = true;
             if (dividend > 0 && divisor < 0) sign = true;
-            if (dividend < 0) dividend = -dividend;
-            if (divisor < 0) divisor = -divisor;
+            long a = dividend, b = divisor;
+            if (a < 0) a = -a;
+            if (b < 0) b = -b;
 
-            int result = BinarySearchDivide(dividend, divisor);
+            long result = BinarySearchDivide(a, b);
             if (sign)
             {
                 result = -result;
             }
-            if (result <= int.MinValue) return int.MaxValue;
-
-            return result;
+            if (result > int.MaxValue || result<int.MinValue) return int.MaxValue;
+            return (int)result;
         }
 
-        public int BinarySearchDivide(int divident, int divisor)
+        public long BinarySearchDivide(long divident, long divisor)
         {
             if (divisor == 1) return divident;
 
-            int temp = divisor;
+            long temp = divisor;
             if (divident < divisor) return 0;
             int i = 1;
+            long result = 1;
             for (; i < divident; i++)
             {
                 if (divident < (divisor << 1)) break;
-                if (divisor <= int.MinValue >> 1) break;
                 divisor = divisor << 1;
+                result <<= 1;
             }
-            int result = i;
             return result + BinarySearchDivide(divident - divisor, temp);
         }
 
