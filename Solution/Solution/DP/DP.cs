@@ -8,6 +8,24 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int NthUglyNumber(int n, int a, int b, int c)
+        {
+            int cur = 1, xa = 0, xb = 0, xc = 0;
+            List<int> dp = new List<int>();
+            dp.Add(1);
+            for (int i = 1; i <= n; i++)
+            {
+                int min = Math.Min(Math.Min(dp[xa]*a, dp[xb]*b), dp[xc]*c);
+                dp.Add(min);
+                if (min == dp[xa]*a) xa++;
+                if (min == dp[xb] * b) xb++;
+                if (min == dp[xc] * c) xc++;
+
+
+            }
+            return dp[n];
+        }
+
         public IList<int> LargestDivisibleSubset(int[] nums)
         {
             Array.Sort(nums);

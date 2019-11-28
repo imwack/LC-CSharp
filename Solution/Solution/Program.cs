@@ -107,7 +107,7 @@ namespace Solution
             ListNode l4 = new ListNode(4);
             l3.next = l4;
             l4.next = l2;
-            s.PermuteUnique(new int[] {1,2,3});
+            s.MyPow(2.0,10);
 
  
         }
