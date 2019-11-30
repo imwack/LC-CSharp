@@ -8,20 +8,18 @@ namespace Solution.BitMap
 {
     public partial class MySolution
     {
-        public bool HasAlternatingBits(int n)
+        bool HasAlternatingBits(int n)
         {
-            if (n == 0) return true;
-            int last = (n&1);
-            n >>= 1;
+            string str = "";
             while (n>0)
             {
-                int cur = n & 1;
-                if (cur == last)
-                {
+                str += n%2;
+                n /= 2;
+            }
+            for (int i = 1; i < str.Length; i++)
+            {
+                if (str[i] == str[i - 1])
                     return false;
-                }
-                last = cur;
-                n >>= 1;
             }
             return true;
         }

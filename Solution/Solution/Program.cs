@@ -92,7 +92,7 @@ namespace Solution
             TreeNode r3 = new TreeNode(3);
             r1.left = r2;
             r1.right = r3;
-            s.CountBinarySubstrings("10101");
+            s.DeleteTreeNodes(7, new int[] { -1, 0, 0, 1, 2, 2, 2 },new int[] { 1, -2, 4, 0, -2, -1, -1 } );
 
             int[][] arr = new int[3][]
             {

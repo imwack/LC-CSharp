@@ -8,6 +8,7 @@ namespace Solution
 {
     public partial class MySolution
     {
+ 
         public double MyPow(double x, int n)
         {
             bool sign = n < 0;

@@ -9,7 +9,84 @@ namespace Solution
 {
     public partial class MySolution
     {
- 
+        public int DeleteTreeNodes(int nodes, int[] parent, int[] value)
+        {
+            Dictionary<int, int> keyToParent = new Dictionary<int, int>();
+            Dictionary<int,List<int>> dic =new Dictionary<int, List<int>>();
+            HashSet<int> node = new HashSet<int>();
+            for (int i = 0; i < nodes; i++)
+                node.Add(i);
+            for (int i = 0; i < parent.Length; i++)
+            {
+                keyToParent[i] = parent[i];
+                if(!dic.ContainsKey(parent[i]))
+                    dic[parent[i]] = new List<int>();
+                dic[parent[i]].Add(i);
+            }
+            HashSet<int> all = new HashSet<int>();
+            int[] dp = new int[nodes];
+            for (int i = 0; i < nodes; i++)
+            {
+                dp[i] = value[i];
+                all.Add(i);
+            }
+            for (int i = parent.Length - 1; i > 0; i--)
+            {
+                dp[parent[i]] += dp[i];
+            }
+            for (int i = 0; i < nodes; i++)
+            {
+                if (dp[i] == 0)
+                {
+                    if (dic.ContainsKey(i))
+                    foreach (var son in dic[i])
+                    {
+                        all.Remove(son);
+                    }
+                    all.Remove(i);
+                }
+            }
+            return all.Count;
+        }
+
+        public string ToHexspeak(string num)
+        {
+            long result = long.Parse(num);
+            string str = "";
+            while (result>0)
+            {
+                long s = result%16;
+                if (s == 10) str += 'A';
+                else if (s == 11) str += 'B';
+                else if (s == 12) str += 'C';
+                else if (s == 13) str += 'D';
+                else if (s == 14) str += 'E';
+                else if (s == 15) str += 'F';
+                else str += s;
+                result = result/16;
+            }
+            string hex = "";
+            foreach (var s in str.Reverse())
+            {
+                hex += s;
+            }
+            Console.WriteLine(hex);
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in hex)
+            {
+                if (c == '1') sb.Append('I');
+                else if (c == '0') sb.Append('O');
+                else if (c == 'A') sb.Append('A');
+                else if (c == 'B') sb.Append('B');
+                else if (c == 'C') sb.Append('C');
+                else if (c == 'D') sb.Append('D');
+                else if (c == 'E') sb.Append('E');
+                else if (c == 'F') sb.Append('F');
+                else return "ERROR";
+
+            }
+            return sb.ToString();
+        }
         public int Compress(char[] chars)
         {
             int read = 1, write = 0;
