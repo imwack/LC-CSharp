@@ -9,7 +9,155 @@ namespace Solution.Contest
 {
 
     public class Contest
-    {
+    { 
+        public int SmallestDivisor(int[] nums, int threshold)
+        {
+            int l = 1, r = 0;
+
+            foreach (int num in nums)
+            {
+                r = Math.Max(r, num);
+            }
+            while (l<r)
+            {
+                int mid = (l + r)/2;
+                int sum = 0;
+                foreach (var num in nums)
+                {
+                    sum += num/mid;
+                    if (num%mid != 0) sum++;
+                }
+                if (sum > threshold) l=mid+1;
+                else r = mid;
+            }
+            return l;
+        }
+
+        public IList<IList<int>> GroupThePeople(int[] groupSizes)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            Dictionary<int, IList<int>> dic = new Dictionary<int, IList<int>>();
+            for(int i = 0;i<groupSizes.Length;i++)
+            {
+                int num = groupSizes[i];
+                if (!dic.ContainsKey(num))
+                {
+                    dic[num] = new List<int>();
+                }
+                if (dic[num].Count >= num)
+                {
+                    result.Add(new List<int>(dic[num]));
+                    dic[num].Clear();
+                }
+                dic[num].Add(i);
+            }
+            foreach (var v in dic.Values)
+            {
+                result.Add(new List<int>(v));    
+            }
+            return result;
+        }
+
+        public int PalindromePartition(string s, int k)
+        {
+            Dictionary<int, int> indexMaxLen = new Dictionary<int, int>();
+            StringBuilder sb = new StringBuilder();
+            
+            bool[,] dp = new bool[s.Length,s.Length]; //DP[i][j]表示 [i,j]是否回文
+            bool[,] dpLen = new bool[s.Length, s.Length]; //DP[i][j]表示 [i,j]是否回文
+
+            for (int len = 1; len < s.Length; len++)
+            {
+                for (int i = 0; i <= s.Length - len; i++)
+                {
+                    int j = i + len - 1;
+                    dp[i, j] = s[i] == s[j] && (len < 3 || dp[i + 1, j - 1]);
+                }
+            }
+            return 0;
+        }
+
+        public int CountSquares(int[][] matrix)
+        {
+            int sum = 0;
+            if (matrix.Length == 0) return 0;
+            int[,] dp = new int[matrix.Length,matrix[0].Length];
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                dp[i, 0] = matrix[i][0];
+            }
+            for (int j = 0; j < matrix[0].Length; j++)
+            {
+                dp[0, j] = matrix[0][j];
+            }
+            for (int i = 1; i < matrix.Length; i++)
+            {
+                for (int j = 1; j < matrix[0].Length; j++)
+                {
+                    if (matrix[i][j] == 1)
+                        dp[i, j] = Math.Min(Math.Min(dp[i - 1, j], dp[i, j - 1]), dp[i - 1,j - 1]) + 1;
+                }
+            }
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[0].Length; j++)
+                {
+                    sum += dp[i, j];
+                }
+            }
+            return sum;
+        }
+
+        public IList<int> NumOfBurgers(int tomatoSlices, int cheeseSlices)
+        {
+            if(tomatoSlices%2 != 0) return new List<int>();
+            int a = tomatoSlices / 2 - cheeseSlices;
+            if (a< 0) return new List<int>();
+
+            int b = cheeseSlices - a;
+            if(b<0) return new List<int>();
+            return new List<int>() {a,b};
+
+        }
+
+        public string Tictactoe(int[][] moves)
+        {
+            int[,] m = new int[3, 3];
+            bool A = true;
+            foreach (int[] move in moves)
+            {
+                if (A)
+                {
+                    m[move[0], move[1]] = 1;
+                }
+                else
+                {
+                    m[move[0], move[1]] = 2;
+                }
+                A = !A;
+                int ret = CheckWin(m);
+                if (ret != 0) return ret == 1 ? "A" : "B";
+            }
+            if (moves.Length == 9) return "Draw";
+            return "Pending";
+        }
+
+        private int CheckWin(int[,] m)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (m[i, 0] == m[i, 1] && m[i, 1] == m[i, 2] && m[i, 0]!=0) return m[i, 0];
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                if (m[0,i] == m[1,i] && m[1,i] == m[2,i] && m[0,i]!=0) return m[0,i];
+            }
+            if (m[0, 0] == m[1, 1] && m[1, 1] == m[2, 2] && m[0, 0] != 0) return m[0,0];
+            if (m[0, 2] == m[1, 1] && m[1, 1] == m[2, 0] && m[0, 2] != 0) return m[0, 2];
+
+            return 0;
+        }
+
         Dictionary<string,int>  waysDic = new Dictionary<string, int>();
         public int NumWays(int steps, int arrLen)
         {

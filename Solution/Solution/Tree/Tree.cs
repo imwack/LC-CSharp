@@ -8,6 +8,15 @@ namespace Solution
 {
     public partial class MySolution
     {
+       
+
+        public TreeNode SearchBST(TreeNode root, int val)
+        {
+            if (root == null) return null;
+            if (root.val == val) return root;
+            if (root.val < val) return SearchBST(root.right, val);
+            return SearchBST(root.left, val);
+        }
         public IList<TreeNode> GenerateTrees(int n)
         {
             return GenerateTrees(1, n);
