@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Solution.Contest;
 using Solution.Design;
 
 namespace Solution
@@ -110,9 +111,19 @@ namespace Solution
             s.Divide(10, 3);
 
             Contest.Contest c = new Contest.Contest();
-            c.SmallestDivisor(new int[] {962551, 933661, 905225, 923035, 990560}, 10);
+            c.MaxSideLength(new int[3][]
+            {
+                new int[] {1,1,3,2,4,3,2}, new int[] {1,1,3,2,4,3,2}, new int[] {1,1,3,2,4,3,2}
+            }, 4);
 
-    ;
+            AA ss = new AA();
+            string[] result = ss.Combine(new string[] {"a", "b", "c"}, -1);
+            foreach (var s1 in result)
+            {
+                Console.WriteLine(s1);
+            }
+
+
 
         }
     }

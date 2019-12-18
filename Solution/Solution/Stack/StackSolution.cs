@@ -9,6 +9,31 @@ namespace Solution
     public partial class MySolution
     {
         #region stack
+        public int[] DailyTemperatures(int[] T)
+        {
+            Stack<int> stack = new Stack<int>();
+            int []result = new int[T.Length];
+
+            for (int i = 0; i < T.Length; i++)
+            {
+                if (stack.Count == 0)
+                {
+                    stack.Push(i);
+                }
+                else
+                {
+                    while (stack.Count>0 && T[stack.Peek()]<T[i])
+                    {
+                        int peekId = stack.Pop();
+                        result[peekId] = i-peekId;
+                    }
+                    stack.Push(i);
+                }
+            }
+
+            return result;
+        }
+
         public bool Find132pattern(int[] nums)
         {
             int curMax = Int32.MinValue;
@@ -204,34 +229,7 @@ namespace Solution
         }
 
 
-
-        public int[] DailyTemperatures(int[] T)
-        {
-            Stack<Pair<int, int>> stack = new Stack<Pair<int, int>>();
-            List<int> ret = new List<int>();
-            for (int i = 0; i < T.Length; i++)
-                ret.Add(0);
-
-            for (int i = 0; i < T.Length; i++)
-            {
-                int cur = T[i];
-                while (stack.Count > 0)
-                {
-                    if (stack.Peek().First < cur)
-                    {
-                        var top = stack.Pop();
-                        ret[top.Second] = i - top.Second;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                stack.Push(new Pair<int, int>(cur, i));
-            }
-            return ret.ToArray();
-        }
-
+         
         public bool ValidateStackSequences(int[] pushed, int[] popped)
         {
             int cur = 0;
