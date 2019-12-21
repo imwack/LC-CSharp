@@ -8,7 +8,29 @@ namespace Solution
 {
     public partial class MySolution
     {
-       
+        public void Flatten(TreeNode root)
+        {
+            DfsFlatten(root);
+        }
+
+        public void DfsFlatten(TreeNode root)
+        {
+            if(root == null) return;
+            if (root.left != null)
+            {
+                DfsFlatten(root.left);
+                TreeNode right = root.right;
+                root.right = root.left;
+                root.left = null;
+
+                while (root.right != null)
+                {
+                    root = root.right;
+                }
+                root.right = right;
+            }
+            DfsFlatten(root.right);
+        }
 
         public TreeNode SearchBST(TreeNode root, int val)
         {
