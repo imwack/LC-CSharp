@@ -8,6 +8,8 @@ namespace Solution
 {
     public partial class MySolution
     {
+
+
         public IList<TreeNode> GenerateTrees(int n)
         {
             return GenerateTrees(1, n);
