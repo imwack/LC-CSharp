@@ -9,6 +9,39 @@ namespace Solution
 {
     public partial class MySolution
     {
+
+
+        public string ReverseWords(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            int start = 0;
+            while (start<s.Length)
+            {
+                while (start < s.Length && s[start] == ' ')
+                    start++;
+                int end = start + 1;
+                while (end<s.Length && s[end]!=' ')
+                {
+                    end++;
+                }
+                if(end>s.Length)
+                    break;
+                
+                sb.Append(ReverseStr(s, start, end));
+                sb.Append(" ");
+                start = end + 1;
+            }
+            return ReverseStr(sb.ToString(), 0, sb.Length-1);
+        }
+
+        public string ReverseStr(string str, int start, int end)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = end-1; i >= start; i--)
+                sb.Append(str[i]);
+            return sb.ToString();
+        }
+
         public int DeleteTreeNodes(int nodes, int[] parent, int[] value)
         {
             Dictionary<int, int> keyToParent = new Dictionary<int, int>();
