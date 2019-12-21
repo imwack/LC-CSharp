@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Solution.Contest;
 using Solution.Design;
 
 namespace Solution
@@ -92,7 +93,7 @@ namespace Solution
             TreeNode r3 = new TreeNode(3);
             r1.left = r2;
             r1.right = r3;
-            s.CountBinarySubstrings("10101");
+            s.DeleteTreeNodes(7, new int[] {-1, 0, 0, 1, 2, 2, 2}, new int[] {1, -2, 4, 0, -2, -1, -1});
 
             int[][] arr = new int[3][]
             {
@@ -107,9 +108,23 @@ namespace Solution
             ListNode l4 = new ListNode(4);
             l3.next = l4;
             l4.next = l2;
-            s.PermuteUnique(new int[] {1,2,3});
+            s.Divide(10, 3);
 
- 
+            Contest.Contest c = new Contest.Contest();
+            c.MaxSideLength(new int[3][]
+            {
+                new int[] {1,1,3,2,4,3,2}, new int[] {1,1,3,2,4,3,2}, new int[] {1,1,3,2,4,3,2}
+            }, 4);
+
+            AA ss = new AA();
+            string[] result = ss.Combine(new string[] {"a", "b", "c"}, -1);
+            foreach (var s1 in result)
+            {
+                Console.WriteLine(s1);
+            }
+
+
+
         }
     }
 }

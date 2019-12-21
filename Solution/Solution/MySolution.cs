@@ -759,19 +759,6 @@ namespace Solution
             return sb.ToString();
         }
 
-        public double MyPow(double x, int n)
-        {
-            if (n == 0) return 1;
-            double xx = 1.0;
-            for (int i = 0; i < n; i++)
-                xx *= x;
-            if (n > 0)
-            {
-                return xx;
-            }
-            return 1.0/xx;
-
-        }
 
         public int EvalRPN(string[] tokens)
         {

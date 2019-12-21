@@ -2,14 +2,357 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Solution.Contest
 {
+    public class AA
+    {
+        public int Distance(string a, string b)
+        {
+            int insert = 0, del = 0, modify = 0;
+            int[,] dp = new int[a.Length,b.Length];
 
+            dp[0, 0] = a[0] == b[0] ? 0 : 1;
+            for (int i = 1; i < a.Length; i++)
+            {
+                if (a[i] == b[0])
+                {
+                    dp[i, 0] = dp[i - 1, 0];
+                }
+                else
+                {
+                    dp[i, 0] = dp[i - 1, 0] + 1;
+                }
+            }
+            for (int i = 1; i < b.Length; i++)
+            {
+                if (b[i] == a[0])
+                {
+                    dp[0, i] = dp[0, i-1];
+                }
+                else
+                {
+                    dp[0, i] = dp[0, i-1] + 1;
+                }
+            }
+            for (int i = 1; i < a.Length; i++)
+            {
+                for (int j = 1; j < b.Length; j++)
+                {
+                    if (a[i] == b[j])
+                    {
+                        dp[i, j] = dp[i - 1, j - 1];
+                    }
+                    else
+                    {
+                        dp[i, j] = dp[i - 1, j - 1] + 1;
+                    }
+                    
+                    dp[i, j] =Math.Min(dp[i, j], Math.Min(dp[i - 1, j], dp[i, j - 1]));
+
+                }
+            }
+            return dp[a.Length - 1, b.Length - 1];
+        }
+
+        public List<string> Result = new List<string>();
+        public string[] Combine(string[] str, int n)
+        {
+            Dfs(str, 0, n, "");
+            return Result.ToArray();
+        }
+
+        public void Dfs(string[] str, int start, int n, string currentStr)
+        {
+            if (n < 0)
+            {
+                
+                return;
+            }
+            if (n == 0)
+            {
+                Result.Add(currentStr);
+                return;
+            }
+            for (int i = start; i < str.Length; i++)
+            {
+                Dfs(str, start,n-1, currentStr + str[i]);
+            }
+        }
+    }
     public class Contest
     {
+
+
+        int shortestPath = -1;
+        HashSet<string> pathSet = new HashSet<string>();
+        public int ShortestPath(int[][] grid, int k)
+        {
+            int row = grid.Length, col = grid[0].Length;
+            bool[,] visited = new bool[row,col];
+            DFSShortestPath(0, 0, grid, visited, k,0);
+            return shortestPath;
+        }
+
+        private void DFSShortestPath(int i, int j, int[][] grid, bool[,] visited, int k, int step)
+        {
+            if (step > shortestPath && shortestPath != -1) return;
+            if (k < 0) return;
+            if(visited[i,j]) return;
+            visited[i, j] = true;
+            if (grid[i][j] == 1)
+            {
+                --k;
+                grid[i][j] = 0;
+            }
+            if (k < 0) return;
+            if (i == grid.Length - 1 && j == grid[0].Length - 1)
+            {
+                if (shortestPath == -1)
+                    shortestPath = step;
+                else
+                    shortestPath = Math.Min(shortestPath, step);
+                return;
+            }
+
+            if (i + 1 < grid.Length)
+                DFSShortestPath(i + 1, j, CopyArr(grid), CopyArr(visited), k, step + 1);
+            if (j + 1 < grid[0].Length)
+                DFSShortestPath(i, j + 1, CopyArr(grid), CopyArr(visited), k, step + 1);
+            if (i - 1 >= 0)
+                DFSShortestPath(i - 1, j, CopyArr(grid), CopyArr(visited), k, step + 1);
+            if (j - 1 >= 0)
+                DFSShortestPath(i, j - 1, CopyArr(grid), CopyArr(visited), k, step + 1);
+        }
+        public int[][] CopyArr(int[][] v)
+        {
+            int[][] result = new int[v.Length][];
+            for (int i = 0; i < result.Length; i++)
+                result[i] = new int[v[0].Length];
+
+            for (int i = 0; i < v.Length;i++)
+            {
+                for (int j = 0; j < v[0].Length; j++)
+                {
+                    result[i][j] = v[i][j];
+                }
+            }
+            return result;
+        }
+        public bool[,] CopyArr(bool[,] v)
+        {
+            bool[,] result = new bool[v.GetLength(0),v.GetLength(1)];
+            for (int i = 0; i < v.GetLength(0); i++)
+            {
+                for (int j = 0; j < v.GetLength(1); j++)
+                {
+                    result[i, j] = v[i, j];
+                }
+            }
+            return result;
+        }
+
+        public int MaxSideLength(int[][] mat, int threshold)
+        {
+            int row = mat.Length, col = mat[0].Length;
+            int[,] sum = new int[row + 1, col + 1];
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    sum[i + 1, j + 1] = sum[i, j + 1] + mat[i][j] + sum[i + 1, j] - sum[i, j];
+                }
+            }
+            int maxLength = 0;
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    for (int len = maxLength + 1; len <= col; len++)
+                    {
+                        if (i + len > row) break;
+                        if (j + len > col) break;
+                        int total = sum[i + len , j + len ] - sum[i + len , j] -
+                                    sum[i, j + len ] + sum[i, j];
+                        if (total <= threshold)
+                        {
+                            maxLength = len;
+                        }
+                    }
+                }
+            }
+            return maxLength;
+        }
+
+        public IList<int> SequentialDigits(int low, int high)
+        {
+            List<int> table = new List<int>()
+            {
+                12, 23, 34, 45, 56, 67, 78, 89, 123,234,345,456,678,789, 1234, 2345, 3456, 4567, 5678, 6789 ,
+                12345,23456,34567,45678,56789,123456,234567,345678,456789,1234567,2345678,3456789,123456789
+            };
+            IList<int> result= new List<int>();
+            foreach (var i in table)
+            {
+                if(i>=low &&i<=high)
+                    result.Add(i);
+                else 
+                    break;
+            }
+            return result;
+        }
+
+        public int SmallestDivisor(int[] nums, int threshold)
+        {
+            int l = 1, r = 0;
+
+            foreach (int num in nums)
+            {
+                r = Math.Max(r, num);
+            }
+            while (l<r)
+            {
+                int mid = (l + r)/2;
+                int sum = 0;
+                foreach (var num in nums)
+                {
+                    sum += num/mid;
+                    if (num%mid != 0) sum++;
+                }
+                if (sum > threshold) l=mid+1;
+                else r = mid;
+            }
+            return l;
+        }
+
+        public IList<IList<int>> GroupThePeople(int[] groupSizes)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            Dictionary<int, IList<int>> dic = new Dictionary<int, IList<int>>();
+            for(int i = 0;i<groupSizes.Length;i++)
+            {
+                int num = groupSizes[i];
+                if (!dic.ContainsKey(num))
+                {
+                    dic[num] = new List<int>();
+                }
+                if (dic[num].Count >= num)
+                {
+                    result.Add(new List<int>(dic[num]));
+                    dic[num].Clear();
+                }
+                dic[num].Add(i);
+            }
+            foreach (var v in dic.Values)
+            {
+                result.Add(new List<int>(v));    
+            }
+            return result;
+        }
+
+        public int PalindromePartition(string s, int k)
+        {
+            Dictionary<int, int> indexMaxLen = new Dictionary<int, int>();
+            StringBuilder sb = new StringBuilder();
+            
+            bool[,] dp = new bool[s.Length,s.Length]; //DP[i][j]表示 [i,j]是否回文
+            bool[,] dpLen = new bool[s.Length, s.Length]; //DP[i][j]表示 [i,j]是否回文
+
+            for (int len = 1; len < s.Length; len++)
+            {
+                for (int i = 0; i <= s.Length - len; i++)
+                {
+                    int j = i + len - 1;
+                    dp[i, j] = s[i] == s[j] && (len < 3 || dp[i + 1, j - 1]);
+                }
+            }
+            return 0;
+        }
+
+        public int CountSquares(int[][] matrix)
+        {
+            int sum = 0;
+            if (matrix.Length == 0) return 0;
+            int[,] dp = new int[matrix.Length,matrix[0].Length];
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                dp[i, 0] = matrix[i][0];
+            }
+            for (int j = 0; j < matrix[0].Length; j++)
+            {
+                dp[0, j] = matrix[0][j];
+            }
+            for (int i = 1; i < matrix.Length; i++)
+            {
+                for (int j = 1; j < matrix[0].Length; j++)
+                {
+                    if (matrix[i][j] == 1)
+                        dp[i, j] = Math.Min(Math.Min(dp[i - 1, j], dp[i, j - 1]), dp[i - 1,j - 1]) + 1;
+                }
+            }
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[0].Length; j++)
+                {
+                    sum += dp[i, j];
+                }
+            }
+            return sum;
+        }
+
+        public IList<int> NumOfBurgers(int tomatoSlices, int cheeseSlices)
+        {
+            if(tomatoSlices%2 != 0) return new List<int>();
+            int a = tomatoSlices / 2 - cheeseSlices;
+            if (a< 0) return new List<int>();
+
+            int b = cheeseSlices - a;
+            if(b<0) return new List<int>();
+            return new List<int>() {a,b};
+
+        }
+
+        public string Tictactoe(int[][] moves)
+        {
+            int[,] m = new int[3, 3];
+            bool A = true;
+            foreach (int[] move in moves)
+            {
+                if (A)
+                {
+                    m[move[0], move[1]] = 1;
+                }
+                else
+                {
+                    m[move[0], move[1]] = 2;
+                }
+                A = !A;
+                int ret = CheckWin(m);
+                if (ret != 0) return ret == 1 ? "A" : "B";
+            }
+            if (moves.Length == 9) return "Draw";
+            return "Pending";
+        }
+
+        private int CheckWin(int[,] m)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (m[i, 0] == m[i, 1] && m[i, 1] == m[i, 2] && m[i, 0]!=0) return m[i, 0];
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                if (m[0,i] == m[1,i] && m[1,i] == m[2,i] && m[0,i]!=0) return m[0,i];
+            }
+            if (m[0, 0] == m[1, 1] && m[1, 1] == m[2, 2] && m[0, 0] != 0) return m[0,0];
+            if (m[0, 2] == m[1, 1] && m[1, 1] == m[2, 0] && m[0, 2] != 0) return m[0, 2];
+
+            return 0;
+        }
+
         Dictionary<string,int>  waysDic = new Dictionary<string, int>();
         public int NumWays(int steps, int arrLen)
         {
