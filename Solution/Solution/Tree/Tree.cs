@@ -8,6 +8,24 @@ namespace Solution
 {
     public partial class MySolution
     {
+        public int MaxPathSum(TreeNode root)
+        {
+            if (root == null) return 0;
+            int res = root.val;
+
+            DFSMaxPathSum(root, ref res);
+            return res;
+        }
+
+        public int DFSMaxPathSum(TreeNode root, ref int res)
+        {
+            if (root == null) return 0;
+            int left = Math.Max(DFSMaxPathSum(root.left, ref res), 0);
+            int right = Math.Max(DFSMaxPathSum(root.right, ref res),0);
+            res = Math.Max(res, root.val + left + right);
+            return Math.Max(left, right) + root.val;
+        }
+
         public void Flatten(TreeNode root)
         {
             DfsFlatten(root);
