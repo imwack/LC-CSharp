@@ -8,84 +8,9 @@ using System.Threading.Tasks;
 
 namespace Solution.Contest
 {
-    public class AA
-    {
-        public int Distance(string a, string b)
-        {
-            int insert = 0, del = 0, modify = 0;
-            int[,] dp = new int[a.Length,b.Length];
-
-            dp[0, 0] = a[0] == b[0] ? 0 : 1;
-            for (int i = 1; i < a.Length; i++)
-            {
-                if (a[i] == b[0])
-                {
-                    dp[i, 0] = dp[i - 1, 0];
-                }
-                else
-                {
-                    dp[i, 0] = dp[i - 1, 0] + 1;
-                }
-            }
-            for (int i = 1; i < b.Length; i++)
-            {
-                if (b[i] == a[0])
-                {
-                    dp[0, i] = dp[0, i-1];
-                }
-                else
-                {
-                    dp[0, i] = dp[0, i-1] + 1;
-                }
-            }
-            for (int i = 1; i < a.Length; i++)
-            {
-                for (int j = 1; j < b.Length; j++)
-                {
-                    if (a[i] == b[j])
-                    {
-                        dp[i, j] = dp[i - 1, j - 1];
-                    }
-                    else
-                    {
-                        dp[i, j] = dp[i - 1, j - 1] + 1;
-                    }
-                    
-                    dp[i, j] =Math.Min(dp[i, j], Math.Min(dp[i - 1, j], dp[i, j - 1]));
-
-                }
-            }
-            return dp[a.Length - 1, b.Length - 1];
-        }
-
-        public List<string> Result = new List<string>();
-        public string[] Combine(string[] str, int n)
-        {
-            Dfs(str, 0, n, "");
-            return Result.ToArray();
-        }
-
-        public void Dfs(string[] str, int start, int n, string currentStr)
-        {
-            if (n < 0)
-            {
-                
-                return;
-            }
-            if (n == 0)
-            {
-                Result.Add(currentStr);
-                return;
-            }
-            for (int i = start; i < str.Length; i++)
-            {
-                Dfs(str, start,n-1, currentStr + str[i]);
-            }
-        }
-    }
+  
     public class Contest
     {
-
 
         int shortestPath = -1;
         HashSet<string> pathSet = new HashSet<string>();
